@@ -11,7 +11,7 @@ namespace Lisa.Excelsis.WebClient
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseStaticFiles();
+            app.UseFileServer();
         }
     }
 }
