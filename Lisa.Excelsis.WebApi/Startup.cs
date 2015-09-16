@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNet.Builder;
+﻿using Lisa.Excelsis.WebApi.Models;
+using Microsoft.AspNet.Builder;
 using Microsoft.Framework.DependencyInjection;
+using System;
+using System.Collections.Generic;
 
 namespace Lisa.Excelsis.WebApi
 {
+
     public class Startup
     {
         public void ConfigureServices(IServiceCollection services)
@@ -13,6 +17,7 @@ namespace Lisa.Excelsis.WebApi
         public void Configure(IApplicationBuilder app)
         {
             app.UseMvcWithDefaultRoute();
+            DummieData.LoadDummieData();
         }
     }
 }
