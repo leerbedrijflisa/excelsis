@@ -1,8 +1,5 @@
-﻿using Lisa.Excelsis.WebApi.Models;
-using Microsoft.AspNet.Builder;
+﻿using Microsoft.AspNet.Builder;
 using Microsoft.Framework.DependencyInjection;
-using System;
-using System.Collections.Generic;
 
 namespace Lisa.Excelsis.WebApi
 {
