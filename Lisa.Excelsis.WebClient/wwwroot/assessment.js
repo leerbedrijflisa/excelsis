@@ -1,8 +1,9 @@
 ﻿export class Welcome{
     constructor() {
         this.heading = "Form";
-        this.firstName = "John";
-        this.lastName = "Doe";
+        this.firstName;
+        this.lastName;
+        this.studentNumber;
 
         this.currentDate = new Date();
         this.dd = this.currentDate.getDate();
@@ -15,11 +16,8 @@
         this.newTime = this.hh + ":" + this.mm;
     }
 
-    get fullName(){
-        return `${this.firstName} ${this.lastName}`;
-    }
 
     submit(){
-        alert(`Welcome, ${this.fullName}!`);
-    }
+        alert(`Welcome, ${this.firstName} ${this.lastName} The date is ${this.newDate} and the time is ${this.newTime}!`);
+  }
 }
