@@ -14,7 +14,8 @@ export class App{
     configureRouter(config, router){
         config.title = "Excelsis";
         config.map([
-            { route: ['', 'assessment'], name: 'assessment', moduleId: 'assessment', nav: true }           
+            { route: 'assessment', name: 'assessment', moduleId: 'assessment', nav: true },
+            { route: ['', 'exam'], name: 'exam', moduleId: 'exam', nav: true }
         ]);
 
         this.router = router;
