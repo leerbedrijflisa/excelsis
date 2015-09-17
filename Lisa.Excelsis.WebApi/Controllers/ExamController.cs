@@ -3,7 +3,7 @@
 namespace Lisa.Excelsis.WebApi
 {
     [Route("api/[controller]")]
-    public class FormController : Controller
+    public class ExamController : Controller
     {
         
         [HttpGet]
