@@ -1,6 +1,8 @@
 ﻿<template>
     <h2>${heading}</h2>
     
-    
+    <button type="submit" click.delegate="updateContacts()" disabled.bind="!canSearch" class="btn btn-default">Search</button>
+    <button type="submit" click.delegate="getExam()" class="btn btn-primary">Laat zien.</button>
+
     
 </template>

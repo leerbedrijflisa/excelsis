@@ -1,8 +1,5 @@
-﻿using Lisa.Excelsis.WebApi.Models;
-using Microsoft.AspNet.Builder;
+﻿using Microsoft.AspNet.Builder;
 using Microsoft.Framework.DependencyInjection;
-using System;
-using System.Collections.Generic;
 
 namespace Lisa.Excelsis.WebApi
 {
@@ -12,12 +9,23 @@ namespace Lisa.Excelsis.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.ConfigureCors(options =>
+            {
+                options.AddPolicy(
+                   "CorsExcelsis",
+                    builder =>
+                    {
+                        builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
+                    });
+            });
         }
 
         public void Configure(IApplicationBuilder app)
         {
             app.UseMvcWithDefaultRoute();
             DummieData.LoadDummieData();
+            app.UseCors("CorsExcelsis");
         }
     }
 }

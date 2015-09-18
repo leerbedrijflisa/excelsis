@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.Cors.Core;
+using Microsoft.AspNet.Mvc;
 
 namespace Lisa.Excelsis.WebApi
 {
+    [EnableCors("CorsExcelsis")]
     [Route("api/[controller]")]
     public class ExamController : Controller
     {
@@ -9,7 +11,7 @@ namespace Lisa.Excelsis.WebApi
         [HttpGet]
         public HttpOkObjectResult Get()
         {
-            string[,] forms = new string[3, 2]
+            string[,] forms = new string[5, 2]
             { 
                 { "Nederlands", "Lezen" }, 
                 { "Rekenen", "Hoofdrekenen" },
