@@ -1,22 +1,21 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.Cors.Core;
+using Microsoft.AspNet.Mvc;
+using System.Linq;
 
 namespace Lisa.Excelsis.WebApi
 {
+    [EnableCors("CorsExcelsis")]
     [Route("api/[controller]")]
     public class ExamController : Controller
     {
         
         [HttpGet]
-        public HttpOkObjectResult Get()
+        public object Get()
         {
-            string[,] forms = new string[3, 2]
-            { 
-                { "Nederlands", "Lezen" }, 
-                { "Rekenen", "Hoofdrekenen" },
-                { "AO", "Iteratievergadering" }
-            };
+            var query = (from exams in DummieData.Exams
+                         select exams);
 
-            return Ok(forms);
+            return Json(query);
         }
     }
 }

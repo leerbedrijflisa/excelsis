@@ -1,0 +1,18 @@
+﻿<template>
+    <h2>${heading}</h2>
+
+    <ul>
+        <li repeat.for="exam of Exams">
+            Vak: ${exam.Subject} <br />
+            Naam: ${exam.Name} <br />
+            Cohort: ${exam.Cohort} <br />
+            Organisatie: ${exam.Organisation} <br />
+            Question:  <br />
+            <ul>
+                <li repeat.for="question of exam.questions">
+                   vraag: ${question.Description}
+                </li>
+            </ul>
+        </li>
+    </ul>
+</template>
