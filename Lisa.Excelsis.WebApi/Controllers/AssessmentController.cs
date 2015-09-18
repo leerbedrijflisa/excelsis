@@ -1,6 +1,5 @@
 ﻿using Lisa.Excelsis.WebApi.Models;
 using Microsoft.AspNet.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,10 +12,8 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet]
         public object Get()
         {
-            var query = (
-                            from assessments in DummieData.Assessments
-                            select assessments
-                        );
+            var query = (from assessments in DummieData.Assessments
+                         select assessments);
 
             return Json(query);
         }
@@ -30,11 +27,9 @@ namespace Lisa.Excelsis.WebApi.Controllers
 
             List<string> errors = new List<string>();
 
-            var query = (
-                            from assessments in DummieData.Assessments
-                            where assessments.Id == id
-                            select assessments
-                         ).FirstOrDefault();
+            var query = (from assessments in DummieData.Assessments
+                         where assessments.Id == id
+                         select assessments).FirstOrDefault();
 
             if (query == null)
             {
@@ -54,11 +49,9 @@ namespace Lisa.Excelsis.WebApi.Controllers
 
             List<string> errors = new List<string>();
 
-            var query = (
-                            from assessments in DummieData.Assessments
-                            where assessments.Id == assesmentId                   
-                            select assessments.Criteria
-                        ).SingleOrDefault();
+            var query = (from assessments in DummieData.Assessments
+                         where assessments.Id == assesmentId                   
+                         select assessments.Criteria).SingleOrDefault();
             
             if (query == null)
             {
@@ -106,19 +99,44 @@ namespace Lisa.Excelsis.WebApi.Controllers
             {
                 error.Add("Examinee is required, but is not set.");
             }
-
+            
             if( error.Count() == 0)
             {               
-                Random rnd = new Random();
                 Assessment assessment = new Assessment();
 
-                int id = rnd.Next(1, 100);
+                var query = (from exam in DummieData.Exams
+                             where exam.Id == value.ExamId
+                             select exam).FirstOrDefault();
+
+                if(query == null)
+                {
+                    error.Add("Exam is not found");
+                    return HttpError(request, method, 404, error);
+                }
+
+                int id = DummieData.Assessments.Count() + 1;
                  
                 assessment.Id = id;
                 assessment.ExamId = value.ExamId;
                 assessment.TeacherId = value.TeacherId;
                 assessment.Examinee = value.Examinee;
+                assessment.Criteria = new List<Criterium>();
 
+                int i = 0;
+                foreach(var question in query.questions)
+                {
+                    assessment.Criteria.Add(new Criterium
+                    {
+                        Id = i,
+                        QuestionId = question.Id,
+                        Answer = null,
+                        CriteriumBoxes = new bool[]
+                        {
+                            false,false,false,false
+                        }                            
+                    });
+                    i++;
+                }
                 DummieData.Assessments.Add(assessment);
 
                 return Json(assessment);
@@ -133,6 +151,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpPatch("{assesmentId}")]
         public void Patch(int assesmentId, [FromBody]string value)
         {
+
         }
 
         // PATCH api/assessment/5/criterium/3
@@ -141,6 +160,8 @@ namespace Lisa.Excelsis.WebApi.Controllers
         {                       
             return Ok();
         }
+
+        // This creates a HTTP error code with json data
         public object HttpError(string request, string method, int HttpStatusCode, List<string> message)
         {
             Response.StatusCode = HttpStatusCode;
