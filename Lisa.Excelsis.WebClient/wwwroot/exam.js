@@ -1,11 +1,12 @@
-﻿//import {inject} from 'aurelia-framework';
+﻿import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
 
 export class Exam
 {
-    Exam;
+    
 
     constructor() {
+        this.heading = "Exam";
         this.http = new HttpClient().configure(x => {
             x.withBaseUrl('http://localhost:5858/api');      
             x.withHeader('Content-Type', 'application/json')});
@@ -13,16 +14,16 @@ export class Exam
 
     //constructor() {
 
-    //    this.heading = "Exam";
+    //    
     //    this.firstName;
     //    this.lastName;
     //    this.studentNumber;
     //}
 
-    getExam() {
-        return this.http.createRequest("/Exam")
-          .asGet().send().then(response => {
-              this.Exam = response.content.Exam;
+    activate() {
+        return this.http.get("/Exam").then(response => {
+              this.Exams = response.content;
+              console.log(response.content);
           });
     }
 

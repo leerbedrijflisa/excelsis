@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Cors.Core;
 using Microsoft.AspNet.Mvc;
+using System.Linq;
 
 namespace Lisa.Excelsis.WebApi
 {
@@ -9,18 +10,12 @@ namespace Lisa.Excelsis.WebApi
     {
         
         [HttpGet]
-        public HttpOkObjectResult Get()
+        public object Get()
         {
-            string[,] forms = new string[5, 2]
-            { 
-                { "Nederlands", "Lezen" }, 
-                { "Rekenen", "Hoofdrekenen" },
-                { "AO", "Iteratievergadering" },
-                { "Nederlands", "Spreken" },
-                { "Rekenen", "Getallen" }
-            };
+            var query = (from exams in DummieData.Exams
+                         select exams);
 
-            return Ok(forms);
+            return Json(query);
         }
     }
 }
