@@ -128,7 +128,8 @@ namespace Lisa.Excelsis.WebApi.Controllers
                     assessment.Criteria.Add(new Criterium
                     {
                         Id = i,
-                        QuestionId = question.Id,
+                        Question = question.Description,
+                        Rating = question.Rating,
                         Answer = null,
                         CriteriumBoxes = new bool[]
                         {
@@ -156,9 +157,48 @@ namespace Lisa.Excelsis.WebApi.Controllers
 
         // PATCH api/assessment/5/criterium/3
         [HttpPatch("{assesmentId}/criterium/{criteriumId}")]
-        public HttpStatusCodeResult Patch(int assesmentId, int criteriumId, [FromBody]Criterium value)
-        {                       
-            return Ok();
+        public object Patch(int? assesmentId = null, int? criteriumId = null, [FromBody]Criterium value)
+        {
+            string method = "GET";
+            string request = "/api/assessment/" + assesmentId + "/criterium/" + criteriumId;
+
+            List<string> errors = new List<string>();
+
+            var query = (from assessments in DummieData.Assessments
+                         where assessments.Id == assesmentId
+                         select assessments.Criteria).SingleOrDefault();
+
+            if (query == null)
+            {
+                errors.Add("Assessment ID is not found");
+                return HttpError(request, method, 404, errors);
+            }
+
+            var criterium = query.SingleOrDefault(c => c.Id == criteriumId);
+
+            if (criterium == null)
+            {
+                errors.Add("Criterium ID is not found");
+                return HttpError(request, method, 404, errors);
+            }
+
+            if(value.Answer == null && value.CriteriumBoxes == null)
+            {
+                errors.Add("You didn't supply any answer");
+                return HttpError(request, method, 404, errors);
+            }
+
+            if(value.Answer != null)
+            {
+                criterium.Answer = value.Answer;
+            }
+            
+            if(value.CriteriumBoxes != null)
+            {
+                criterium.CriteriumBoxes = value.CriteriumBoxes;
+            }
+
+            return Json(criterium);
         }
 
         // This creates a HTTP error code with json data
