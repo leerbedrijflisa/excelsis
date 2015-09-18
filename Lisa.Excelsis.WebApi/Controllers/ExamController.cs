@@ -13,7 +13,9 @@ namespace Lisa.Excelsis.WebApi
             { 
                 { "Nederlands", "Lezen" }, 
                 { "Rekenen", "Hoofdrekenen" },
-                { "AO", "Iteratievergadering" }
+                { "AO", "Iteratievergadering" },
+                { "Nederlands", "Spreken" },
+                { "Rekenen", "Getallen" }
             };
 
             return Ok(forms);
