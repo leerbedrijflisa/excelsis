@@ -12,68 +12,27 @@ export class Exam
             x.withHeader('Content-Type', 'application/json')});
     }
 
-    //constructor() {
+    showExams() {
 
-    //    
-    //    this.firstName;
-    //    this.lastName;
-    //    this.studentNumber;
-    //}
+        var selectSubject = document.getElementById("selectExam");
+        var subject = selectSubject.options[selectSubject.selectedIndex].value;
 
-    activate() {
+        var selectCohort = document.getElementById("selectCohort");
+        var cohort = selectCohort.options[selectCohort.selectedIndex].value;
+
         return this.http.get("/Exam").then(response => {
-              this.Exams = response.content;
+            this.Exams = this.find_in_object(response.content, {Subject: subject, Cohort: cohort});
               console.log(response.content);
-          });
+        });         
     }
 
-    //Mee bezig :
+    find_in_object(my_object, my_criteria){
 
-    //activate(params) {
-    //    return promise.all([
-    //        this.http.get('/api/jobs/' + params.id).then(http => {
-    //            this.job = json.parse(http.response);
-    //        }),
-    //        this.http.get('/api/employees').then(http => {
-    //            this.employees = json.parse(http.response);
-    //        })
-    //    ]);
-    //}
+        return my_object.filter(function(obj) {
+            return Object.keys(my_criteria).every(function(c) {
+                return obj[c] == my_criteria[c];
+            });
+        });
 
-    
-    //import {HttpClient} from 'aurelia-http-client';
-
-    //@inject(HttpClient)
-    //export class Contact {
-    //    searchEntry = '';
-    //    contacts = [];
-    //    contactId = '';
-    //    contact = '';
-    //    currentPage = 1;
-    //    textShowAll = 'Show All';
-
-    //    constructor(http) {
-    //        this.http = http;
-    //    }
-
-    //    updateContacts() {
-    //        return this.http.createRequest("/contacts/?page=" + this.currentPage + "&pageSize=100&query=" + this.searchEntry)
-    //          .asGet().send().then(response => {
-    //              this.contacts = response.content.contacts;
-    //          });
-    //    }
-
-    //    get canSearch() {
-    //        return (this.searchEntry != '' ? true : false);
-    //    }
-
-    //    activate() {
-    //        return this.updateContacts();
-    //    }
-
-    //    displayAllContacts() {
-    //        this.searchEntry = '';
-    //        this.activate();
-    //    }
-    //}
+    }
 }
