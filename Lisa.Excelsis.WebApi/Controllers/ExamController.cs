@@ -5,10 +5,9 @@ using System.Linq;
 namespace Lisa.Excelsis.WebApi
 {
     [EnableCors("CorsExcelsis")]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ExamController : Controller
     {
-        
         [HttpGet]
         public object Get()
         {
