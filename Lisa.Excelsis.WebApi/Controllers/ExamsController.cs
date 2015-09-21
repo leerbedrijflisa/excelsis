@@ -6,7 +6,7 @@ namespace Lisa.Excelsis.WebApi
 {
     [EnableCors("CorsExcelsis")]
     [Route("[controller]")]
-    public class ExamController : Controller
+    public class ExamsController : Controller
     {
         [HttpGet]
         public object Get()
