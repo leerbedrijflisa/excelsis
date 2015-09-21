@@ -7,7 +7,7 @@ namespace Lisa.Excelsis.WebApi.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Subject { get; set; }
-        public string Organisation { get; set; }
+        public string Organization { get; set; }
         public string Cohort { get; set; }
         public int DocumentationId { get; set; }
         public List<Question> questions { get; set; }
