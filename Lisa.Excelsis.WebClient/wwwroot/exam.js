@@ -10,6 +10,9 @@ export class Exam
         this.http = new HttpClient().configure(x => {
             x.withBaseUrl('http://localhost:5858/api');      
             x.withHeader('Content-Type', 'application/json')});
+
+        this.subjects = [ "Nederlands", "Applicatieontwikkelaar", "Rekenen" ];
+        this.cohorts = [ "2015", "2014", "2013", "2012" ];
     }
 
     showExams() {

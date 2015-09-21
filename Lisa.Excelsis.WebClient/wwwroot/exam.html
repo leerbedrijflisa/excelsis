@@ -2,15 +2,11 @@
     <h2>${heading}</h2>
 
     <select id="selectExam">
-        <option value="Nederlands">Nederlands</option>
-        <option value="Rekenen">Rekenen</option>
-        <option value="AO">AO</option>
+        <option repeat.for="subject of subjects" value="${subject}">${subject}</option>
     </select>
 
     <select id="selectCohort">
-        <option>2015/2016</option>
-        <option>2014/2015</option>
-        <option>2013/2014</option>
+        <option repeat.for="cohort of cohorts">${cohort}</option>
     </select>
 
     <button click.Delegate="showExams()">Zoek</button>
