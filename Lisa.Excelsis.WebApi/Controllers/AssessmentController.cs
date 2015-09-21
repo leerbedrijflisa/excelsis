@@ -157,7 +157,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
 
         // PATCH api/assessment/5/criterium/3
         [HttpPatch("{assesmentId}/criterium/{criteriumId}")]
-        public object Patch(int? assesmentId = null, int? criteriumId = null, [FromBody]Criterium value)
+        public object Patch([FromBody]Criterium value, int? assesmentId = null, int? criteriumId = null)
         {
             string method = "GET";
             string request = "/api/assessment/" + assesmentId + "/criterium/" + criteriumId;

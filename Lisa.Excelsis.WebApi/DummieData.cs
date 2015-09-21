@@ -71,7 +71,6 @@ namespace Lisa.Excelsis.WebApi
                     new Criterium
                     {
                         Id = 0,
-                        QuestionId = 0,
                         Answer = null,
                         CriteriumBoxes = new bool[]
                         {
@@ -81,7 +80,6 @@ namespace Lisa.Excelsis.WebApi
                     new Criterium
                     {
                         Id = 1,
-                        QuestionId = 1,
                         Answer = null,
                         CriteriumBoxes = new bool[]
                         {
@@ -91,7 +89,6 @@ namespace Lisa.Excelsis.WebApi
                     new Criterium
                     {
                         Id = 2,
-                        QuestionId = 2,
                         Answer = null,
                         CriteriumBoxes = new bool[]
                         {
@@ -111,7 +108,6 @@ namespace Lisa.Excelsis.WebApi
                     new Criterium
                     {
                         Id = 4,
-                        QuestionId = 0,
                         Answer = null,
                         CriteriumBoxes = new bool[]
                         {
@@ -121,7 +117,6 @@ namespace Lisa.Excelsis.WebApi
                     new Criterium
                     {
                         Id = 5,
-                        QuestionId = 1,
                         Answer = null,
                         CriteriumBoxes = new bool[]
                         {
@@ -131,7 +126,6 @@ namespace Lisa.Excelsis.WebApi
                     new Criterium
                     {
                         Id = 6,
-                        QuestionId = 2,
                         Answer = null,
                         CriteriumBoxes = new bool[]
                         {
@@ -151,7 +145,6 @@ namespace Lisa.Excelsis.WebApi
                     new Criterium
                     {
                         Id = 0,
-                        QuestionId = 0,
                         Answer = null,
                         CriteriumBoxes = new bool[]
                         {
@@ -161,7 +154,6 @@ namespace Lisa.Excelsis.WebApi
                     new Criterium
                     {
                         Id = 1,
-                        QuestionId = 1,
                         Answer = null,
                         CriteriumBoxes = new bool[]
                         {
@@ -171,7 +163,6 @@ namespace Lisa.Excelsis.WebApi
                     new Criterium
                     {
                         Id = 2,
-                        QuestionId = 2,
                         Answer = null,
                         CriteriumBoxes = new bool[]
                         {
