@@ -8,7 +8,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
     [Route("[controller]")]
     public class AssessmentsController : Controller
     {
-        // GET: api/assessment
+        // GET: assessment
         [HttpGet]
         public object Get()
         {
@@ -18,12 +18,12 @@ namespace Lisa.Excelsis.WebApi.Controllers
             return Json(query);
         }
 
-        // GET api/assessment/5
+        // GET assessment/5
         [HttpGet("{id}")]
         public object Get(int? id = null)
         {
             string method = "GET";
-            string request = "/api/assessment/" + id;
+            string request = "/assessment/" + id;
 
             List<string> errors = new List<string>();
 
@@ -40,12 +40,12 @@ namespace Lisa.Excelsis.WebApi.Controllers
             return Json(query);
         }
 
-        // GET api/assessment/5/criterium/3
+        // GET assessment/5/criterium/3
         [HttpGet("{assesmentId}/criterium/{criteriumId}")]
         public object Get(int? assesmentId = null, int? criteriumId = null)
         {
             string method = "GET";
-            string request = "/api/assessment/" + assesmentId + "/criterium/" + criteriumId;
+            string request = "/assessment/" + assesmentId + "/criterium/" + criteriumId;
 
             List<string> errors = new List<string>();
 
@@ -70,12 +70,12 @@ namespace Lisa.Excelsis.WebApi.Controllers
             return Json(criterium);
         }
 
-        // POST api/assessment
+        // POST assessment
         [HttpPost]
         public object Post([FromBody]Assessment value)
         {
             string method = "POST";
-            string request = "/api/assessment";
+            string request = "/assessment";
 
             List<string> error = new List<string>();
 
@@ -160,7 +160,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
         public object Patch([FromBody]Criterium value, int? assesmentId = null, int? criteriumId = null)
         {
             string method = "GET";
-            string request = "/api/assessment/" + assesmentId + "/criterium/" + criteriumId;
+            string request = "/assessment/" + assesmentId + "/criterium/" + criteriumId;
 
             List<string> errors = new List<string>();
 

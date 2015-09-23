@@ -23,7 +23,7 @@ namespace Lisa.Excelsis.WebApi
                 Id = 1,
                 Name = "Lezen en Schrijven",
                 Subject = "Nederlands",
-                Organisation = "Davinci College Dordrecht",
+                Organization = "Davinci College Dordrecht",
                 Cohort = "2015/2016",
                 DocumentationId = 1,
                 questions = new List<Question>()
@@ -63,7 +63,7 @@ namespace Lisa.Excelsis.WebApi
                 Id = 2,
                 Name = "Iteratievergadering",
                 Subject = "AO",
-                Organisation = "Davinci College Dordrecht",
+                Organization = "Davinci College Dordrecht",
                 Cohort = "2015/2016",
                 DocumentationId = 1,
                 questions = new List<Question>()
@@ -103,7 +103,7 @@ namespace Lisa.Excelsis.WebApi
                 Id = 3,
                 Name = "Spreken",
                 Subject = "Nederlands",
-                Organisation = "Davinci College Dordrecht",
+                Organization = "Davinci College Dordrecht",
                 Cohort = "2015/2016",
                 DocumentationId = 1,
                 questions = new List<Question>()
