@@ -8,11 +8,16 @@ namespace Lisa.Excelsis.WebApi.Controllers
     [Route("[controller]")]
     public class AssessmentsController : Controller
     {
+        private readonly ExcelsisDb _db;
+        public AssessmentsController(ExcelsisDb db)
+        {
+            _db = db;
+        }
         // GET: assessment
         [HttpGet]
         public object Get()
         {
-            var query = (from assessments in DummieData.Assessments
+            var query = (from assessments in _db.Assessments
                          select assessments);
 
             return Json(query);
@@ -27,7 +32,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
 
             List<string> errors = new List<string>();
 
-            var query = (from assessments in DummieData.Assessments
+            var query = (from assessments in _db.Assessments
                          where assessments.Id == id
                          select assessments).FirstOrDefault();
 
@@ -49,7 +54,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
 
             List<string> errors = new List<string>();
 
-            var query = (from assessments in DummieData.Assessments
+            var query = (from assessments in _db.Assessments
                          where assessments.Id == assesmentId                   
                          select assessments.Criteria).SingleOrDefault();
             
@@ -70,83 +75,68 @@ namespace Lisa.Excelsis.WebApi.Controllers
             return Json(criterium);
         }
 
-        // POST assessment
-        [HttpPost]
-        public object Post([FromBody]Assessment value)
-        {
-            string method = "POST";
-            string request = "/assessment";
+        //// POST assessment
+        //[HttpPost]
+        //public object Post([FromBody]Assessment value)
+        //{
+        //    string method = "POST";
+        //    string request = "/assessment";
 
-            List<string> error = new List<string>();
+        //    List<string> error = new List<string>();
 
-            if(value == null)
-            {
-                error.Add("Malformed Json");            
-                return HttpError(request, method, 400, error);
-            }
+        //    if(value == null)
+        //    {
+        //        error.Add("Malformed Json");            
+        //        return HttpError(request, method, 400, error);
+        //    }
 
-            if (value.TeacherId == null)
-            {
-                error.Add("Teacher ID is required, but is not set.");
-            }
+        //    if( error.Count() == 0)
+        //    {               
+        //        Assessment assessment = new Assessment();
 
-            if (value.ExamId == null)
-            {
-                error.Add("Exam ID is required, but is not set.");
-            }
+        //        var query = (from exam in _db.Exams
+        //                     where exam.Id == value.ExamId
+        //                     select exam).FirstOrDefault();
 
-            if (value.Examinee == null)
-            {
-                error.Add("Examinee is required, but is not set.");
-            }
-            
-            if( error.Count() == 0)
-            {               
-                Assessment assessment = new Assessment();
+        //        if(query == null)
+        //        {
+        //            error.Add("Exam is not found");
+        //            return HttpError(request, method, 404, error);
+        //        }
 
-                var query = (from exam in DummieData.Exams
-                             where exam.Id == value.ExamId
-                             select exam).FirstOrDefault();
-
-                if(query == null)
-                {
-                    error.Add("Exam is not found");
-                    return HttpError(request, method, 404, error);
-                }
-
-                int id = DummieData.Assessments.Count() + 1;
+        //        int id = _db.Assessments.Count() + 1;
                  
-                assessment.Id = id;
-                assessment.ExamId = value.ExamId;
-                assessment.TeacherId = value.TeacherId;
-                assessment.Examinee = value.Examinee;
-                assessment.Criteria = new List<Criterium>();
+        //        assessment.Id = id;
+        //        assessment.ExamId = value.ExamId;
+        //        assessment.TeacherId = value.TeacherId;
+        //        assessment.Examinee = value.Examinee;
+        //        assessment.Criteria = new List<Criterium>();
 
-                int i = 0;
-                foreach(var question in query.questions)
-                {
-                    assessment.Criteria.Add(new Criterium
-                    {
-                        Id = i,
-                        Question = question.Description,
-                        Rating = question.Rating,
-                        Answer = null,
-                        CriteriumBoxes = new bool[]
-                        {
-                            false,false,false,false
-                        }                            
-                    });
-                    i++;
-                }
-                DummieData.Assessments.Add(assessment);
+        //        int i = 0;
+        //        foreach(var question in query.questions)
+        //        {
+        //            assessment.Criteria.Add(new Criterium
+        //            {
+        //                Id = i,
+        //                Question = question.Description,
+        //                Rating = question.Rating,
+        //                Answer = null,
+        //                CriteriumBoxes = new bool[]
+        //                {
+        //                    false,false,false,false
+        //                }                            
+        //            });
+        //            i++;
+        //        }
+        //        _db.Assessments.Add(assessment);
 
-                return Json(assessment);
-            }
-            else
-            {
-                return HttpError(request, method, 400, error);
-            }
-        }
+        //        return Json(assessment);
+        //    }
+        //    else
+        //    {
+        //        return HttpError(request, method, 400, error);
+        //    }
+        //}
 
         // PATCH api/assessment/5
         [HttpPatch("{assesmentId}")]
@@ -164,7 +154,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
 
             List<string> errors = new List<string>();
 
-            var query = (from assessments in DummieData.Assessments
+            var query = (from assessments in _db.Assessments
                          where assessments.Id == assesmentId
                          select assessments.Criteria).SingleOrDefault();
 

@@ -19,10 +19,10 @@ namespace Lisa.Excelsis.WebApi
         [HttpGet]
         public object Get()
         {
-            var query = (from exams in _db.Assessments
+            var query = (from exams in _db.Exams
                          select exams);
 
             return Json(query);
-        }
+        }        
     }
 }
