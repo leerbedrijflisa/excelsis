@@ -37,7 +37,7 @@ namespace Lisa.Excelsis.WebApi
             var query = (from exams in _db.Exams
                          where exams.Subject == subjectId &&
                          exams.Cohort == cohort
-                         select assessments.Criteria).SingleOrDefault();
+                         select exams.Criteria)();
 
             if (query == null)
             {
