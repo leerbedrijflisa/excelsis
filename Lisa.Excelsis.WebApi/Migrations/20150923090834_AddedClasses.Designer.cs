@@ -9,9 +9,14 @@ using Microsoft.Data.Entity.SqlServer.Metadata;
 namespace Lisa.Excelsis.WebApi.Migrations
 {
     [DbContext(typeof(ExcelsisDb))]
-    partial class ExcelsisDbModelSnapshot : ModelSnapshot
+    partial class AddedClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        public override string Id
+        {
+            get { return "20150923090834_AddedClasses"; }
+        }
+
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Annotation("ProductVersion", "7.0.0-beta7-15540")
@@ -98,7 +103,7 @@ namespace Lisa.Excelsis.WebApi.Migrations
                     b.Property<string>("Description")
                         .Required();
 
-                    b.Property<int>("ExamId");
+                    b.Property<int?>("ExamId");
 
                     b.Property<int>("Rating");
 
@@ -160,6 +165,13 @@ namespace Lisa.Excelsis.WebApi.Migrations
                     b.Reference("Lisa.Excelsis.WebApi.Models.Assessment")
                         .InverseCollection()
                         .ForeignKey("AssessmentId");
+                });
+
+            modelBuilder.Entity("Lisa.Excelsis.WebApi.Models.Question", b =>
+                {
+                    b.Reference("Lisa.Excelsis.WebApi.Models.Exam")
+                        .InverseCollection()
+                        .ForeignKey("ExamId");
                 });
         }
     }

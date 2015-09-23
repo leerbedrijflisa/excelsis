@@ -1,21 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lisa.Excelsis.WebApi.Models
 {
     public class Exam
     {
+        [Key]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
-        public string Subject { get; set; }
+        [Required]
+        public int Subject { get; set; }
+        [Required]
         public string Organization { get; set; }
+        [Required]
         public string Cohort { get; set; }
+        [Required]
         public int DocumentationId { get; set; }
-        public List<Question> questions { get; set; }
-    }
-    public class Question
-    {
-        public int Id { get; set; }
-        public string Description { get; set; }
-        public int Rating { get; set; }        
-    }
+
+        public ICollection<Question> Questions { get; set; }
+    }   
 }

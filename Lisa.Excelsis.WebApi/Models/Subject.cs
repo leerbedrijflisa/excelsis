@@ -2,7 +2,7 @@
 
 namespace Lisa.Excelsis.WebApi.Models
 {
-    public class Tag
+    public class Subject
     {
         [Key]
         public int Id { get; set; }
