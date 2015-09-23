@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
 
 namespace Lisa.Excelsis.WebApi.Models
 {
@@ -9,6 +8,8 @@ namespace Lisa.Excelsis.WebApi.Models
         public DbSet<Assessment> Assessments { get; set; }
         public DbSet<Assessor> Assessors { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Question> Questions { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Result> Results { get; set; }               
     }
