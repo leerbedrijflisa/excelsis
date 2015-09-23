@@ -25,12 +25,15 @@ namespace Lisa.Excelsis.WebApi
         public void ConfigureServices(IServiceCollection services)
         { 
             services.AddMvc();
+
             services.AddEntityFramework()
-               .AddSqlServer()
-               .AddDbContext<ExcelsisDb>(options =>
-               {
-                   options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]);
-               });
+                    .AddSqlServer()
+                    .AddDbContext<ExcelsisDb>(options =>
+                    {
+                        options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]);
+                    });
+
+            services.AddTransient<SampleDataInitializer>();
 
             services.ConfigureCors(options =>
             {
@@ -43,12 +46,14 @@ namespace Lisa.Excelsis.WebApi
             });            
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, SampleDataInitializer sampleData)
         {
             app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();
             app.UseCors("CorsExcelsis");
-            DummieData.LoadDummieData();
+
+            sampleData.InitializeDataAsync();
+
         }
     }
 }
