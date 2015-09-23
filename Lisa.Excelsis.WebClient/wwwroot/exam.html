@@ -12,17 +12,11 @@
     <button click.Delegate="showExams()">Zoek</button>
     
     <ul>
-        <li repeat.for="exam of Exams">
-            Vak: ${exam.Subject} <br />
-            Naam: ${exam.Name} <br />
-            Cohort: ${exam.Cohort} <br />
-            Organisatie: ${exam.Organisation} <br />
-            Question:  <br />
-            <ul>
-                <li repeat.for="question of exam.questions">
-                    vraag: ${question.Description}
-                </li>
-            </ul>
+        <li repeat.for="exam of exams">
+            <p>Vak: ${exam.subject}</p>
+            <p>Naam: ${exam.name}</p>
+            <p>Cohort: ${exam.cohort}</p>
+            <p>Organisatie: ${exam.organization}</p>
         </li>
     </ul>
 </template>
