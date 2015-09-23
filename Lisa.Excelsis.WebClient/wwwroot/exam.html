@@ -1,15 +1,15 @@
 ﻿<template>
     <h2>${heading}</h2>
 
-    <select id="selectExam">
+    <select value.bind="subject">
         <option repeat.for="subject of subjects" value="${subject}">${subject}</option>
     </select>
 
-    <select id="selectCohort">
+    <select value.bind="cohort">
         <option repeat.for="cohort of cohorts">${cohort}</option>
     </select>
 
-    <button click.Delegate="showExams()">Zoek</button>
+    <button click.delegate="showExams()">Zoek</button>
     
     <ul>
         <li repeat.for="exam of exams">
