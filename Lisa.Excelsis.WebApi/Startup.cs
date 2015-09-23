@@ -5,10 +5,10 @@ using Microsoft.Data.Entity;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 
 namespace Lisa.Excelsis.WebApi
 {
-
     public class Startup
     {
         public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
@@ -23,8 +23,11 @@ namespace Lisa.Excelsis.WebApi
         public IConfiguration Configuration { get; set; }
 
         public void ConfigureServices(IServiceCollection services)
-        { 
-            services.AddMvc();
+        {
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             services.AddEntityFramework()
                     .AddSqlServer()
@@ -53,7 +56,6 @@ namespace Lisa.Excelsis.WebApi
             app.UseCors("CorsExcelsis");
 
             sampleData.InitializeDataAsync();
-
         }
     }
 }
