@@ -9,9 +9,14 @@ using Microsoft.Data.Entity.SqlServer.Metadata;
 namespace Lisa.Excelsis.WebApi.Migrations
 {
     [DbContext(typeof(ExcelsisDb))]
-    partial class ExcelsisDbModelSnapshot : ModelSnapshot
+    partial class AddedQuestionsToContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        public override string Id
+        {
+            get { return "20150923114124_AddedQuestionsToContext"; }
+        }
+
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Annotation("ProductVersion", "7.0.0-beta7-15540")
