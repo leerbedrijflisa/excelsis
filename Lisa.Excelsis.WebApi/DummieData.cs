@@ -24,7 +24,7 @@ namespace Lisa.Excelsis.WebApi
                 Name = "Lezen en Schrijven",
                 Subject = "Nederlands",
                 Organisation = "Davinci College Dordrecht",
-                Cohort = "2015/1016",
+                Cohort = "2015/2016",
                 DocumentationId = 1,
                 questions = new List<Question>()
                 {
@@ -56,7 +56,87 @@ namespace Lisa.Excelsis.WebApi
                         // 2 = Goed
                     }
                 }
-            });             
+            });
+
+            Exams.Add(new Exam
+            {
+                Id = 2,
+                Name = "Iteratievergadering",
+                Subject = "AO",
+                Organisation = "Davinci College Dordrecht",
+                Cohort = "2015/2016",
+                DocumentationId = 1,
+                questions = new List<Question>()
+                {
+                    new Question
+                    {
+                        Id = 0,
+                        Description = "Vraag 1: Ik heb geen idee, heb jij wel een idee?",
+                        Rating = 0
+                        // 0 = Onvoldoende
+                        // 1 = Voldoende
+                        // 2 = Goed
+                    },
+                    new Question
+                    {
+                        Id = 1,
+                        Description = "Vraag 2: Ik heb geen idee, heb jij wel een idee?",
+                        Rating = 0
+                        // 0 = Onvoldoende
+                        // 1 = Voldoende
+                        // 2 = Goed
+                    },
+                    new Question
+                    {
+                        Id = 2,
+                        Description = "Vraag 3: Ik heb geen idee, heb jij wel een idee?",
+                        Rating = 0
+                        // 0 = Onvoldoende
+                        // 1 = Voldoende
+                        // 2 = Goed
+                    }
+                }
+            });
+
+            Exams.Add(new Exam
+            {
+                Id = 3,
+                Name = "Spreken",
+                Subject = "Nederlands",
+                Organisation = "Davinci College Dordrecht",
+                Cohort = "2015/2016",
+                DocumentationId = 1,
+                questions = new List<Question>()
+                {
+                    new Question
+                    {
+                        Id = 0,
+                        Description = "Vraag 1: Ik heb geen idee, heb jij wel een idee?",
+                        Rating = 0
+                        // 0 = Onvoldoende
+                        // 1 = Voldoende
+                        // 2 = Goed
+                    },
+                    new Question
+                    {
+                        Id = 1,
+                        Description = "Vraag 2: Ik heb geen idee, heb jij wel een idee?",
+                        Rating = 0
+                        // 0 = Onvoldoende
+                        // 1 = Voldoende
+                        // 2 = Goed
+                    },
+                    new Question
+                    {
+                        Id = 2,
+                        Description = "Vraag 3: Ik heb geen idee, heb jij wel een idee?",
+                        Rating = 0
+                        // 0 = Onvoldoende
+                        // 1 = Voldoende
+                        // 2 = Goed
+                    }
+                }
+            });
         }
         public static void AssessmentsData()
         {

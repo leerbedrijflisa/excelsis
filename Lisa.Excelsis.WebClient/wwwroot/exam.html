@@ -1,6 +1,20 @@
 ﻿<template>
     <h2>${heading}</h2>
 
+    <select id="selectExam">
+        <option value="Nederlands">Nederlands</option>
+        <option value="Rekenen">Rekenen</option>
+        <option value="AO">AO</option>
+    </select>
+
+    <select id="selectCohort">
+        <option>2015/2016</option>
+        <option>2014/2015</option>
+        <option>2013/2014</option>
+    </select>
+
+    <button click.Delegate="showExams()">Zoek</button>
+    
     <ul>
         <li repeat.for="exam of Exams">
             Vak: ${exam.Subject} <br />
@@ -10,7 +24,7 @@
             Question:  <br />
             <ul>
                 <li repeat.for="question of exam.questions">
-                   vraag: ${question.Description}
+                    vraag: ${question.Description}
                 </li>
             </ul>
         </li>
