@@ -1,7 +1,4 @@
-﻿import {inject} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-http-client';
-
-export class App {
+﻿export class App {
     configureRouter(config, router) {
         config.title = "Excelsis";
         config.map([
