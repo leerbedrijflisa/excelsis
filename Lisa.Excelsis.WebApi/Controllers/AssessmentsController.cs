@@ -5,8 +5,8 @@ using System.Linq;
 
 namespace Lisa.Excelsis.WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    public class AssessmentController : Controller
+    [Route("[controller]")]
+    public class AssessmentsController : Controller
     {
         // GET: api/assessment
         [HttpGet]
