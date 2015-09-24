@@ -85,7 +85,8 @@ namespace Lisa.Excelsis.WebApi.Migrations
                     b.Property<string>("Organization")
                         .Required();
 
-                    b.Property<int>("Subject");
+                    b.Property<int?>("SubjectId")
+                        .Required();
 
                     b.Key("Id");
                 });
@@ -160,6 +161,20 @@ namespace Lisa.Excelsis.WebApi.Migrations
                     b.Reference("Lisa.Excelsis.WebApi.Models.Assessment")
                         .InverseCollection()
                         .ForeignKey("AssessmentId");
+                });
+
+            modelBuilder.Entity("Lisa.Excelsis.WebApi.Models.Exam", b =>
+                {
+                    b.Reference("Lisa.Excelsis.WebApi.Models.Subject")
+                        .InverseCollection()
+                        .ForeignKey("SubjectId");
+                });
+
+            modelBuilder.Entity("Lisa.Excelsis.WebApi.Models.Question", b =>
+                {
+                    b.Reference("Lisa.Excelsis.WebApi.Models.Exam")
+                        .InverseCollection()
+                        .ForeignKey("ExamId");
                 });
         }
     }

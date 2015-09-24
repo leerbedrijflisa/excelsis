@@ -12,86 +12,29 @@ namespace Lisa.Excelsis.WebApi
             _db = db;
         }
         public void InitializeDataAsync()
-        {           
-            CreateSubjects();
-            CreateExams();
-        }
-        private void CreateSubjects()
         {
+            var dutch = new Subject { Name = "Nederlands" };
+            var softwareDevelopment = new Subject { Name = "Applicatieontwikkelaar" };
+            var english = new Subject { Name = "Engels" };
+            var mathematics = new Subject { Name = "Rekenen" };
+
             if (!_db.Subjects.Any())
             {
-                _db.Subjects.Add(new Subject
-                {
-                    Name = "Nederlands"
-                });
-                _db.Subjects.Add(new Subject
-                {
-                    Name = "ApplicatieOntwikkelaar"
-                });
-                _db.Subjects.Add(new Subject
-                {
-                    Name = "Engels"
-                });
-                _db.Subjects.Add(new Subject
-                {
-                    Name = "Rekenen"
+                _db.Subjects.AddRange(new Subject[] { dutch, softwareDevelopment, english, mathematics });
+                _db.SaveChanges();
+
+                _db.Exams.AddRange(new Exam[] {
+                    new Exam { Subject = dutch, Name = "Spreken", Cohort = "2015", Organization = "Da Vinci College" },
+                    new Exam { Subject = dutch, Name = "Schrijven", Cohort = "2015", Organization = "Da Vinci College" },
+                    new Exam { Subject = english, Name = "Spreken", Cohort = "2015", Organization = "Da Vinci College" },
+                    new Exam { Subject = softwareDevelopment, Name = "Ontwerpen van een applicatie", Cohort = "2015", Organization = "Da Vinci College" },
+                    new Exam { Subject = softwareDevelopment, Name = "Realiseren van een applicatie", Cohort = "2015", Organization = "Da Vinci College" },
+                    new Exam { Subject = softwareDevelopment, Name = "Opleveren van een applicatie", Cohort = "2015", Organization = "Da Vinci College" },
+                    new Exam { Subject = mathematics, Name = "Verhoudingen", Cohort = "2015", Organization = "Da Vinci College" },
+                    new Exam { Subject = mathematics, Name = "Meten en meetkunde", Cohort = "2015", Organization = "Da Vinci College" }
                 });
                 _db.SaveChanges();
             }
-        }
-        private void CreateExams()
-        {
-            if (!_db.Exams.Any())
-            {
-                Exam exam1 = new Exam
-                {
-                    Name = "Spreken",
-                    Subject = 1,
-                    DocumentationId = 1,
-                    Cohort = "2015",
-                    Organization = "Davinci College Dordrecht"                    
-                };
-
-                Exam exam2 = new Exam
-                {
-                    Name = "Schrijven",
-                    Subject = 1,
-                    DocumentationId = 1,
-                    Cohort = "2014",
-                    Organization = "Davinci College Dordrecht"
-                };
-
-                Exam exam3 = new Exam
-                {
-                    Name = "EindProject",
-                    Subject = 3,
-                    DocumentationId = 1,
-                    Cohort = "2015",
-                    Organization = "Davinci College Dordrecht"
-                };
-
-                _db.Exams.Add(exam1);
-                _db.Exams.Add(exam2);
-                _db.Exams.Add(exam3);
-
-                _db.SaveChanges();
-
-                _db.Questions.Add(AddQuestionsToExam(exam1.Id));
-                _db.Questions.Add(AddQuestionsToExam(exam2.Id));
-                _db.Questions.Add(AddQuestionsToExam(exam3.Id));
-
-                _db.SaveChanges();
-            }
-        }
-        private Question AddQuestionsToExam(int id)
-        {
-            Question question = new Question
-            {
-                ExamId = id,
-                Description = "Some weird question",
-                Rating = 1
-            };
-            return question;
         }
     }
 }

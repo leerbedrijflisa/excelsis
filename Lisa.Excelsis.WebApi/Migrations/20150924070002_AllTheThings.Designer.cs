@@ -9,11 +9,11 @@ using Microsoft.Data.Entity.SqlServer.Metadata;
 namespace Lisa.Excelsis.WebApi.Migrations
 {
     [DbContext(typeof(ExcelsisDb))]
-    partial class Initial
+    partial class AllTheThings
     {
         public override string Id
         {
-            get { return "20150922124351_Initial"; }
+            get { return "20150924070002_AllTheThings"; }
         }
 
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,14 +24,15 @@ namespace Lisa.Excelsis.WebApi.Migrations
 
             modelBuilder.Entity("Lisa.Excelsis.WebApi.Models.Assessment", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ExamId");
+                    b.Property<int>("ExamId");
 
-                    b.Property<string>("Examinee");
+                    b.Property<string>("Examinee")
+                        .Required();
 
-                    b.Property<int?>("TeacherId");
+                    b.Property<int>("TeacherId");
 
                     b.Key("Id");
                 });
@@ -40,6 +41,18 @@ namespace Lisa.Excelsis.WebApi.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Abbreviation")
+                        .Required();
+
+                    b.Property<string>("Email")
+                        .Required();
+
+                    b.Property<string>("Firstname")
+                        .Required();
+
+                    b.Property<string>("Lastname")
+                        .Required();
 
                     b.Key("Id");
                 });
@@ -53,7 +66,8 @@ namespace Lisa.Excelsis.WebApi.Migrations
 
                     b.Property<int?>("AssessmentId");
 
-                    b.Property<string>("Question");
+                    b.Property<string>("Question")
+                        .Required();
 
                     b.Property<int>("Rating");
 
@@ -65,15 +79,19 @@ namespace Lisa.Excelsis.WebApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Cohort");
+                    b.Property<string>("Cohort")
+                        .Required();
 
                     b.Property<int>("DocumentationId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .Required();
 
-                    b.Property<string>("Organisation");
+                    b.Property<string>("Organization")
+                        .Required();
 
-                    b.Property<string>("Subject");
+                    b.Property<int?>("SubjectId")
+                        .Required();
 
                     b.Key("Id");
                 });
@@ -83,9 +101,10 @@ namespace Lisa.Excelsis.WebApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .Required();
 
-                    b.Property<int?>("ExamId");
+                    b.Property<int>("ExamId");
 
                     b.Property<int>("Rating");
 
@@ -105,6 +124,29 @@ namespace Lisa.Excelsis.WebApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Cohort")
+                        .Required();
+
+                    b.Property<string>("Firstname")
+                        .Required();
+
+                    b.Property<string>("Lastname")
+                        .Required();
+
+                    b.Property<string>("SchoolNumber")
+                        .Required();
+
+                    b.Key("Id");
+                });
+
+            modelBuilder.Entity("Lisa.Excelsis.WebApi.Models.Subject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .Required();
+
                     b.Key("Id");
                 });
 
@@ -112,6 +154,9 @@ namespace Lisa.Excelsis.WebApi.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .Required();
 
                     b.Key("Id");
                 });
@@ -121,6 +166,13 @@ namespace Lisa.Excelsis.WebApi.Migrations
                     b.Reference("Lisa.Excelsis.WebApi.Models.Assessment")
                         .InverseCollection()
                         .ForeignKey("AssessmentId");
+                });
+
+            modelBuilder.Entity("Lisa.Excelsis.WebApi.Models.Exam", b =>
+                {
+                    b.Reference("Lisa.Excelsis.WebApi.Models.Subject")
+                        .InverseCollection()
+                        .ForeignKey("SubjectId");
                 });
 
             modelBuilder.Entity("Lisa.Excelsis.WebApi.Models.Question", b =>

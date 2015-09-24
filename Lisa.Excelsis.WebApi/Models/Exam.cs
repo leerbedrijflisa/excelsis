@@ -10,7 +10,7 @@ namespace Lisa.Excelsis.WebApi.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        public int Subject { get; set; }
+        public Subject Subject { get; set; }
         [Required]
         public string Organization { get; set; }
         [Required]
