@@ -32,6 +32,25 @@ namespace Lisa.Excelsis.WebApi
 
             return Json(query);
         }
+        [HttpGet("{id}")]
+        public object Get (int id)
+        {
+            var query = (from exam in _db.Exams
+                         where exam.Id == id
+                         select new
+                         {
+                             Id = exam.Id,
+                             Name = exam.Name,
+                             Subject = exam.Subject.Name,
+                             Cohort = exam.Cohort,
+                             Organization = exam.Organization,
+                             Questions = from question in _db.Questions
+                                         where question.ExamId == id
+                                         select question
+                         });          
+
+            return Json(query);
+        }
 
         //[HttpGet("{subjectId}/cohort/{cohort}")]
         //public object Get(int? subjectId = null, string cohort = null)
