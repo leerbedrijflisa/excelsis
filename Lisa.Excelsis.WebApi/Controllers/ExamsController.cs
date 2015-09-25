@@ -18,7 +18,7 @@ namespace Lisa.Excelsis.WebApi
         }
 
         [HttpGet]
-        public object Get()
+        public IActionResult Get()
         {
             var query = (from exam in _db.Exams
                          select new
@@ -30,41 +30,41 @@ namespace Lisa.Excelsis.WebApi
                              Organization = exam.Organization
                          });
 
-            return Json(query);
+            return new ObjectResult(query);
+        }
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var query = (from exam in _db.Exams
+                         where exam.Id == id
+                         select new
+                         {
+                             Id = exam.Id,
+                             Name = exam.Name,
+                             Subject = exam.Subject.Name,
+                             Cohort = exam.Cohort,
+                             Organization = exam.Organization,
+                             Questions = from question in _db.Questions
+                                         where question.ExamId == id
+                                         select new
+                                         {
+                                             Id = question.Id,
+                                             Description = question.Description,
+                                             Rating = question.Rating
+                                         }
+                         });
+            return new ObjectResult(query);
         }
 
-        //[HttpGet("{subjectId}/cohort/{cohort}")]
-        //public object Get(int? subjectId = null, string cohort = null)
-        //{
-        //    string method = "GET";
-        //    string request = "/subject/" + subjectId + "/cohort/" + cohort;
-
-        //    List<string> errors = new List<string>();
-
-        //    var query = (from exams in _db.Exams
-        //                 where exams.Subject.Id == subjectId &&
-        //                 exams.Cohort == cohort)();
-
-        //    if (query == null)
-        //    {
-        //        errors.Add("No exams where found");
-        //        return HttpError(request, method, 404, errors);
-        //    }
-
-        //    return Json(query);
-        //}
-
-        // This creates a HTTP error code with json data
-        public object HttpError(string request, string method, int HttpStatusCode, List<string> message)
+        [HttpGet("{subject}/cohort/{cohort}")]
+        public IActionResult Get(string subject = null, string cohort = null)
         {
-            Response.StatusCode = HttpStatusCode;
-            var error = new Error();
-            error.HttpResponseCode = HttpStatusCode;
-            error.Request = request;
-            error.Method = method;
-            error.message = message;
+            var query = (from exams in _db.Exams
+                         where exams.Subject.Name.ToLower() == subject.ToLower() &&
+                         exams.Cohort == cohort
+                         select exams);        
 
-            return Json(error);
+            return new ObjectResult(query);
         }
     }
 }

@@ -18,6 +18,6 @@ namespace Lisa.Excelsis.WebApi.Models
         [Required]
         public int DocumentationId { get; set; }
 
-        public ICollection<Question> Questions { get; set; }
+        public List<Question> Questions { get; set; }
     }   
 }
