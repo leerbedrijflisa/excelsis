@@ -3,7 +3,8 @@
         config.title = "Excelsis";
         config.map([
             { route: 'assessment', name: 'assessment', moduleId: 'assessment' },
-            { route: ['', 'exam'], name: 'exam', moduleId: 'exam' }
+            { route: ['', 'exam'], name: 'exam', moduleId: 'exam' },
+            { route: 'version', name: 'version', moduleId: 'version'}
         ]);
     }
 }
