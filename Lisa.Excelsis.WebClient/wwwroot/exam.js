@@ -5,7 +5,7 @@ export class Exam
     activate() {
         this.heading = "Exam";
         this.http = new HttpClient().configure(x => {
-            x.withBaseUrl('http://localhost:5858');      
+            x.withBaseUrl('http://excelsis-api.azurewebsites.net');      
             x.withHeader('Content-Type', 'application/json')});
 
         this.subjects = [ 1, "Nederlands", "Applicatieontwikkelaar", "Rekenen" ];
