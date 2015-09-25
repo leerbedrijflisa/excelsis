@@ -56,13 +56,20 @@ namespace Lisa.Excelsis.WebApi
             return new ObjectResult(query);
         }
 
-        [HttpGet("{subject}/cohort/{cohort}")]
+        [HttpGet("{subject}/{cohort}")]
         public IActionResult Get(string subject = null, string cohort = null)
         {
             var query = (from exams in _db.Exams
                          where exams.Subject.Name.ToLower() == subject.ToLower() &&
                          exams.Cohort == cohort
-                         select exams);        
+                         select new
+                         {
+                             Id = exams.Id,
+                             Name = exams.Name,
+                             Subject = exams.Subject.Name,
+                             Cohort = exams.Cohort,
+                             Organization = exams.Organization
+                         }); ;        
 
             return new ObjectResult(query);
         }
