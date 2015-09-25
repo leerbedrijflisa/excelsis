@@ -42,9 +42,8 @@ namespace Lisa.Excelsis.WebApi
         //    List<string> errors = new List<string>();
 
         //    var query = (from exams in _db.Exams
-        //                 where exams.Subject == subjectId &&
-        //                 exams.Cohort == cohort
-        //                 select exams.Criteria)();
+        //                 where exams.Subject.Id == subjectId &&
+        //                 exams.Cohort == cohort)();
 
         //    if (query == null)
         //    {
