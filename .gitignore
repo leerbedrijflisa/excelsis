@@ -194,3 +194,5 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+Lisa.Excelsis.WebApi/Migrations/20150924082928_allthethings.Designer.cs
+Lisa.Excelsis.WebApi/Migrations/20150924082928_allthethings.cs
