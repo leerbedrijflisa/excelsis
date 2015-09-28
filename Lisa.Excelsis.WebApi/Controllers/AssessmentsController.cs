@@ -108,8 +108,8 @@ namespace Lisa.Excelsis.WebApi.Controllers
 
         }
 
-        // PATCH api/assessment/5/criterium/3
-        [HttpPatch("{assesmentId}/criterium/{criteriumId}")]
+        // PATCH api/assessment/5/3
+        [HttpPatch("{assesmentId}/{criteriumId}")]
         public IActionResult Patch([FromBody]Criterium value, int assesmentId, int criteriumId)
         {
             var query = (from assessments in _db.Assessments
