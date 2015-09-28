@@ -112,23 +112,32 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpPatch("{assesmentId}/{criteriumId}")]
         public IActionResult Patch([FromBody]Criterium value, int assesmentId, int criteriumId)
         {
-            var query = (from assessments in _db.Assessments
-                         where assessments.Id == assesmentId
-                         select assessments.Criteria).SingleOrDefault();
+            var query = (from criteria in _db.Criterium
+                         where criteria.Id == criteriumId && criteria.AssessmentId == assesmentId
+                         select criteria).SingleOrDefault();
 
-            var criterium = query.SingleOrDefault(c => c.Id == criteriumId);
-
-            if(value.Answer != null)
+            if (ModelState.IsValid)
             {
-                criterium.Answer = value.Answer;
-            }
-            
-            if(value.CriteriumBoxes != null)
-            {
-                criterium.CriteriumBoxes = value.CriteriumBoxes;
-            }
+                if (value.Answer != null)
+                {
+                    query.Answer = value.Answer;
+                }
 
-            return new ObjectResult(criterium);
+                if (value.CriteriumBoxes != null)
+                {
+                    query.CriteriumBoxes = value.CriteriumBoxes;
+                }
+                _db.SaveChanges();
+
+                return new ObjectResult(query);
+            }
+            else
+            {
+                var errorList = ModelState.Values.SelectMany(m => m.Errors)
+                                 .Select(e => e.ErrorMessage)
+                                 .ToList();
+                return new ObjectResult(errorList);
+            }               
         }
     }
 }
