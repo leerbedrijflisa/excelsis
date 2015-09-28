@@ -87,7 +87,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                         }
                     });
                 }
-               ;
+               
                 _db.SaveChanges();
 
                 return new ObjectResult(assessment);
