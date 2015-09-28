@@ -1,0 +1,26 @@
+﻿<template>
+
+    <hr>
+
+    <p>${exam.name}</p>
+    <p>${exam.cohort}</p>
+    <p>${exam.subject}</p> 
+
+    <h3>Vragen:</h3>  
+
+    <div repeat.for="question of exam.questions">
+        <h3>${question.description}</h3>
+        <br>
+        <input type="radio" name="vraag1" value="true">Voldaan
+        <input type="radio" name="vraag1" value="false">Niet Voldaan
+        <input type="radio" name="vraag2" value="false">Niet Beoordeeld
+        <br>
+        <div>
+            <label>Extra</label>
+            <input type="checkbox" name="marking1.1" value="true">
+            <input type="checkbox" name="marking1.1" value="true">
+            <input type="checkbox" name="marking1.1" value="true">
+            <input type="checkbox" name="marking1.1" value="true">
+        </div>
+    </div>
+</template>
