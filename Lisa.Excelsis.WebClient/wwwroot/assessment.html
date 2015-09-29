@@ -2,20 +2,30 @@
     <h1>${exam.subject} &ndash; ${exam.name}</h1>
 
     <form>
-        <label>Voornaam</label>
-        <input type="text" value.bind="firstName">
+        <div>
+            <label>Voornaam</label>
+            <input type="text" value.bind="firstName">
+        </div>
 
-        <label>Achternaam</label>
-        <input type="text" value.bind="lastName">
+        <div>
+            <label>Achternaam</label>
+            <input type="text" value.bind="lastName">
+        </div>
             
-        <label>Studentnummer</label>
-        <input type="text" value.bind="studentNumber">
+        <div>
+            <label>Studentnummer</label>
+            <input type="text" value.bind="studentNumber">
+        </div>
             
-        <label>Datum</label>
-        <input type="text" value.bind="newDate">
-            
-        <label>Tijd</label>
-        <input type="text" value.bind="newTime">
+        <div>
+            <label>Datum</label>
+            <input type="text" value.bind="newDate">
+        </div>
+
+        <div>
+            <label>Tijd</label>
+            <input type="text" value.bind="newTime">
+        </div>
 
         <button click.delegate="storeStudent()">Opslaan</button>
 
