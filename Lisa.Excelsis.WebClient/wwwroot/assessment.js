@@ -2,7 +2,11 @@
 
 export class Welcome{
     constructor() {
-        this.heading = "Form";
+        this.exam = {
+            "subject": "Nederlands",
+            "name": "Gesprekken voeren"
+        }
+
         this.firstName;
         this.lastName;
         this.studentNumber;

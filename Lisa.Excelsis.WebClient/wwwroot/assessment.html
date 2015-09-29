@@ -1,30 +1,24 @@
 ﻿<template>
-    <section>
-        <h2>${heading}</h2>
+    <h1>${exam.subject} &ndash; ${exam.name}</h1>
 
+    <form>
+        <label>Voornaam</label>
+        <input type="text" value.bind="firstName">
 
+        <label>Achternaam</label>
+        <input type="text" value.bind="lastName">
+            
+        <label>Studentnummer</label>
+        <input type="text" value.bind="studentNumber">
+            
+        <label>Datum</label>
+        <input type="text" value.bind="newDate">
+            
+        <label>Tijd</label>
+        <input type="text" value.bind="newTime">
 
-        <form submit.delegate="submit()">
+        <button click.delegate="storeStudent()">Opslaan</button>
 
-            <!--Basic Information-->
-            <label>Voornaam</label><br>
-            <input type="text" value.bind="firstName">
-            <br>
-            <label>Achternaam</label><br>
-            <input type="text" value.bind="lastName">
-            <br>
-            <label>Student Nummer</label><br>
-            <input type="text" value.bind="studentNumber">
-            <br>
-            <label>Datum</label><br>
-            <input type="text" value.bind="newDate">
-            <br>
-            <label>Tijd</label><br>
-            <input type="text" value.bind="newTime">
-
-            <p><button click.delegate="storeStudent()">Opslaan</button></p>
-
-            <compose view="questions.html" model.bind="exam" repeat.for="exam of exams">  
-        </form>
-    </section>
+        <compose view="questions.html" model.bind="exam" repeat.for="exam of exams">  
+    </form>
 </template>
