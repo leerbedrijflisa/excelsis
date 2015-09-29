@@ -29,6 +29,7 @@ namespace Lisa.Excelsis.WebApi
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
+                options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Error;
             });
 
             services.AddEntityFramework()

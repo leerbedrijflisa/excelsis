@@ -52,6 +52,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpPost("/assessments/{subject}/{exam}/{cohort}")]
         public IActionResult PostPost([FromBody] AssessmentPost assessment, string subject, string exam, string cohort)
         {
+            if (!ModelState.IsValid)
+            {
+                return new BadRequestResult();
+            }
+
             return new ObjectResult(assessment);
         }
 
