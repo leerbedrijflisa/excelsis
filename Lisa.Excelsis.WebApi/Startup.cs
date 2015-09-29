@@ -5,6 +5,7 @@ using Microsoft.Data.Entity;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Lisa.Excelsis.WebApi
@@ -27,6 +28,7 @@ namespace Lisa.Excelsis.WebApi
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                options.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
             });
 
             services.AddEntityFramework()
