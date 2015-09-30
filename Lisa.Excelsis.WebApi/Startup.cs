@@ -51,9 +51,10 @@ namespace Lisa.Excelsis.WebApi
 
         public void Configure(IApplicationBuilder app, SampleDataInitializer sampleData)
         {
+            app.UseCors("CorsExcelsis");
+
             app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();
-            app.UseCors("CorsExcelsis");
 
             sampleData.InitializeDataAsync();
         }
