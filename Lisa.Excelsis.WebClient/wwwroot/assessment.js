@@ -21,16 +21,28 @@ export class Welcome{
     activate() {
         this.heading = "Exam";
         this.http = new HttpClient().configure(x => {
-            x.withBaseUrl('http://localhost:5858');      
+            x.withBaseUrl('http://localhost:5858/');      
             x.withHeader('Content-Type', 'application/json')});
     }
 
     storeStudent() {
         alert(`Welcome, ${this.firstName} ${this.lastName} The date is ${this.newDate} and the time is ${this.newTime}!`);
         
-        this.http.get("/exams/1").then(response => {
-            this.exams = response.content;  
-            console.log(response.content);
+        //this.http.get("/exams/1").then(response => {
+        //    this.exams = response.content;  
+        //    console.log(response.content);
+        //});
+
+        
+        var Content = {
+            "TeacherId": 1,
+            "ExamId": 1,
+            "Examinee": "Keespietjandirksenzoon-van-ders-Lagerwaard"        
+        };
+
+        this.http.post("assessments", Content).then(response => {
+            this.assessment = response.content;
+            alert(this.assessment);
         });
     }
 }
