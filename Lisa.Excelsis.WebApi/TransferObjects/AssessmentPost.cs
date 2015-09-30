@@ -21,16 +21,16 @@ namespace Lisa.Excelsis.WebApi.Models
         public StudentPost Student { get; set; }
         public IEnumerable<TeacherPost> Teacher { get; set; }
         public DateTime Assessed { get; set; }
-    }
 
-    public class StudentPost
-    {
-        public string Name { get; set; }
-        public string Number { get; set; }
-    }
+        public class StudentPost
+        {
+            public string Name { get; set; }
+            public string Number { get; set; }
+        }
 
-    public class TeacherPost
-    {
-        public string UserName { get; set; }
-    }
+        public class TeacherPost
+        {
+            public string UserName { get; set; }
+        }
+    }   
 }
