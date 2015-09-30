@@ -15,7 +15,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
         }
         // GET: assessment
         [HttpGet]
-        public object Get()
+        public IActionResult Get()
         {
             var query = (from assessments in _db.Assessments
                          select new
@@ -26,7 +26,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                              ExamId = assessments.ExamId
                          });
 
-            return Json(query);
+            return new ObjectResult(query);
         }
 
         // GET assessment/{assessmentId}
