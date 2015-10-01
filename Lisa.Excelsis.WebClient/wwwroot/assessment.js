@@ -30,20 +30,25 @@ export class Welcome{
     }
 
     storeStudent() {
-        alert(`Welcome, ${this.firstName} ${this.lastName} The date is ${this.newDate} and the time is ${this.newTime}!`);
-        
-        //this.http.get("/exams/1").then(response => {
-        //    this.exams = response.content;  
-        //    console.log(response.content);
-        //});
+        alert(`Welcome, ${this.name} The date is ${this.newDate} and the time is ${this.newTime}!`);
+
+        this.subject = "Nederlands";
+        this.examName = "Schrijven";
+        this.cohort = "2083";
 
         var Content = {
-            "TeacherId": 1,
-            "ExamId": 1,
-            "Examinee": "Keespietjandirksenzoon-van-ders-Lagerwaard"        
+            "student": {
+                "name": this.name,
+                "number": this.number
+            },
+            "assessor": [{
+                "userName": "joostronkesagerbeek"
+            }],
+            "assessed": this.newDate+"T"+this.newTime+":00Z"
         };
 
-        this.http.post("assessments", Content).then(response => {
+        this.http.post("assessments/"+this.subject+"/"+this.examName+"/"+this.cohort, Content).then(response => {
+        //this.http.post("assessments/nederlands/schrijven/2015", Content).then(response => {
             this.assessment = response.content;
             alert(this.assessment);
         });
