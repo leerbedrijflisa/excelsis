@@ -12,6 +12,6 @@ namespace Lisa.Excelsis.WebApi.Models
         public string Organization { get; set; }
         public string Cohort { get; set; }
         public int DocumentationId { get; set; }
-        public List<Question> Questions { get; set; }
+        public IList<Criterium> Questions { get; set; }
     }   
 }

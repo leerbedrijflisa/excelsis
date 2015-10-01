@@ -6,10 +6,9 @@ namespace Lisa.Excelsis.WebApi.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Question { get; set; }
-        public int AssessmentId { get; set; }
-        public int Rating { get; set; }
-        public bool? Answer { get; set; }
-        public bool[] CriteriumBoxes { get; set; }
+        public int Order { get; set; }
+        public string Description { get; set; }
+        public string value { get; set; }
+        public int ExamId { get; set; }
     }
 }

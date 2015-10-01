@@ -9,9 +9,9 @@ namespace Lisa.Excelsis.WebApi.Models
         [Key]
         public int Id { get; set; }
         public int ExamId { get; set; }
-        public int TeacherId { get; set; }
-        public string Examinee { get; set; }
+        public IList<Assessor> assessors { get; set; }
+        public Student student { get; set; }
         public DateTime Assessed { get; set; }
-        public List<Criterium> Criteria { get; set; }        
+        public virtual ICollection<Observation> Criteria { get; set; }        
     }
 }
