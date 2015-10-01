@@ -7,17 +7,11 @@ namespace Lisa.Excelsis.WebApi.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
         public Subject Subject { get; set; }
-        [Required]
         public string Organization { get; set; }
-        [Required]
         public string Cohort { get; set; }
-        [Required]
         public int DocumentationId { get; set; }
-
-        public List<Question> Questions { get; set; }
+        public IList<Criterium> Questions { get; set; }
     }   
 }

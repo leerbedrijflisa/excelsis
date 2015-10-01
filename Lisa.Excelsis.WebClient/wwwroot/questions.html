@@ -1,26 +1,27 @@
 ﻿<template>
+    <ol>
+        <li repeat.for="question of exam.questions">
+            ${question.description}
 
-    <hr>
+            <div>
+                <input type="radio" name="rating-${question.id}" id="rating-done-${question.id}" checked>
+                <label for="rating-done-${question.id}">voldaan</label>
+            </div>
 
-    <p>${exam.name}</p>
-    <p>${exam.cohort}</p>
-    <p>${exam.subject}</p> 
+            <div>
+                <input type="radio" name="rating-${question.id}" id="rating-notdone-${question.id}">
+                <label for="rating-notdone-${question.id}">niet voldaan</label>
+            </div>
 
-    <h3>Vragen:</h3>  
+            <div>
+                <input type="radio" name="rating-${question.id}" id="rating-notrated-${question.id}">
+                <label for="rating-notrated-${question.id}">niet beoordeeld</label>
+            </div>
 
-    <div repeat.for="question of exam.questions">
-        <h3>${question.description}</h3>
-        <br>
-        <input type="radio" name="vraag1" value="true">Voldaan
-        <input type="radio" name="vraag1" value="false">Niet Voldaan
-        <input type="radio" name="vraag2" value="false">Niet Beoordeeld
-        <br>
-        <div>
-            <label>Extra</label>
-            <input type="checkbox" name="marking1.1" value="true">
-            <input type="checkbox" name="marking1.1" value="true">
-            <input type="checkbox" name="marking1.1" value="true">
-            <input type="checkbox" name="marking1.1" value="true">
-        </div>
-    </div>
+            <input type="checkbox" name="thumbsup-${question.id}" checked>
+            <input type="checkbox" name="thumbsdown-${question.id}">
+            <input type="checkbox" name="questionmark-${question.id}">
+            <input type="checkbox" name="asterisk-${question.id}">
+        </li>
+    </ol>
 </template>

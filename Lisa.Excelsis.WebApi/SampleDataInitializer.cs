@@ -39,12 +39,13 @@ namespace Lisa.Excelsis.WebApi
                 
                 foreach (var exam in _db.Exams)
                 {                   
-                    for(var i = 0; i < 10; i++)
+                    for (var i = 1; i < 11; i++)
                     {
-                        _db.Questions.Add(new Question
+                        _db.Criteria.Add(new Criterium
                         {
-                            Description = "Hier hoord vraag " + i + " te staan.",
-                            Rating = 0,
+                            Description = "De kandidaat doet wat van hem verwacht wordt.",
+                            value = "V",
+                            Order = i,
                             ExamId = exam.Id
                         });
                     }  

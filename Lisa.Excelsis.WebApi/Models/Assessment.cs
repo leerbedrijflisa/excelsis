@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Lisa.Excelsis.WebApi.Models
@@ -7,22 +8,10 @@ namespace Lisa.Excelsis.WebApi.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
         public int ExamId { get; set; }
-        [Required]
-        public int TeacherId { get; set; }
-        [Required]
-        public string Examinee { get; set; }
-        public List<Criterium> Criteria { get; set; }        
-    }
-    public class Criterium
-    {
-        [Key]
-        public int Id { get; set; }
-        public string Question { get; set; }
-        public int AssessmentId { get; set; }
-        public int Rating { get; set; }
-        public bool? Answer { get; set; }
-        public bool[] CriteriumBoxes { get; set; }
+        public IList<Assessor> assessors { get; set; }
+        public Student student { get; set; }
+        public DateTime Assessed { get; set; }
+        public virtual ICollection<Observation> Criteria { get; set; }        
     }
 }

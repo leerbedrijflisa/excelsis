@@ -2,15 +2,13 @@
 
 namespace Lisa.Excelsis.WebApi.Models
 {
-    public class Question
+    public class Criterium
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        public int Order { get; set; }
         public string Description { get; set; }
-        [Required]
-        public int Rating { get; set; }
-        [Required]
+        public string value { get; set; }
         public int ExamId { get; set; }
     }
 }

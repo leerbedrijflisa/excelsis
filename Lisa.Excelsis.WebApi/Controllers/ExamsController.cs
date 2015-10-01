@@ -43,13 +43,13 @@ namespace Lisa.Excelsis.WebApi
                              Subject = exam.Subject.Name,
                              Cohort = exam.Cohort,
                              Organization = exam.Organization,
-                             Questions = from question in _db.Questions
-                                         where question.ExamId == id
+                             Criteria = from criterium in _db.Criteria
+                                         where criterium.ExamId == id
                                          select new
                                          {
-                                             Id = question.Id,
-                                             Description = question.Description,
-                                             Rating = question.Rating
+                                             Id = criterium.Id,
+                                             Description = criterium.Description,
+                                             Rating = criterium.value
                                          }
                          });
             return new ObjectResult(query);
