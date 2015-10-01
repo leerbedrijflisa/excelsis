@@ -33,7 +33,6 @@ export class Welcome{
         //    console.log(response.content);
         //});
 
-        
         var Content = {
             "TeacherId": 1,
             "ExamId": 1,
