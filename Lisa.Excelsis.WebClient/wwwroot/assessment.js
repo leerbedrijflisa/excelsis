@@ -2,6 +2,17 @@
 
 export class Welcome{
     constructor() {
+
+        function doubleDigit(digit)
+        {
+            if(digit.length < 2)
+            {
+                digit = "0"+digit;
+            }
+
+            return digit;
+        }
+
         this.exam = {
             "subject": "Nederlands",
             "name": "Gesprekken voeren"
@@ -15,10 +26,18 @@ export class Welcome{
         this.dd = this.currentDate.getDate();
         this.MM = this.currentDate.getMonth() + 1;
         this.yyyy = this.currentDate.getFullYear();
+
+        this.dd = doubleDigit(this.dd);
+        this.mm = doubleDigit(this.mm);
+
         this.newDate = this.dd + "-" + this.MM + "-" + this.yyyy;
 
         this.hh = this.currentDate.getHours();
         this.mm = this.currentDate.getMinutes();
+
+        this.hh = doubleDigit(this.hh);
+        this.mm = doubleDigit(this.mm);
+
         this.newTime = this.hh + ":" + this.mm;
     }
 
@@ -55,30 +74,33 @@ export class Welcome{
 
         function formatDate(date, time){
 
+            //splits the date and the time in seperate numbers.
             var splitDate = date.split("-");
             var splitTime = time.split(":");
 
             //If the month is below 10 it adds a 0 up front.
-            if(splitDate[1] < 10){
-                splitDate[1] = "0"+splitDate[1];
-            }
+            splitDate[1] = doubleDigit(splitDate[1]);
 
             //If the day is below 10 it adds a 0 up front.
-            if(splitDate[0] < 10){
-                splitDate[0] = "0"+splitDate[0];
-            }
+            splitDate[0] = doubleDigit(splitDate[0])
 
             //If the hours are below 10 it adds a 0 up front.
-            if(splitTime[0] < 10){
-                splitTime[0] = "0"+splitTime[0];
-            }
+            splitTime[0] = doubleDigit(splitTime[0]);
 
             //If the minutes are below 10 it adds a 0 up front.
-            if(splitTime[1] < 10){
-                splitTime[1] = "0"+splitTime[1];
-            }
+            splitTime[1] = doubleDigit(splitTime[1]);
 
             return splitDate[2]+"-"+splitDate[1]+"-"+splitDate[0]+"T"+splitTime[0]+":"+splitTime[1]+":00Z"
+        }
+
+        function doubleDigit(digit)
+        {
+            if(digit.length < 2)
+            {
+                digit = "0"+digit;
+            }
+
+            return digit;
         }
     }
 }
