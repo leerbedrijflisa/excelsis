@@ -12,17 +12,6 @@ namespace Lisa.Excelsis.WebApi
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
-        {
-            // Setup configuration sources.
-            var builder = new ConfigurationBuilder(appEnv.ApplicationBasePath)
-                .AddJsonFile("config.json")
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-        }
-
-        public IConfiguration Configuration { get; set; }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddJsonOptions(options =>
@@ -31,15 +20,6 @@ namespace Lisa.Excelsis.WebApi
                 options.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
                 options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Error;
             });
-
-            services.AddEntityFramework()
-                    .AddSqlServer()
-                    .AddDbContext<ExcelsisDb>(options =>
-                    {
-                        options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]);
-                    });
-
-            services.AddTransient<SampleDataInitializer>();
 
             services.ConfigureCors(options =>
             {
@@ -52,13 +32,11 @@ namespace Lisa.Excelsis.WebApi
             });            
         }
 
-        public void Configure(IApplicationBuilder app, SampleDataInitializer sampleData)
+        public void Configure(IApplicationBuilder app)
         {
-            app.UseMvcWithDefaultRoute();
-            app.UseStaticFiles();
             app.UseCors("CorsExcelsis");
-
-            sampleData.InitializeDataAsync();
+            app.UseMvcWithDefaultRoute();
+            app.UseStaticFiles();            
         }
     }
 }
