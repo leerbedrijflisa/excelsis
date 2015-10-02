@@ -41,7 +41,7 @@ export class Welcome{
     }
 
     activate() {
-        this.heading = "Exam";
+        this.heading = "Assessment";
         this.http = new HttpClient().configure(x => {
             x.withBaseUrl('http://localhost:5858/');      
             x.withHeader('Content-Type', 'application/json')});
