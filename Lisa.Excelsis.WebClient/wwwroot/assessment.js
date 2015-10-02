@@ -1,11 +1,10 @@
 ﻿import {HttpClient} from 'aurelia-http-client';
-
 export class Welcome{
     constructor() {
 
         function doubleDigit(digit)
         {
-            if(digit.length < 2)
+            if(digit < 10)
             {
                 digit = "0"+digit;
             }
@@ -67,7 +66,6 @@ export class Welcome{
         };
 
         this.http.post("assessments/"+this.subject+"/"+this.examName+"/"+this.cohort, Content).then(response => {
-        //this.http.post("assessments/nederlands/schrijven/2015", Content).then(response => {
             this.assessment = response.content;
             alert(this.assessment);
         });
@@ -93,6 +91,7 @@ export class Welcome{
             return splitDate[2]+"-"+splitDate[1]+"-"+splitDate[0]+"T"+splitTime[0]+":"+splitTime[1]+":00Z"
         }
 
+        //input MUST be string!
         function doubleDigit(digit)
         {
             if(digit.length < 2)
