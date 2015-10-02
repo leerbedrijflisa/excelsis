@@ -1,11 +1,11 @@
 ﻿<template>
     <h2>${heading}</h2>
 
-    <select value.bind="subject">
+    <select value.bind="subject" id="subject">
         <option repeat.for="subject of subjects" value="${subject}">${subject}</option>
     </select>
 
-    <select value.bind="cohort">
+    <select value.bind="cohort" id="cohort">
         <option repeat.for="cohort of cohorts">${cohort}</option>
     </select>
 
@@ -19,4 +19,5 @@
             <p>Organisatie: ${exam.organization}</p>
         </li>
     </ul>
+
 </template>
