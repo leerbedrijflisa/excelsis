@@ -1,0 +1,21 @@
+﻿body {
+    font-family: Verdana;
+    font-size: 10pt;
+}
+
+form div {
+    margin-bottom: 5px;
+}
+
+form label {
+    display: inline-block;
+    min-width: 200px;
+}
+
+form button {
+    margin-left: 200px;
+}
+
+form li {
+    margin-bottom: 1em;
+}

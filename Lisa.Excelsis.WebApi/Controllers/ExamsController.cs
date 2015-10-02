@@ -1,7 +1,6 @@
 ﻿using Lisa.Excelsis.WebApi.Models;
 using Microsoft.AspNet.Cors.Core;
 using Microsoft.AspNet.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Lisa.Excelsis.WebApi
