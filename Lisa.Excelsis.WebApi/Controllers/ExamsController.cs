@@ -1,4 +1,4 @@
-﻿using Lisa.Excelsis.WebApi.Models;
+﻿using Lisa.Excelsis.Data;
 using Microsoft.AspNet.Cors.Core;
 using Microsoft.AspNet.Mvc;
 using System.Linq;
@@ -9,17 +9,10 @@ namespace Lisa.Excelsis.WebApi
     [Route("[controller]")]
     public class ExamsController : Controller
     {
-        private readonly ExcelsisDb _db;
-
-        public ExamsController(ExcelsisDb db)
-        {
-            _db = db;
-        }
-
         [HttpGet]
         public IActionResult Get()
         {
-            var query = (from exam in _db.Exams
+            var query = (from exam in _db.FetchExams()
                          select new
                          {
                              Id = exam.Id,
@@ -34,7 +27,7 @@ namespace Lisa.Excelsis.WebApi
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var query = (from exam in _db.Exams
+            var query = (from exam in _db.FetchExams()
                          where exam.Id == id
                          select new
                          {
@@ -43,7 +36,7 @@ namespace Lisa.Excelsis.WebApi
                              Subject = exam.Subject.Name,
                              Cohort = exam.Cohort,
                              Organization = exam.Organization,
-                             Criteria = from criterium in _db.Criteria
+                             Criteria = from criterium in _db.FetchCriteria()
                                          where criterium.ExamId == id
                                          select new
                                          {
@@ -58,7 +51,7 @@ namespace Lisa.Excelsis.WebApi
         [HttpGet("{subject}/{cohort}")]
         public IActionResult Get(string subject = null, string cohort = null)
         {
-            var query = (from exams in _db.Exams
+            var query = (from exams in _db.FetchExams()
                          where exams.Subject.Name.ToLower() == subject.ToLower() &&
                          exams.Cohort == cohort
                          select new
@@ -72,5 +65,6 @@ namespace Lisa.Excelsis.WebApi
 
             return new ObjectResult(query);
         }
+        private readonly Database _db = new Database();
     }
 }
