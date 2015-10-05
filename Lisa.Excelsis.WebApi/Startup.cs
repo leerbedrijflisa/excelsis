@@ -1,9 +1,4 @@
-﻿using Lisa.Excelsis.WebApi.Models;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.Data.Entity;
-using Microsoft.Dnx.Runtime;
-using Microsoft.Framework.Configuration;
+﻿using Microsoft.AspNet.Builder;
 using Microsoft.Framework.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
