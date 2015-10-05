@@ -1,4 +1,5 @@
-﻿using Lisa.Excelsis.WebApi.Models;
+﻿using Lisa.Excelsis.Data;
+using Lisa.Excelsis.WebApi.Models;
 using Microsoft.AspNet.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,29 +9,24 @@ namespace Lisa.Excelsis.WebApi.Controllers
     [Route("[controller]")]
     public class AssessmentsController : Controller
     {
-        private readonly ExcelsisDb _db;
-        public AssessmentsController(ExcelsisDb db)
-        {
-            _db = db;
-        }
         // GET: assessment
         [HttpGet]
         public IActionResult Get()
         {
-            var query = (from assessments in _db.Assessments
+            var query = (from assessments in _db.FetchAssessments()
                          select new
                          {
                              Id = assessments.Id,
-                             Student = new 
+                             Student = new
                              {
-                                 Name = assessments.student.Name,
-                                 Number = assessments.student.Number
+                                 Name = assessments.Student.Name,
+                                 Number = assessments.Student.Number
                              },
-                             Assessor = (from assessors in assessments.assessors                                         
-                                        select new
-                                        {
-                                            Username = assessors.Username
-                                        }),
+                             Assessors = (from assessors in assessments.Assessors
+                                         select new
+                                         {
+                                             Username = assessors.Username
+                                         }),
                              Assessed = assessments.Assessed,
                              ExamId = assessments.ExamId
                          });
@@ -42,18 +38,28 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var query = (from assessments in _db.Assessments
+            var query = (from assessments in _db.FetchAssessments()
                          where assessments.Id == id
                          select new
                          {
                              Id = assessments.Id,
-                             Assessor = assessments.assessors,
+                             Assessors = (from assessors in assessments.Assessors
+                                          select new
+                                          {
+                                              Username = assessors.Username
+                                          }),
                              ExamId = assessments.ExamId,
                              Assessed = assessments.Assessed,
-                             Student = assessments.student,
-                             Criteria = (from observation in _db.Observations
-                                         where observation.AssessmentId == id
-                                         select observation)
+                             Student = assessments.Student,
+                             Observations = (from observation in _db.FetchObservations()
+                                             where observation.AssessmentId == id
+                                             select new
+                                             {
+                                                 Id = observation.Id,
+                                                 Criterium = observation.Criterium,
+                                                 Result = observation.Result,                                                 
+                                                 Marks = observation.Marks.Split(';'),
+                                             })
                          });          
 
             return new ObjectResult(query);
@@ -70,21 +76,22 @@ namespace Lisa.Excelsis.WebApi.Controllers
                 return new ObjectResult(errorList);
             }
 
-            var _exam = (from exams in _db.Exams
+            var _exam = (from exams in _db.FetchExams()
                          where exams.Subject.Name.ToLower() == subject.ToLower()
                            && exams.Name.ToLower() == examName.ToLower()
                            && exams.Cohort.ToLower() == cohort.ToLower()
                          select exams).FirstOrDefault();
 
-            var _criteria = (from criterium in _db.Criteria
+            var _criteria = (from criterium in _db.FetchCriteria()
                              where criterium.ExamId == _exam.Id
                              select criterium);
 
-            var _assessors = (from assessor in _db.Assessors
-                              where assessmentPost.Assessors.All(a => a.UserName.Contains(assessor.Username))
-                              select assessor);
+            var _assessors = (from assessorA in _db.FetchAssessors()   
+                              join assessorB in assessmentPost.Assessors   
+                              on assessorA.Username equals assessorB.UserName   
+                              select assessorA);
 
-            var _student = (from student in _db.Students
+            var _student = (from student in _db.FetchStudents()
                             where student.Name.ToLower() == assessmentPost.Student.Name.ToLower()
                                || student.Number == assessmentPost.Student.Number
                             select student).FirstOrDefault();
@@ -92,69 +99,105 @@ namespace Lisa.Excelsis.WebApi.Controllers
             if (_exam != null)
             {
                 Assessment assessment = new Assessment();
-                IList<Assessor> assessors = new List<Assessor>();
-                IList<Observation> Criteria = new List<Observation>();
+                List<Assessor> assessors = new List<Assessor>();
+                List<Observation> Observations = new List<Observation>();
                 Student student = new Student();
+                AssessmentPost.ObservationPost observation = new AssessmentPost.ObservationPost();
 
                 if (_student == null)
                 {
                     student.Name = assessmentPost.Student.Name;
                     student.Number = assessmentPost.Student.Number;
-                    _db.Students.Add(student);
+                    _db.AddStudent(student);
                 }
                 else
                 {
                     student = _student;
                 }
-
-                if(_assessors == null || _assessors.Count() != assessmentPost.Assessors.Count())
+   
+                foreach(var assessor in assessmentPost.Assessors)
                 {
-                    foreach(var assessor in assessmentPost.Assessors)
+                    if (!_assessors.Any(a => assessor.UserName.Contains(a.Username)))
                     {
-                        assessors.Add(new Assessor
+                        var a = new Assessor
                         {
                             Username = assessor.UserName
-                        });
+                        };
+                        _db.AddAssessor(a);
                     }
-                    _db.Assessors.AddRange(assessors);
                 }
-                else
-                {
-                    assessors = _assessors.ToList();
-                }
-                
-                _db.SaveChanges();               
 
                 assessment.ExamId = _exam.Id;
-                assessment.student = student;
+                assessment.Student = student;
                 assessment.Assessed = assessmentPost.Assessed;
-                assessment.assessors = assessors;                
+                assessment.Assessors = _assessors.ToList();                
                 
-                _db.Assessments.Add(assessment);
-                _db.SaveChanges();
+                _db.AddAssessment(assessment);
 
-                if (_criteria == null)
+                if (_criteria != null)
                 {
+                   
                     foreach (var question in _criteria)
                     {
-                        Criteria.Add(new Observation
+                        if (assessmentPost.Observations != null)
                         {
-                            AssessmentId = assessment.Id,
-                            Criterium = question,
-                            Result = null,
-                            Remarks = new bool[]
-                            {
-                                false,false,false,false
-                            }
-                        });
-                    }
 
-                    _db.Observations.AddRange(Criteria);
+                            observation = (from o in assessmentPost.Observations
+                                           where question.Order == o.CriteriumOrderId
+                                           select o).FirstOrDefault();
+                        }
+                                                
+                        if (observation != null && assessmentPost.Observations != null)
+                        {
+                            Observations.Add(new Observation
+                            {
+                                AssessmentId = assessment.Id,
+                                Criterium = question,
+                                Result = observation.Result,
+                                Marks = string.Join(";", observation.Marks)
+
+                            });
+                        }
+                        else
+                        {
+                            Observations.Add(new Observation
+                            {
+                                AssessmentId = assessment.Id,
+                                Criterium = question,
+                                Result = "",
+                                Marks = ""
+                            });
+                        }
+                    }
                 }
 
-                _db.SaveChanges();
+                _db.AddObservations(Observations);                
 
-                return new ObjectResult(assessment);
+                return new CreatedResult(
+                    "http://localhost:5858/assessments/" + assessment.Id, 
+                    new
+                    {
+                        Id = assessment.Id,
+                        Assessors = (from a in assessment.Assessors
+                                     select new
+                                     {
+                                         Id = a.Id,
+                                         Username = a.Username
+                                     }),
+                        ExamId = assessment.ExamId,
+                        Assessed = assessment.Assessed,
+                        Student = assessment.Student,
+                        Observations = (from o in Observations
+                                    where o.AssessmentId == assessment.Id
+                                    select new
+                                    {
+                                        Id = o.Id,
+                                        Criterium = o.Criterium,
+                                        Result = o.Result,
+                                        Marks = o.Marks.Split(';'),
+                                    })
+                    }
+                );
             }
             else
             {
@@ -162,43 +205,6 @@ namespace Lisa.Excelsis.WebApi.Controllers
             }            
         }
 
-        // PATCH api/assessment/5
-        [HttpPatch("{assesmentId}")]
-        public void Patch(int assesmentId, [FromBody]string value)
-        {
-
-        }
-
-        // PATCH api/assessment/5/3
-       /* [HttpPatch("{assesmentId}/{criteriumId}")]
-        public IActionResult Patch([FromBody]Observation value, int assesmentId, int criteriumId)
-        {
-            var query = (from criteria in _db.Criterium
-                         where criteria.Id == criteriumId && criteria.AssessmentId == assesmentId
-                         select criteria).SingleOrDefault();
-
-            if (ModelState.IsValid)
-            {
-                if (value.Answer != null)
-                {
-                    query.Answer = value.Answer;
-                }
-
-                if (value.CriteriumBoxes != null)
-                {
-                    query.CriteriumBoxes = value.CriteriumBoxes;
-                }
-                _db.SaveChanges();
-
-                return new ObjectResult(query);
-            }
-            else
-            {
-                var errorList = ModelState.Values.SelectMany(m => m.Errors)
-                                 .Select(e => e.ErrorMessage)
-                                 .ToList();
-                return new ObjectResult(errorList);
-            }               
-        }*/
+        private readonly Database _db = new Database();
     }
 }
