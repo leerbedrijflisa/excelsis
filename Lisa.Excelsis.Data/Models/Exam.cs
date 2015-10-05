@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lisa.Excelsis.WebApi.Models
+namespace Lisa.Excelsis.Data
 {
     public class Exam
     {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public Subject Subject { get; set; }
+        public virtual Subject Subject { get; set; }
         public string Organization { get; set; }
         public string Cohort { get; set; }
         public int DocumentationId { get; set; }
-        public IList<Criterium> Questions { get; set; }
+        public virtual IList<Criterium> Questions { get; set; }
     }   
 }

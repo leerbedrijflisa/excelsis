@@ -21,6 +21,7 @@ namespace Lisa.Excelsis.WebApi.Models
         public StudentPost Student { get; set; }
         public List<AssessorPost> Assessors { get; set; }
         public DateTime Assessed { get; set; }
+        public List<ObservationPost> Observations { get; set; }
 
         public class StudentPost
         {
@@ -31,6 +32,12 @@ namespace Lisa.Excelsis.WebApi.Models
         public class AssessorPost
         {
             public string UserName { get; set; }
+        }
+        public class ObservationPost
+        {
+            public int CriteriumOrderId { get; set; } 
+            public string Result { get; set; }
+            public List<string> Marks { get; set; }
         }
     }   
 }

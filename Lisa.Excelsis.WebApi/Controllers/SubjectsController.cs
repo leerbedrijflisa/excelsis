@@ -1,4 +1,4 @@
-﻿using Lisa.Excelsis.WebApi.Models;
+﻿using Lisa.Excelsis.Data;
 using Microsoft.AspNet.Mvc;
 using System.Linq;
 
@@ -6,17 +6,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
 {
     public class SubjectsController : Controller
     {
-        private readonly ExcelsisDb _db;
-        public SubjectsController(ExcelsisDb db)
-        {
-            _db = db;
-        }
-
         // GET: subjects
         [HttpGet]
         public IActionResult Get()
         {
-            var query = (from subjects in _db.Subjects
+            var query = (from subjects in _db.FetchSubjects()
                          select subjects);
 
             return new ObjectResult(query);
@@ -26,11 +20,13 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet("{name}")]
         public IActionResult Get(string name)
         {
-            var query = (from subjects in _db.Subjects
+            var query = (from subjects in _db.FetchSubjects()
                          where subjects.Name.ToLower() == name.ToLower()
                          select subjects);
 
             return new ObjectResult(query);
         }
+
+        private readonly Database _db = new Database();
     }
 }

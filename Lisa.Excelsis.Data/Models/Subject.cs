@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Lisa.Excelsis.WebApi.Models
+namespace Lisa.Excelsis.Data
 {
-    public class Tag
+    public class Subject
     {
         [Key]
         public int Id { get; set; }

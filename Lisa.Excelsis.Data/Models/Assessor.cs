@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lisa.Excelsis.WebApi.Models
+namespace Lisa.Excelsis.Data
 {
     public class Assessor
     {

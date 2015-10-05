@@ -1,9 +1,12 @@
-﻿using Microsoft.Data.Entity;
+﻿using System.Data.Entity;
 
-namespace Lisa.Excelsis.WebApi.Models
+namespace Lisa.Excelsis.Data
 {
     public class ExcelsisDb : DbContext
     {   
+        public ExcelsisDb() : base(@"Data source=(localdb)\v11.0;Initial Catalog=ExcelsisDb;Integrated Security=true;MultipleActiveResultSets=true")
+        {
+        }
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Assessment> Assessments { get; set; }
         public DbSet<Assessor> Assessors { get; set; }
