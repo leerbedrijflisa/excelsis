@@ -52,7 +52,7 @@ export class Welcome{
 
         this.subject = "Nederlands";
         this.examName = "Schrijven";
-        this.cohort = "2083";
+        this.cohort = "2015";
 
         var Content = {
             "student": {
