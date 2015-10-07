@@ -1,7 +1,7 @@
 ﻿<template>
-    <ol>
-        <li repeat.for="question of exam.questions">
-            ${question.description}
+    <ul>
+        <li repeat.for="observation of assessment.observations">
+            <span>${observation.criterium.description}</span>
 
             <div>
                 <input type="radio" name="rating-${question.id}" id="rating-done-${question.id}" checked>
@@ -23,5 +23,5 @@
             <input type="checkbox" name="questionmark-${question.id}"><img src="Icons/star.png">
             <input type="checkbox" name="asterisk-${question.id}"><img src="Icons/Warning_icon.png">
         </li>
-    </ol>
+    </ul>
 </template>
