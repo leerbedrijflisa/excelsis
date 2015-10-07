@@ -47,7 +47,7 @@ export class Welcome{
             x.withHeader('Content-Type', 'application/json')});
     }
 
-    storeStudent() {
+    startAssessment() {
 
         this.subject = "Nederlands";
         this.examName = "Schrijven";
