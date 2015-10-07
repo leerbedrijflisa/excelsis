@@ -17,6 +17,8 @@ export class Welcome{
             "name": "Gesprekken voeren"
         }
 
+        this.assessment;
+
         this.firstName;
         this.lastName;
         this.studentNumber;
@@ -66,6 +68,7 @@ export class Welcome{
 
         this.http.post("assessments/"+this.subject+"/"+this.examName+"/"+this.cohort, Content).then(response => {
             this.assessment = response.content;
+            window.history.pushState('assessments', 'Excelsis2', '#/assessment/'+this.assessment.id)
         });
         
         function formatDate(date, time){
