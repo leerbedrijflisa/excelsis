@@ -67,9 +67,8 @@ export class Welcome{
 
         this.http.post("assessments/"+this.subject+"/"+this.examName+"/"+this.cohort, Content).then(response => {
             this.assessment = response.content;
-            alert(this.assessment);
         });
-
+        
         function formatDate(date, time){
 
             //splits the date and the time in seperate numbers.
