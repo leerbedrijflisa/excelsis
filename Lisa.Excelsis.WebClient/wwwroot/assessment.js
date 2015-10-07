@@ -48,7 +48,6 @@ export class Welcome{
     }
 
     storeStudent() {
-        alert(`Welcome, ${this.name} The date is ${this.newDate} and the time is ${this.newTime}!`);
 
         this.subject = "Nederlands";
         this.examName = "Schrijven";
