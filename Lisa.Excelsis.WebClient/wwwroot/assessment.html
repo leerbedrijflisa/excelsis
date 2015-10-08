@@ -3,18 +3,13 @@
 
     <form>
         <div>
-            <label>Voornaam</label>
-            <input type="text" value.bind="firstName">
-        </div>
-
-        <div>
-            <label>Achternaam</label>
-            <input type="text" value.bind="lastName">
+            <label>Naam</label>
+            <input type="text" value.bind="name">
         </div>
             
         <div>
             <label>Studentnummer</label>
-            <input type="text" value.bind="studentNumber">
+            <input type="text" value.bind="number">
         </div>
             
         <div>
@@ -27,8 +22,8 @@
             <input type="text" value.bind="newTime">
         </div>
 
-        <button click.delegate="storeStudent()">Opslaan</button>
+        <button click.delegate="startAssessment()">Opslaan</button>
 
-        <compose view="questions.html" model.bind="exam" repeat.for="exam of exams">  
+        <compose view="questions.html" model.bind="assessment">
     </form>
 </template>

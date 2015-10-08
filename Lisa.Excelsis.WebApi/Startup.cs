@@ -31,7 +31,7 @@ namespace Lisa.Excelsis.WebApi
         {
             app.UseCors("CorsExcelsis");
             app.UseMvcWithDefaultRoute();
-            app.UseStaticFiles();            
+            app.UseStaticFiles();
         }
     }
 }
