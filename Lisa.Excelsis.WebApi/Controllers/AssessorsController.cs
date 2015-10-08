@@ -4,13 +4,18 @@ using System.Linq;
 
 namespace Lisa.Excelsis.WebApi.Controllers
 {
+    [Route("[controller]")]
     public class AssessorsController : Controller
     {
         [HttpGet]
         public IActionResult Get()
         {
             var query = (from assessor in _db.FetchAssessors()
-                         select assessor);
+                         select new
+                         {
+                             id = assessor.Id,
+                             username = assessor.Username
+                         });
 
             return new ObjectResult(query);
         }
@@ -20,7 +25,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
         {
             var query = (from assessor in _db.FetchAssessors()
                          where assessor.Id == id
-                         select assessor);
+                         select new
+                         {
+                             id = assessor.Id,
+                             username = assessor.Username
+                         });
 
             return new ObjectResult(query);
         }
