@@ -1,5 +1,7 @@
 ﻿import {HttpClient} from 'aurelia-http-client';
+
 export class Welcome{
+
     constructor() {
 
         function doubleDigit(digit)
@@ -16,10 +18,6 @@ export class Welcome{
             "subject": "Nederlands",
             "name": "Gesprekken voeren"
         }
-
-        this.firstName;
-        this.lastName;
-        this.studentNumber;
 
         this.currentDate = new Date();
         this.dd = this.currentDate.getDate();
@@ -38,13 +36,37 @@ export class Welcome{
         this.mm = doubleDigit(this.mm);
 
         this.newTime = this.hh + ":" + this.mm;
+      
     }
 
-    activate() {
+    activate(params) {
         this.heading = "Assessment";
         this.http = new HttpClient().configure(x => {
             x.withBaseUrl('http://localhost:5858/');      
             x.withHeader('Content-Type', 'application/json')});
+
+        if (Number.isInteger(parseInt(params.urlId))) {
+            console.log(params.urlId);
+            this.getAssessment(params.urlId);            
+        }      
+    }
+
+    getAssessment(id){
+        this.http.get("assessments/"+id).then(response => {
+            this.assessment = response.content; 
+            this.name = this.assessment.student.name;
+            this.number = this.assessment.student.number;
+            var assessed = this.assessment.assessed;
+
+            var date = assessed.replace("T", "-");
+            var dateSplit = date.split("-");
+            var timeSplit = dateSplit[3].split(":");
+
+            // dd - mm - yyyy
+            this.newDate =  dateSplit[2] + "-" +dateSplit[1] + "-" + dateSplit[0];
+            // HH-mm
+            this.newTime = timeSplit[0] + ":" + timeSplit[1];
+        });
     }
 
     startAssessment() {
@@ -66,6 +88,7 @@ export class Welcome{
 
         this.http.post("assessments/"+this.subject+"/"+this.examName+"/"+this.cohort, Content).then(response => {
             this.assessment = response.content;
+            window.history.pushState('assessments', 'Excelsis2', '#/assessment/'+this.assessment.id)
         });
         
         function formatDate(date, time){

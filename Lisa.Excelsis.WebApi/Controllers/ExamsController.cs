@@ -44,7 +44,8 @@ namespace Lisa.Excelsis.WebApi
                                              Description = criterium.Description,
                                              Rating = criterium.value
                                          }
-                         });
+                         }).FirstOrDefault();
+
             return new ObjectResult(query);
         }
 

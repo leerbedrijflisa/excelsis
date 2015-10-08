@@ -60,7 +60,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                                                  Result = observation.Result,                                                 
                                                  Marks = observation.Marks.Split(';'),
                                              })
-                         });          
+                         }).FirstOrDefault();          
 
             return new ObjectResult(query);
         }
