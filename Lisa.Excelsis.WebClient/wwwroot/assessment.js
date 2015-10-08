@@ -56,8 +56,16 @@ export class Welcome{
             this.assessment = response.content; 
             this.name = this.assessment.student.name;
             this.number = this.assessment.student.number;
-            //this.newDate = this.assessment.assessed.getDate();
-            //this.newTime = this.assessment.assessed.getHours() + ':' + this.assessment.assessed.getMinutes();
+            var assessed = this.assessment.assessed;
+
+            var date = assessed.replace("T", "-");
+            var dateSplit = date.split("-");
+            var timeSplit = dateSplit[3].split(":");
+
+            // dd - mm - yyyy
+            this.newDate =  dateSplit[2] + "-" +dateSplit[1] + "-" + dateSplit[0];
+            // HH-mm
+            this.newTime = timeSplit[0] + ":" + timeSplit[1];
         });
     }
 
