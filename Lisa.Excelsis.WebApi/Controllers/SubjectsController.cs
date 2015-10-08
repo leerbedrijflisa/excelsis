@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Lisa.Excelsis.WebApi.Controllers
 {
+    [Route("[controller]")]
     public class SubjectsController : Controller
     {
         // GET: subjects
