@@ -1,3 +1,8 @@
 ﻿<template>
+    <ul>
+        <li repeat.for="item of router.navigation">
+            <a href.bind="item.href">${item.title}</a>
+        </li>
+    </ul>
   <router-view></router-view>
 </template>
