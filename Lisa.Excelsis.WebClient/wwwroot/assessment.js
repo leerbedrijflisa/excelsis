@@ -1,5 +1,7 @@
 ﻿import {HttpClient} from 'aurelia-http-client';
+
 export class Welcome{
+
     constructor() {
 
         function doubleDigit(digit)
@@ -16,12 +18,6 @@ export class Welcome{
             "subject": "Nederlands",
             "name": "Gesprekken voeren"
         }
-
-        this.assessment;
-
-        this.firstName;
-        this.lastName;
-        this.studentNumber;
 
         this.currentDate = new Date();
         this.dd = this.currentDate.getDate();
@@ -40,13 +36,29 @@ export class Welcome{
         this.mm = doubleDigit(this.mm);
 
         this.newTime = this.hh + ":" + this.mm;
+      
     }
 
-    activate() {
+    activate(params) {
         this.heading = "Assessment";
         this.http = new HttpClient().configure(x => {
             x.withBaseUrl('http://localhost:5858/');      
             x.withHeader('Content-Type', 'application/json')});
+
+        if (Number.isInteger(parseInt(params.urlId))) {
+            console.log(params.urlId);
+            this.getAssessment(params.urlId);            
+        }      
+    }
+
+    getAssessment(id){
+        this.http.get("assessments/"+id).then(response => {
+            this.assessment = response.content; 
+            this.name = this.assessment.student.name;
+            this.number = this.assessment.student.number;
+            //this.newDate = this.assessment.assessed.getDate();
+            //this.newTime = this.assessment.assessed.getHours() + ':' + this.assessment.assessed.getMinutes();
+        });
     }
 
     startAssessment() {
