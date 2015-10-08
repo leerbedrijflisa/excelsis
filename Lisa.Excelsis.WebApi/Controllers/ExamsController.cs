@@ -1,11 +1,9 @@
 ﻿using Lisa.Excelsis.Data;
-using Microsoft.AspNet.Cors.Core;
 using Microsoft.AspNet.Mvc;
 using System.Linq;
 
-namespace Lisa.Excelsis.WebApi
+namespace Lisa.Excelsis.WebApi.Controllers
 {
-    [EnableCors("CorsExcelsis")]
     [Route("[controller]")]
     public class ExamsController : Controller
     {
