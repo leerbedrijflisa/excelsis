@@ -14,7 +14,9 @@ export class Exam
     }
     activate() {
         this.heading = "Exam"; 
-        this.subjects = [ "Nederlands", "Applicatieontwikkelaar", "Rekenen" ];
+        this.http.get("/subjects").then(response => {
+            this.subjects = response.content;            
+        });        
         this.cohorts = [ "2015", "2014", "2013", "2012" ];
     }
 
@@ -23,8 +25,7 @@ export class Exam
         var subject = document.getElementById('subject').value;
         var cohort = document.getElementById('cohort').value;
         this.http.get("/exams/"+subject+"/"+cohort).then(response => {
-            this.exams = response.content;
-            
+            this.exams = response.content;            
         });
     }
 
