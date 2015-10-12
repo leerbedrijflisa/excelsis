@@ -1,6 +1,7 @@
 ﻿using Lisa.Excelsis.Data;
 using Lisa.Excelsis.WebApi.Models;
 using Microsoft.AspNet.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,7 +30,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
                                         {
                                             Username = assessors.Username
                                         }),
-                            Assessed = a.Assessed,
+                            Assessed = new
+                            {
+                                Date = string.Format("{0}/{1}/{2}", a.Assessed.Day, a.Assessed.Month, a.Assessed.Year),
+                                Time = string.Format("{0}:{1}", a.Assessed.Hour, a.Assessed.Minute)
+                            },
                             Exam = new
                             {
                                 Id = e.Id,
@@ -211,7 +216,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
             {
                 return new BadRequestResult();
             }            
-        }
+        }      
 
         private readonly Database _db = new Database();
     }
