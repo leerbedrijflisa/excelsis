@@ -14,11 +14,6 @@ export class Welcome{
             return digit;
         }
 
-        this.exam = {
-            "subject": "Nederlands",
-            "name": "Gesprekken voeren"
-        }
-
         this.currentDate = new Date();
         this.dd = this.currentDate.getDate();
         this.MM = this.currentDate.getMonth() + 1;
@@ -44,7 +39,11 @@ export class Welcome{
         this.http = new HttpClient().configure(x => {
             x.withBaseUrl('http://localhost:5858/');      
             x.withHeader('Content-Type', 'application/json')});
-
+        this.exam = {
+            "subject": params.subject,
+            "name": params.name,
+            "cohort": params.cohort
+        }
         if (Number.isInteger(parseInt(params.urlId))) {
             console.log(params.urlId);
             this.getAssessment(params.urlId);            
@@ -57,7 +56,7 @@ export class Welcome{
             this.name = this.assessment.student.name;
             this.number = this.assessment.student.number;
             var assessed = this.assessment.assessed;
-
+            
             var date = assessed.replace("T", "-");
             var dateSplit = date.split("-");
             var timeSplit = dateSplit[3].split(":");
@@ -69,12 +68,7 @@ export class Welcome{
         });
     }
 
-    startAssessment() {
-
-        this.subject = "Nederlands";
-        this.examName = "Schrijven";
-        this.cohort = "2015";
-
+    startAssessment() { 
         var Content = {
             "student": {
                 "name": this.name,
@@ -86,7 +80,7 @@ export class Welcome{
             "assessed": formatDate(this.newDate, this.newTime)
         };
 
-        this.http.post("assessments/"+this.subject+"/"+this.examName+"/"+this.cohort, Content).then(response => {
+        this.http.post("assessments/"+this.exam.subject+"/"+this.exam.name+"/"+this.exam.cohort, Content).then(response => {
             this.assessment = response.content;
             window.history.pushState('assessments', 'Excelsis2', '#/assessment/'+this.assessment.id)
         });
