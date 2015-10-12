@@ -4,24 +4,24 @@
             <span>${observation.criterium.description}</span>
 
             <div>
-                <input type="radio" name="rating-${question.id}" id="rating-done-${question.id}" checked>
-                <label for="rating-done-${question.id}">voldaan</label>
+                <input type="radio" name="rating-${observation.criterium.order}" id="rating-done-${observation.criterium.order}">
+                <label for="rating-done-${observation.criterium.order}">voldaan</label>
             </div>
 
             <div>
-                <input type="radio" name="rating-${question.id}" id="rating-notdone-${question.id}">
-                <label for="rating-notdone-${question.id}">niet voldaan</label>
+                <input type="radio" name="rating-${observation.criterium.order}" id="rating-notdone-${observation.criterium.order}">
+                <label for="rating-notdone-${observation.criterium.order}">niet voldaan</label>
             </div>
 
             <div>
-                <input type="radio" name="rating-${question.id}" id="rating-notrated-${question.id}">
-                <label for="rating-notrated-${question.id}">niet beoordeeld</label>
+                <input type="radio" name="rating-${observation.criterium.order}" id="rating-notrated-${observation.criterium.order}" checked="checked" />
+                <label for="rating-notrated-${observation.criterium.order}">niet beoordeeld</label>
             </div>
 
-            <input type="checkbox" name="thumbsup-${question.id}" checked><img src="Icons/ok.png">
-            <input type="checkbox" name="thumbsdown-${question.id}"><img src="Icons/question.png">
-            <input type="checkbox" name="questionmark-${question.id}"><img src="Icons/star.png">
-            <input type="checkbox" name="asterisk-${question.id}"><img src="Icons/Warning_icon.png">
+            <input type="checkbox" name="thumbsup-${observation.criterium.order}"><img src="Icons/ok.png">
+            <input type="checkbox" name="thumbsdown-${observation.criterium.order}"><img src="Icons/question.png">
+            <input type="checkbox" name="questionmark-${observation.criterium.order}"><img src="Icons/star.png">
+            <input type="checkbox" name="asterisk-${observation.criterium.order}"><img src="Icons/Warning_icon.png">
         </li>
     </ul>
 </template>
