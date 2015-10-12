@@ -1,0 +1,13 @@
+﻿<template>
+    <h1>Beoordelingen:</h1>
+
+    <ul>
+        <li repeat.for="assessment of assessments">
+            <p>Datum: ${assesment.assessed}</p>
+            <p>Tijd:</p>
+            <p>Student: ${assessment.student.name}</p>
+            <p>Studentnummer: ${assessment.student.number}</p>
+            <p>Examinator: ${assessment.assessors.name}</p>
+        </li>
+    </ul>
+</template>
