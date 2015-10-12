@@ -5,7 +5,7 @@
         config.title = "Excelsis";
         config.map([
             { route: ['', 'exam'], name: 'exam', moduleId: 'exam', nav: true, title:'Home'  },
-            { route: 'assessment', name: 'assessment', moduleId: 'assessment', nav: true, title:'Assessment' },
+            { route: 'assessment/:name/:subject/:cohort', name: 'assessment', moduleId: 'assessment', title:'Assessment' },
             { route: 'assessment/:urlId', name: 'assessmentId', moduleId: 'assessment' },           
             { route: 'version', name: 'version', moduleId: 'version', nav: true, title:'Version' }
         ]);

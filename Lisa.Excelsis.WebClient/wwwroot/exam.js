@@ -1,13 +1,19 @@
-﻿import {HttpClient} from 'aurelia-http-client';
+﻿import {Router} from 'aurelia-router';
+import {HttpClient} from 'aurelia-http-client';
 
 export class Exam
 {
-    activate() {
-        this.heading = "Exam";
+    static inject() {
+        return [ Router ];
+    }
+    constructor(router){
+        this.router = router;
         this.http = new HttpClient().configure(x => {
             x.withBaseUrl('http://localhost:5858');      
             x.withHeader('Content-Type', 'application/json')});
-
+    }
+    activate() {
+        this.heading = "Exam"; 
         this.subjects = [ "Nederlands", "Applicatieontwikkelaar", "Rekenen" ];
         this.cohorts = [ "2015", "2014", "2013", "2012" ];
     }
@@ -20,5 +26,9 @@ export class Exam
             this.exams = response.content;
             
         });
+    }
+
+    startAssessment(name, subject, cohort) {
+       this.router.navigateToRoute('assessment', {name: name, subject: subject, cohort: cohort });
     }
 }
