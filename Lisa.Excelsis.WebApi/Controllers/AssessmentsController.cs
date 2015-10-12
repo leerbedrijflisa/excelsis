@@ -13,24 +13,32 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var query = (from assessments in _db.FetchAssessments()
-                         select new
-                         {
-                             Id = assessments.Id,
-                             Student = new
-                             {
-                                 Name = assessments.Student.Name,
-                                 Number = assessments.Student.Number
-                             },
-                             Assessors = (from assessors in assessments.Assessors
-                                         select new
-                                         {
-                                             Username = assessors.Username
-                                         }),
-                             Assessed = assessments.Assessed,
-                             ExamId = assessments.ExamId
-                         });
-
+            var query = (from a in _db.FetchAssessments()
+                        from e in _db.FetchExams()
+                        where a.ExamId == e.Id
+                        select new
+                        {
+                            Id = a.Id,
+                            Student = new
+                            {
+                                Name = a.Student.Name,
+                                Number = a.Student.Number
+                            },
+                            Assessors = (from assessors in a.Assessors
+                                        select new
+                                        {
+                                            Username = assessors.Username
+                                        }),
+                            Assessed = a.Assessed,
+                            Exam = new
+                            {
+                                Id = e.Id,
+                                Name = e.Name,
+                                Subject = e.Subject.Name,
+                                Cohort = e.Cohort,
+                                DocumentationId = e.DocumentationId
+                            }
+                        });
             return new ObjectResult(query);
         }
 
