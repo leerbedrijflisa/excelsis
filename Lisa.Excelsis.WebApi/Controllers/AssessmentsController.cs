@@ -88,7 +88,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
             if (!ModelState.IsValid)
             {
                 var errorList = ModelState.Values.SelectMany(m => m.Errors)
-                                .Select(e => e.ErrorMessage)
+                                .Select(e => e.Exception.Message)
                                 .ToList();
                 return new ObjectResult(errorList);
             }
