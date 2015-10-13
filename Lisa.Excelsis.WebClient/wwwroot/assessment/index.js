@@ -5,13 +5,14 @@ import {Utils} from "utils";
 export class Index{
 
     static inject() {
-        return [ Router, Utils ];
+        return [ Router, Utils, HttpClient ];
     }
 
-    constructor(router, utils) {
+    constructor(router, utils, http) {
         this.router = router;
         this.currentDate = new Date();
         this.utils = utils;
+        this.http = http;
 
         this.newDate = this.utils.doubleDigit(this.currentDate.getDate()) + 
                  "-" + this.utils.doubleDigit(this.currentDate.getMonth() + 1) + 
@@ -23,9 +24,7 @@ export class Index{
 
     activate(params) {
         this.heading = "Assessment";
-        this.http = new HttpClient().configure(x => {
-            x.withBaseUrl('http://localhost:5858/');      
-            x.withHeader('Content-Type', 'application/json')});
+       
         this.exam = {
             "subject": params.subject,
             "name": params.name,
@@ -42,7 +41,7 @@ export class Index{
             "assessors": [{
                 "userName": "joostronkesagerbeek"
             }],
-            "assessed": this.utils.formatDate(this.newDate, this.newTime)
+            "assessed" : this.utils.formatDate(this.newDate, this.newTime)       
         };
 
         this.http.post("assessments/"+this.exam.subject+"/"+this.exam.name+"/"+this.exam.cohort, Content).then(response => {
