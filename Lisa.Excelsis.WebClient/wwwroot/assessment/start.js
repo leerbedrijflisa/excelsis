@@ -1,6 +1,15 @@
 ﻿import {HttpClient} from 'aurelia-http-client';
+import {Utils} from "utils";
 
 export class Start{
+
+    static inject() {
+        return [ Utils ];
+    }
+
+    constructor(router, utils) {
+        this.utils = utils;
+    }
 
     activate(params) {
         this.heading = "Assessment";
