@@ -1,0 +1,20 @@
+﻿<template>
+    <h1>Beoordelingen:</h1>
+
+    <ul>
+        <li repeat.for="assessment of assessments">
+            <p>Examen: ${assessment.exam.subject} - ${assessment.exam.name}</p>
+            <p>Cohort: ${assessment.exam.cohort}</p>
+            <p>Datum: ${assessment.assessed.date}</p>
+            <p>Tijd: ${assessment.assessed.time}</p>
+            <p>Student: ${assessment.student.name}</p>
+            <p>Studentnummer: ${assessment.student.number}</p>
+            <p>Examinatoren:</p>
+            <ul>
+                <li repeat.for="assessor of assessment.assessors">
+                    ${assessor.username}
+                </li>
+            </ul>
+        </li>
+    </ul>
+</template>

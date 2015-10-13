@@ -1,6 +1,7 @@
 ﻿using Lisa.Excelsis.Data;
 using Lisa.Excelsis.WebApi.Models;
 using Microsoft.AspNet.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,24 +14,36 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var query = (from assessments in _db.FetchAssessments()
-                         select new
-                         {
-                             Id = assessments.Id,
-                             Student = new
-                             {
-                                 Name = assessments.Student.Name,
-                                 Number = assessments.Student.Number
-                             },
-                             Assessors = (from assessors in assessments.Assessors
-                                         select new
-                                         {
-                                             Username = assessors.Username
-                                         }),
-                             Assessed = assessments.Assessed,
-                             ExamId = assessments.ExamId
-                         });
-
+            var query = (from a in _db.FetchAssessments()
+                        from e in _db.FetchExams()
+                        where a.ExamId == e.Id
+                        select new
+                        {
+                            Id = a.Id,
+                            Student = new
+                            {
+                                Name = a.Student.Name,
+                                Number = a.Student.Number
+                            },
+                            Assessors = (from assessors in a.Assessors
+                                        select new
+                                        {
+                                            Username = assessors.Username
+                                        }),
+                            Assessed = new
+                            {
+                                Date = string.Format("{0}/{1}/{2}", a.Assessed.Day, a.Assessed.Month, a.Assessed.Year),
+                                Time = string.Format("{0}:{1}", addZero(a.Assessed.Hour), addZero(a.Assessed.Minute))
+                            },
+                            Exam = new
+                            {
+                                Id = e.Id,
+                                Name = e.Name,
+                                Subject = e.Subject.Name,
+                                Cohort = e.Cohort,
+                                DocumentationId = e.DocumentationId
+                            }
+                        });
             return new ObjectResult(query);
         }
 
@@ -203,6 +216,18 @@ namespace Lisa.Excelsis.WebApi.Controllers
             {
                 return new BadRequestResult();
             }            
+        }      
+
+        private string addZero(int DateTime)
+        {
+            if(DateTime < 10)
+            {
+                return "0" + DateTime.ToString();
+            }
+            else
+            {
+                return DateTime.ToString();
+            }
         }
 
         private readonly Database _db = new Database();
