@@ -1,7 +1,7 @@
 ﻿import {Router} from 'aurelia-router';
 import {HttpClient} from 'aurelia-http-client';
 
-export class Exam
+export class Welcome
 {
     static inject() {
         return [ Router ];
@@ -30,6 +30,6 @@ export class Exam
     }
 
     startAssessment(name, subject, cohort) {
-       this.router.navigateToRoute('assessment', {name: name, subject: subject, cohort: cohort });
+        this.router.navigateToRoute('assessment', { subject: subject, name: name,  cohort: cohort });
     }
 }
