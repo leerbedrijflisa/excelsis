@@ -11,7 +11,6 @@ export class Assessments
 
         this.http.get("/assessments/").then(response => {
             this.assessments = response.content;
-            
         });
     }
 }
