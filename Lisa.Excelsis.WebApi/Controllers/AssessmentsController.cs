@@ -33,7 +33,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                             Assessed = new
                             {
                                 Date = string.Format("{0}/{1}/{2}", a.Assessed.Day, a.Assessed.Month, a.Assessed.Year),
-                                Time = string.Format("{0}:{1}", a.Assessed.Hour, a.Assessed.Minute)
+                                Time = string.Format("{0}:{1}", addZero(a.Assessed.Hour), addZero(a.Assessed.Minute))
                             },
                             Exam = new
                             {
@@ -217,6 +217,18 @@ namespace Lisa.Excelsis.WebApi.Controllers
                 return new BadRequestResult();
             }            
         }      
+
+        private string addZero(int DateTime)
+        {
+            if(DateTime < 10)
+            {
+                return "0" + DateTime.ToString();
+            }
+            else
+            {
+                return DateTime.ToString();
+            }
+        }
 
         private readonly Database _db = new Database();
     }
