@@ -32,9 +32,7 @@ export class Start{
             this.assessment = response.content; 
             this.name = this.assessment.student.name;
             this.number = this.assessment.student.number;
-            // dd - mm - yyyy
             this.newDate = this.assessment.assessed.date;
-            // HH-mm
             this.newTime = this.assessment.assessed.time;
         });
     }   
