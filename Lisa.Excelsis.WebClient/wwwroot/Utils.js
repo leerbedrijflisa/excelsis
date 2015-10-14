@@ -1,11 +1,7 @@
 ﻿export class Utils {
 
     doubleDigit(digit){
-        if (digit.length < 2)
-        { 
-            digit = "0" + digit;
-        }
-        return digit;
+        return (digit.length < 2) ? "0" + digit : digit;
     }
 
     formatDate(date, time){
