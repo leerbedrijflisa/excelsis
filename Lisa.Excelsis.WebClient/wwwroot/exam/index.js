@@ -20,8 +20,7 @@ export class Welcome
         this.cohorts = [ "2015", "2014", "2013", "2012" ];
     }
 
-    showExams() {
-       
+    showExams() {       
         var subject = document.getElementById('subject').value;
         var cohort = document.getElementById('cohort').value;
         this.http.get("/exams/"+subject+"/"+cohort).then(response => {
