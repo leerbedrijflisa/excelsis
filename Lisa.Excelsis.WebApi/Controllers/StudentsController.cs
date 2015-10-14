@@ -25,7 +25,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
         {
             var query = (from student in _db.FetchStudents()
                          where student.Id == id
-                         select student);
+                         select student).FirstOrDefault();
 
             if (query == null)
             {

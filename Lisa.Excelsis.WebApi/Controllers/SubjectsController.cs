@@ -27,7 +27,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
         {
             var query = (from subjects in _db.FetchSubjects()
                          where subjects.Name.ToLower() == name.ToLower()
-                         select subjects);
+                         select subjects).FirstOrDefault();
 
             if (query == null)
             {
