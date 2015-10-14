@@ -206,7 +206,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                                             Id = o.Id,
                                             Criterium = o.Criterium,
                                             Result = o.Result,
-                                            Marks = o.Marks.Split(';'),
+                                            Marks = o.Marks.Split(';')
                                         })
                     }
                 );
