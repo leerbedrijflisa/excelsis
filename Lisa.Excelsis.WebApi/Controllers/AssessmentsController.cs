@@ -1,7 +1,6 @@
 ﻿using Lisa.Excelsis.Data;
 using Lisa.Excelsis.WebApi.Models;
 using Microsoft.AspNet.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,10 +14,10 @@ namespace Lisa.Excelsis.WebApi.Controllers
         public IActionResult Get()
         {
             var query = (from a in _db.FetchAssessments()
-                        from e in _db.FetchExams()
-                        where a.ExamId == e.Id
-                        select new
-                        {
+                         join e in _db.FetchExams()
+                         on a.ExamId equals e.Id
+                         select new
+                         {
                             Id = a.Id,
                             Student = new
                             {
@@ -44,42 +43,61 @@ namespace Lisa.Excelsis.WebApi.Controllers
                                 DocumentationId = e.DocumentationId
                             }
                         });
-            return new ObjectResult(query);
+            if (query == null || query.Count() == 0)
+            {
+                return new HttpNotFoundObjectResult(new { Error = "No assessments found." });
+            }
+            return new HttpOkObjectResult(query);
         }
 
         // GET assessment/{assessmentId}
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var query = (from assessments in _db.FetchAssessments()
-                         where assessments.Id == id
+            var query = (from a in _db.FetchAssessments()
+                         join e in _db.FetchExams()
+                         on a.ExamId equals e.Id
+                         where a.Id == id
                          select new
                          {
-                             Id = assessments.Id,
-                             Assessors = (from assessors in assessments.Assessors
+                             Id = a.Id,
+                             Student = a.Student,
+
+                             Assessors = (from assessors in a.Assessors
                                           select new
                                           {
                                               Username = assessors.Username
                                           }),
-                             ExamId = assessments.ExamId,
                              Assessed = new
                              {
-                                 Date = string.Format("{0}/{1}/{2}", assessments.Assessed.Day, assessments.Assessed.Month, assessments.Assessed.Year),
-                                 Time = string.Format("{0}:{1}", addZero(assessments.Assessed.Hour), addZero(assessments.Assessed.Minute))
+                                 Date = string.Format("{0}/{1}/{2}", a.Assessed.Day, a.Assessed.Month, a.Assessed.Year),
+                                 Time = string.Format("{0}:{1}", addZero(a.Assessed.Hour), addZero(a.Assessed.Minute))
                              },
-                             Student = assessments.Student,
-                             Observations = (from observation in _db.FetchObservations()
-                                             where observation.AssessmentId == id
+                             Exam = new
+                             {
+                                 Id = e.Id,
+                                 Name = e.Name,
+                                 Subject = e.Subject.Name,
+                                 Cohort = e.Cohort,
+                                 DocumentationId = e.DocumentationId
+                             },
+                             Observations = (from o in _db.FetchObservations()
+                                             where o.AssessmentId == id
                                              select new
                                              {
-                                                 Id = observation.Id,
-                                                 Criterium = observation.Criterium,
-                                                 Result = observation.Result,                                                 
-                                                 Marks = observation.Marks.Split(';'),
-                                             })
-                         }).FirstOrDefault();          
+                                                 Id = o.Id,
+                                                 Criterium = o.Criterium,
+                                                 Result = o.Result,                                                 
+                                                 Marks = o.Marks.Split(';')
+                                             })                            
+                         }).FirstOrDefault();
 
-            return new ObjectResult(query);
+            if (query == null)
+            {
+                var message = string.Format("The assessment with id {0} is not found.", id);
+                return new HttpNotFoundObjectResult(new { Error = message });
+            }
+            return new HttpOkObjectResult(query);
         }
 
         [HttpPost("/assessments/{subject}/{examName}/{cohort}")]
@@ -90,7 +108,8 @@ namespace Lisa.Excelsis.WebApi.Controllers
                 var errorList = ModelState.Values.SelectMany(m => m.Errors)
                                 .Select(e => e.Exception.Message)
                                 .ToList();
-                return new ObjectResult(errorList);
+
+                return new BadRequestObjectResult(errorList);
             }
 
             var _exam = (from exams in _db.FetchExams()
@@ -99,40 +118,29 @@ namespace Lisa.Excelsis.WebApi.Controllers
                            && exams.Cohort.ToLower() == cohort.ToLower()
                          select exams).FirstOrDefault();
 
-            var _criteria = (from criterium in _db.FetchCriteria()
-                             where criterium.ExamId == _exam.Id
-                             select criterium);
-
-            var _assessors = (from assessorA in _db.FetchAssessors()   
-                              join assessorB in assessmentPost.Assessors   
-                              on assessorA.Username equals assessorB.UserName   
-                              select assessorA);
-
-            var _student = (from student in _db.FetchStudents()
-                            where student.Name.ToLower() == assessmentPost.Student.Name.ToLower()
-                               || student.Number == assessmentPost.Student.Number
-                            select student).FirstOrDefault();
-
-            if (_exam != null)
+            if (_exam != null && assessmentPost != null)
             {
                 Assessment assessment = new Assessment();
                 List<Assessor> assessors = new List<Assessor>();
                 List<Observation> Observations = new List<Observation>();
-                Student student = new Student();
-                AssessmentPost.ObservationPost observation = new AssessmentPost.ObservationPost();
+                               
+                var _student = (from student in _db.FetchStudents()
+                                where student.Number.ToLower() == assessmentPost.Student.Number.ToLower()
+                                select student).FirstOrDefault();
 
                 if (_student == null)
                 {
-                    student.Name = assessmentPost.Student.Name;
-                    student.Number = assessmentPost.Student.Number;
-                    _db.AddStudent(student);
+                    _student.Name = assessmentPost.Student.Name;
+                    _student.Number = assessmentPost.Student.Number;
+                    _db.AddStudent(_student);
                 }
-                else
-                {
-                    student = _student;
-                }
-   
-                foreach(var assessor in assessmentPost.Assessors)
+                
+                var _assessors = (from assessorA in _db.FetchAssessors()
+                                  join assessorB in assessmentPost.Assessors
+                                  on assessorA.Username equals assessorB.UserName
+                                  select assessorA);
+
+                foreach (var assessor in assessmentPost.Assessors)
                 {
                     if (!_assessors.Any(a => assessor.UserName.Contains(a.Username)))
                     {
@@ -143,47 +151,35 @@ namespace Lisa.Excelsis.WebApi.Controllers
                         _db.AddAssessor(a);
                     }
                 }
-
+                
                 assessment.ExamId = _exam.Id;
-                assessment.Student = student;
+                assessment.Student = _student;
                 assessment.Assessed = assessmentPost.Assessed;
                 assessment.Assessors = _assessors.ToList();                
                 
                 _db.AddAssessment(assessment);
 
+                var _criteria = (from criterium in _db.FetchCriteria()
+                                 where criterium.ExamId == _exam.Id
+                                 select criterium);
+
                 if (_criteria != null)
-                {
-                   
+                {                   
                     foreach (var question in _criteria)
                     {
                         if (assessmentPost.Observations != null)
                         {
+                            var _observation = (from observation in assessmentPost.Observations
+                                               where question.Order == observation.CriteriumOrderId
+                                               select observation).FirstOrDefault();
 
-                            observation = (from o in assessmentPost.Observations
-                                           where question.Order == o.CriteriumOrderId
-                                           select o).FirstOrDefault();
-                        }
-                                                
-                        if (observation != null && assessmentPost.Observations != null)
-                        {
-                            Observations.Add(new Observation
-                            {
-                                AssessmentId = assessment.Id,
-                                Criterium = question,
-                                Result = observation.Result,
-                                Marks = string.Join(";", observation.Marks)
-
-                            });
-                        }
-                        else
-                        {
-                            Observations.Add(new Observation
-                            {
-                                AssessmentId = assessment.Id,
-                                Criterium = question,
-                                Result = "",
-                                Marks = ""
-                            });
+                            var o = new Observation();
+                            o.AssessmentId = assessment.Id;
+                            o.Criterium = question;
+                            o.Result = (_observation.Result != null) ? _observation.Result : "";
+                            o.Marks = (_observation.Marks != null) ? string.Join(";", _observation.Marks) : "";
+                            
+                            Observations.Add(o);
                         }
                     }
                 }
@@ -205,14 +201,14 @@ namespace Lisa.Excelsis.WebApi.Controllers
                         Assessed = assessment.Assessed,
                         Student = assessment.Student,
                         Observations = (from o in Observations
-                                    where o.AssessmentId == assessment.Id
-                                    select new
-                                    {
-                                        Id = o.Id,
-                                        Criterium = o.Criterium,
-                                        Result = o.Result,
-                                        Marks = o.Marks.Split(';'),
-                                    })
+                                        where o.AssessmentId == assessment.Id
+                                        select new
+                                        {
+                                            Id = o.Id,
+                                            Criterium = o.Criterium,
+                                            Result = o.Result,
+                                            Marks = o.Marks.Split(';')
+                                        })
                     }
                 );
             }
@@ -224,14 +220,8 @@ namespace Lisa.Excelsis.WebApi.Controllers
 
         private string addZero(int DateTime)
         {
-            if(DateTime < 10)
-            {
-                return "0" + DateTime.ToString();
-            }
-            else
-            {
-                return DateTime.ToString();
-            }
+
+            return (DateTime < 10) ? "0" + DateTime.ToString() : DateTime.ToString();
         }
 
         private readonly Database _db = new Database();
