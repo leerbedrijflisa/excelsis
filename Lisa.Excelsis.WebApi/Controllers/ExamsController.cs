@@ -21,9 +21,9 @@ namespace Lisa.Excelsis.WebApi.Controllers
                              Organization = exam.Organization
                          });
 
-            if(query == null)
+            if(query == null || query.Count() == 0)
             {
-                return new HttpNotFoundObjectResult(new { message = "No exams found." });
+                return new HttpNotFoundObjectResult(new { Error = "No exams found." });
             }
             return new HttpOkObjectResult(query);
         }
@@ -52,7 +52,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
             if (query == null)
             {
                 var message = string.Format("The exam with id {0} is not found.", id);
-                return new HttpNotFoundObjectResult(new { message = message });
+                return new HttpNotFoundObjectResult(new { Error = message });
             }
             return new HttpOkObjectResult(query);
         }
@@ -70,12 +70,12 @@ namespace Lisa.Excelsis.WebApi.Controllers
                              Subject = exams.Subject.Name,
                              Cohort = exams.Cohort,
                              Organization = exams.Organization
-                         }); ;
+                         }).FirstOrDefault();
 
             if (query == null)
             {
                 var message = string.Format("The exam with subject {0} and cohort {1} is not found.", subject, cohort);
-                return new HttpNotFoundObjectResult( new { message = message });
+                return new HttpNotFoundObjectResult( new { Error = message });
             }
             return new HttpOkObjectResult(query);
         }

@@ -14,9 +14,9 @@ namespace Lisa.Excelsis.WebApi.Controllers
             var query = (from subjects in _db.FetchSubjects()
                          select subjects);
 
-            if (query == null)
+            if (query == null || query.Count() == 0)
             {
-                return new HttpNotFoundObjectResult(new { message = "No subjects found." });
+                return new HttpNotFoundObjectResult(new { Error = "No subjects found." });
             }
             return new HttpOkObjectResult(query);
         }
@@ -32,7 +32,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
             if (query == null)
             {
                 var message = string.Format("The subject with the name {0} is not found.", name);
-                return new HttpNotFoundObjectResult(new { message = message });
+                return new HttpNotFoundObjectResult(new { Error = message });
             }
             return new HttpOkObjectResult(query);
         }
