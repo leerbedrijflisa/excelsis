@@ -13,7 +13,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
             var query = (from student in _db.FetchStudents()
                          select student);
 
-            return new ObjectResult(query);
+            if (query == null)
+            {
+                return new HttpNotFoundObjectResult(new { message = "No students found." });
+            }
+            return new HttpOkObjectResult(query);
         }
 
         [HttpGet("{id}")]
@@ -22,7 +26,13 @@ namespace Lisa.Excelsis.WebApi.Controllers
             var query = (from student in _db.FetchStudents()
                          where student.Id == id
                          select student);
-            return new ObjectResult(query);
+
+            if (query == null)
+            {
+                var message = string.Format("The student with id {0} is not found.", id);
+                return new HttpNotFoundObjectResult(new { message = message });
+            }
+            return new HttpOkObjectResult(query);
         }
 
         private readonly Database _db = new Database();

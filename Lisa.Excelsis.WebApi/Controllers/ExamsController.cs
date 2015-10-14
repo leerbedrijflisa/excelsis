@@ -1,5 +1,6 @@
 ﻿using Lisa.Excelsis.Data;
 using Microsoft.AspNet.Mvc;
+using System;
 using System.Linq;
 
 namespace Lisa.Excelsis.WebApi.Controllers
@@ -20,7 +21,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
                              Organization = exam.Organization
                          });
 
-            return new ObjectResult(query);
+            if(query == null)
+            {
+                return new HttpNotFoundObjectResult(new { message = "No exams found." });
+            }
+            return new HttpOkObjectResult(query);
         }
         [HttpGet("{id}")]
         public IActionResult Get(int id)
@@ -44,7 +49,12 @@ namespace Lisa.Excelsis.WebApi.Controllers
                                          }
                          }).FirstOrDefault();
 
-            return new ObjectResult(query);
+            if (query == null)
+            {
+                var message = string.Format("The exam with id {0} is not found.", id);
+                return new HttpNotFoundObjectResult(new { message = message });
+            }
+            return new HttpOkObjectResult(query);
         }
 
         [HttpGet("{subject}/{cohort}")]
@@ -60,9 +70,14 @@ namespace Lisa.Excelsis.WebApi.Controllers
                              Subject = exams.Subject.Name,
                              Cohort = exams.Cohort,
                              Organization = exams.Organization
-                         }); ;        
+                         }); ;
 
-            return new ObjectResult(query);
+            if (query == null)
+            {
+                var message = string.Format("The exam with subject {0} and cohort {1} is not found.", subject, cohort);
+                return new HttpNotFoundObjectResult( new { message = message });
+            }
+            return new HttpOkObjectResult(query);
         }
         private readonly Database _db = new Database();
     }
