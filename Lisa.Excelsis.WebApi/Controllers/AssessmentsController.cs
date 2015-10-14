@@ -43,7 +43,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
                                 DocumentationId = e.DocumentationId
                             }
                         });
-            return new ObjectResult(query);
+            if (query == null)
+            {
+                return new HttpNotFoundObjectResult(new { message = "No assessments found." });
+            }
+            return new HttpOkObjectResult(query);
         }
 
         // GET assessment/{assessmentId}
@@ -86,9 +90,14 @@ namespace Lisa.Excelsis.WebApi.Controllers
                                                  Result = o.Result,                                                 
                                                  Marks = o.Marks.Split(';')
                                              })                            
-                         }).FirstOrDefault();          
+                         }).FirstOrDefault();
 
-            return new ObjectResult(query);
+            if (query == null)
+            {
+                var message = string.Format("The assessment with id {0} is not found.", id);
+                return new HttpNotFoundObjectResult(new { message = message });
+            }
+            return new HttpOkObjectResult(query);
         }
 
         [HttpPost("/assessments/{subject}/{examName}/{cohort}")]
