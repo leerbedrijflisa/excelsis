@@ -1,0 +1,27 @@
+﻿<template>
+    <h1>${exam.subject} &ndash; ${exam.name}</h1>
+
+    <form>
+        <div>
+            <label>Naam</label>
+            <input type="text" value.bind="name">
+        </div>
+            
+        <div>
+            <label>Studentnummer</label>
+            <input type="text" value.bind="number">
+        </div>
+            
+        <div>
+            <label>Datum</label>
+            <input type="text" value.bind="newDate">
+        </div>
+
+        <div>
+            <label>Tijd</label>
+            <input type="text" value.bind="newTime">
+        </div>
+
+        <compose view="assessment/questions.html" model.bind="assessment">
+    </form>
+</template>

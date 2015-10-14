@@ -62,7 +62,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
                                               Username = assessors.Username
                                           }),
                              ExamId = assessments.ExamId,
-                             Assessed = assessments.Assessed,
+                             Assessed = new
+                             {
+                                 Date = string.Format("{0}/{1}/{2}", assessments.Assessed.Day, assessments.Assessed.Month, assessments.Assessed.Year),
+                                 Time = string.Format("{0}:{1}", addZero(assessments.Assessed.Hour), addZero(assessments.Assessed.Minute))
+                             },
                              Student = assessments.Student,
                              Observations = (from observation in _db.FetchObservations()
                                              where observation.AssessmentId == id
@@ -84,7 +88,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
             if (!ModelState.IsValid)
             {
                 var errorList = ModelState.Values.SelectMany(m => m.Errors)
-                                .Select(e => e.ErrorMessage)
+                                .Select(e => e.Exception.Message)
                                 .ToList();
                 return new ObjectResult(errorList);
             }

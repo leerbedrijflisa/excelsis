@@ -1,6 +1,6 @@
 ﻿import {HttpClient} from 'aurelia-http-client';
 
-export class Assessments
+export class List
 {
     activate() {
 
