@@ -108,7 +108,8 @@ namespace Lisa.Excelsis.WebApi.Controllers
                 var errorList = ModelState.Values.SelectMany(m => m.Errors)
                                 .Select(e => e.Exception.Message)
                                 .ToList();
-                return new ObjectResult(errorList);
+
+                return new BadRequestObjectResult(errorList);
             }
 
             var _exam = (from exams in _db.FetchExams()
