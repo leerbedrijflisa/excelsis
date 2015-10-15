@@ -13,9 +13,11 @@ export class Welcome
     }
 
     activate() {
+        this.error = "Een moment astublieft...";
         this.heading = "Exam"; 
         this.http.get("/subjects").then(response => {
-            this.subjects = response.content;            
+            this.subjects = response.content;
+            this.error = null;
         });        
         this.cohorts = [ "2015", "2014", "2013", "2012" ];
     }
@@ -26,7 +28,7 @@ export class Welcome
         this.http.get("/exams/"+subject+"/"+cohort).then(response => {
             this.exams = response.content;
             this.error = null;
-            document.getElementById("exams").style.display = "";
+            document.getElementById("exams").style.display = "inline";
         }, response => {
             if(response.statusCode == 404){
                 this.error = "Helaas er zijn geen examens gevonden.";

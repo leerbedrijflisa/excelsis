@@ -1,15 +1,17 @@
 ﻿<template>
     <h2>${heading}</h2>
 
-    <select value.bind="subject" id="subject">
-        <option repeat.for="subject of subjects" value="${subject.name}">${subject.name}</option>
-    </select>
+    <div id="selectBar">
+        <select value.bind="subject" id="subject">
+            <option repeat.for="subject of subjects" value="${subject.name}">${subject.name}</option>
+        </select>
 
-    <select value.bind="cohort" id="cohort">
-        <option repeat.for="cohort of cohorts">${cohort}</option>
-    </select>
+        <select value.bind="cohort" id="cohort">
+            <option repeat.for="cohort of cohorts">${cohort}</option>
+        </select>
 
-    <button click.delegate="showExams()">Zoek</button>
+        <button click.delegate="showExams()">Zoek</button>
+    </div>
     
     <ul class="exams" id="exams">        
         <li repeat.for="exam of exams" click.delegate="$parent.startAssessment(exam.name, exam.subject, exam.cohort)">
