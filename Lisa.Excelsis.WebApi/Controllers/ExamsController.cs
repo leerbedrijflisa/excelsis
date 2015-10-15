@@ -60,9 +60,16 @@ namespace Lisa.Excelsis.WebApi.Controllers
                              Subject = exams.Subject.Name,
                              Cohort = exams.Cohort,
                              Organization = exams.Organization
-                         }); ;        
+                         });
 
-            return new ObjectResult(query);
+            if (query.Count() == 0)
+            {
+                return new HttpNotFoundObjectResult(new {error = "No exam found." });
+            }
+            else
+            {
+                return new ObjectResult(query);
+            }
         }
         private readonly Database _db = new Database();
     }
