@@ -66,7 +66,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                             Organization = e.Organization
                         });
 
-            if (query == null)
+            if (query == null || query.Count() == 0)
             {
                 var message = string.Format("The exam with subject {0} and cohort {1} is not found.", subject, cohort);
                 return new HttpNotFoundObjectResult(new { Error = message });
