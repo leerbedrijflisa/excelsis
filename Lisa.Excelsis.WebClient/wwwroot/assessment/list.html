@@ -1,7 +1,7 @@
 ﻿<template>
     <h1>Beoordelingen:</h1>
 
-    <ul>
+    <ul id="assessments">
         <li repeat.for="assessment of assessments">
             <p>Examen: ${assessment.exam.subject} - ${assessment.exam.name}</p>
             <p>Cohort: ${assessment.exam.cohort}</p>
@@ -17,4 +17,6 @@
             </ul>
         </li>
     </ul>
+
+    <p id="error">${error}</p>
 </template>

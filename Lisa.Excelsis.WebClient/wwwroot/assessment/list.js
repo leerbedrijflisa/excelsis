@@ -11,6 +11,10 @@ export class List
 
         this.http.get("/assessments/").then(response => {
             this.assessments = response.content;
+        }, response => {
+            if(response.statusCode == 404){
+                this.error = "Helaas er zijn geen beoordelingen gevonden.";
+            }
         });
     }
 }
