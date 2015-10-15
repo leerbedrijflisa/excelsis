@@ -5,7 +5,20 @@
     }
 
     formatDate(date, time){
-        var splitDate = date.split("-");
+
+        if(date.indexOf("/") > 1)
+        {
+            var splitDate = date.split("/");
+        }
+        else if(date.indexOf("-") > 1)
+        {
+            var splitDate = date.split("-");
+        }
+        else
+        {
+            alert("Gelieve de datum als 15-10-2015 of 15/10/2015 te noteren.")
+        }
+        
         var splitTime = time.split(":");
 
         return splitDate[2] + "-" + this.doubleDigit(splitDate[1]) + 

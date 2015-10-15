@@ -15,8 +15,8 @@ export class Index{
         this.http = http;
 
         this.newDate = this.utils.doubleDigit(this.currentDate.getDate()) + 
-                 "-" + this.utils.doubleDigit(this.currentDate.getMonth() + 1) + 
-                 "-" + this.currentDate.getFullYear();
+                 "/" + this.utils.doubleDigit(this.currentDate.getMonth() + 1) + 
+                 "/" + this.currentDate.getFullYear();
 
         this.newTime = this.utils.doubleDigit(this.currentDate.getHours()) + 
                  ":" + this.utils.doubleDigit(this.currentDate.getMinutes());       
