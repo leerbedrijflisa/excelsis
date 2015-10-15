@@ -11,6 +11,7 @@ namespace Lisa.Excelsis.Data
         public virtual Subject Subject { get; set; }
         public string Organization { get; set; }
         public string Cohort { get; set; }
+        public int Crebo { get; set; }
         public int DocumentationId { get; set; }
         public virtual IList<Criterium> Questions { get; set; }
     }   

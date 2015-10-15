@@ -17,6 +17,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                              Name = exam.Name,
                              Subject = exam.Subject.Name,
                              Cohort = exam.Cohort,
+                             Crebo = exam.Crebo,
                              Organization = exam.Organization
                          });
 
@@ -33,6 +34,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                              Name = exam.Name,
                              Subject = exam.Subject.Name,
                              Cohort = exam.Cohort,
+                             Crebo = exam.Crebo,
                              Organization = exam.Organization,
                              Criteria = from criterium in _db.FetchCriteria()
                                          where criterium.ExamId == id
@@ -59,6 +61,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                              Name = exams.Name,
                              Subject = exams.Subject.Name,
                              Cohort = exams.Cohort,
+                             Crebo = exams.Crebo,
                              Organization = exams.Organization
                          }); ;        
 
