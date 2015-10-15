@@ -17,7 +17,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
                              username = assessor.Username
                          });
 
-            return new ObjectResult(query);
+            if (query == null || query.Count() == 0)
+            {
+                return new HttpNotFoundObjectResult(new { Error = "No assessors found." });
+            }
+            return new HttpOkObjectResult(query);
         }
 
         [HttpGet("{id}")]
@@ -29,9 +33,14 @@ namespace Lisa.Excelsis.WebApi.Controllers
                          {
                              id = assessor.Id,
                              username = assessor.Username
-                         });
+                         }).FirstOrDefault();
 
-            return new ObjectResult(query);
+            if (query == null)
+            {
+                var message = string.Format("The assessor with id {0} is not found.", id);
+                return new HttpNotFoundObjectResult(new { Error = message });
+            }
+            return new HttpOkObjectResult(query);
         }
 
         private readonly Database _db = new Database();

@@ -1,4 +1,17 @@
-﻿export class App {
+﻿import {HttpClient} from 'aurelia-http-client';
+
+export class App {
+
+    static inject(){
+        return [ HttpClient ]
+    }
+
+    constructor(http){
+        http.configure(x => {
+            x.withBaseUrl('http://localhost:5858/');      
+            x.withHeader('Content-Type', 'application/json')});
+    }
+
     configureRouter(config, router) {
         this.router = router;
 

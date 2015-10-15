@@ -14,7 +14,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
             var query = (from subjects in _db.FetchSubjects()
                          select subjects);
 
-            return new ObjectResult(query);
+            if (query == null || query.Count() == 0)
+            {
+                return new HttpNotFoundObjectResult(new { Error = "No subjects found." });
+            }
+            return new HttpOkObjectResult(query);
         }
 
         // GET subjects/{subject}
@@ -23,9 +27,14 @@ namespace Lisa.Excelsis.WebApi.Controllers
         {
             var query = (from subjects in _db.FetchSubjects()
                          where subjects.Name.ToLower() == name.ToLower()
-                         select subjects);
+                         select subjects).FirstOrDefault();
 
-            return new ObjectResult(query);
+            if (query == null)
+            {
+                var message = string.Format("The subject with the name {0} is not found.", name);
+                return new HttpNotFoundObjectResult(new { Error = message });
+            }
+            return new HttpOkObjectResult(query);
         }
 
         private readonly Database _db = new Database();

@@ -4,14 +4,14 @@ import {HttpClient} from 'aurelia-http-client';
 export class Welcome
 {
     static inject() {
-        return [ Router ];
+        return [ Router, HttpClient ];
     }
-    constructor(router){
+
+    constructor(router, http){
         this.router = router;
-        this.http = new HttpClient().configure(x => {
-            x.withBaseUrl('http://localhost:5858');      
-            x.withHeader('Content-Type', 'application/json')});
+        this.http = http;
     }
+
     activate() {
         this.heading = "Exam"; 
         this.http.get("/subjects").then(response => {
@@ -20,8 +20,7 @@ export class Welcome
         this.cohorts = [ "2015", "2014", "2013", "2012" ];
     }
 
-    showExams() {
-       
+    showExams() {       
         var subject = document.getElementById('subject').value;
         var cohort = document.getElementById('cohort').value;
         this.http.get("/exams/"+subject+"/"+cohort).then(response => {
