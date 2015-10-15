@@ -4,7 +4,7 @@ export class List
 {
     activate() {
 
-        this.error = "Beoordelingen worden geladen. Een moment geduld astublieft...";
+        this.message = "Beoordelingen worden geladen. Een moment geduld astublieft...";
 
         this.heading = "Assessments";
         this.http = new HttpClient().configure(x => {
@@ -13,10 +13,10 @@ export class List
 
         this.http.get("/assessments/").then(response => {
             this.assessments = response.content;
-            this.error = null;
+            this.message = null;
         }, response => {
             if(response.statusCode == 404){
-                this.error = "Helaas er zijn geen beoordelingen gevonden.";
+                this.message = "Helaas er zijn geen beoordelingen gevonden.";
             }
         });
     }
