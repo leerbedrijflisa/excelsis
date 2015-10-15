@@ -11,7 +11,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var query = _db.FetchSubjects();
+            var query = _db.FetchSubjects().Select(s => new
+                        {
+                            Id = s.Id,
+                            Name = s.Name
+                        });
 
             if (query == null || query.Count() == 0)
             {
@@ -24,7 +28,16 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet("{name}")]
         public IActionResult Get(string name)
         {
-            var query = _db.FetchSubjects().Where(s => s.Name.ToLower() == name.ToLower()).FirstOrDefault();
+            var query = _db.FetchSubjects().Where(s => s.Name.ToLower() == name.ToLower()).Select(s => new
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Assessors = s.Assessors.Select(a => new
+                {
+                    Id = a.Id,
+                    Username = a.Username
+                })
+            }).FirstOrDefault();
 
             if (query == null)
             {
