@@ -100,6 +100,45 @@ namespace Lisa.Excelsis.WebApi.Controllers
             return new HttpOkObjectResult(query);
         }
 
+        [HttpGet("student/{number}")]
+        public IActionResult Get(string number)
+        {
+            var query = (from a in _db.FetchAssessments()
+                         join e in _db.FetchExams()
+                         on a.ExamId equals e.Id
+                         where a.Student.Number.ToLower() == number.ToLower()
+                         select new
+                         {
+                             Id = a.Id,
+                             Student = a.Student,
+
+                             Assessors = (from assessors in a.Assessors
+                                          select new
+                                          {
+                                              Username = assessors.Username
+                                          }),
+                             Assessed = new
+                             {
+                                 Date = string.Format("{0}/{1}/{2}", a.Assessed.Day, a.Assessed.Month, a.Assessed.Year),
+                                 Time = string.Format("{0}:{1}", addZero(a.Assessed.Hour), addZero(a.Assessed.Minute))
+                             },
+                             Exam = new
+                             {
+                                 Id = e.Id,
+                                 Name = e.Name,
+                                 Subject = e.Subject.Name,
+                                 Cohort = e.Cohort,
+                                 DocumentationId = e.DocumentationId
+                             }
+                         });
+            if (query == null || query.Count() == 0)
+            {
+                var message = string.Format("No assessments found with student number {0}.", number);
+                return new HttpNotFoundObjectResult(new { Error = message});
+            }
+            return new HttpOkObjectResult(query);
+        }
+
         [HttpPost("/assessments/{subject}/{examName}/{cohort}")]
         public IActionResult Post([FromBody] AssessmentPost assessmentPost, string subject, string examName, string cohort)
         {
