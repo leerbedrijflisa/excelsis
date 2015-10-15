@@ -11,7 +11,7 @@
 
     <button click.delegate="showExams()">Zoek</button>
     
-    <ul class="exams">        
+    <ul class="exams" id="exams">        
         <li repeat.for="exam of exams" click.delegate="$parent.startAssessment(exam.name, exam.subject, exam.cohort)">
             <p>Vak: ${exam.subject}</p>
             <p>Naam: ${exam.name}</p>
@@ -19,5 +19,7 @@
             <p>Organisatie: ${exam.organization}</p>
         </li>       
     </ul>
+
+    <p id="error">${error}</p>
 
 </template>

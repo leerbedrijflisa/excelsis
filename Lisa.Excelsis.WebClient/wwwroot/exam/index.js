@@ -25,7 +25,14 @@ export class Welcome
         var subject = document.getElementById('subject').value;
         var cohort = document.getElementById('cohort').value;
         this.http.get("/exams/"+subject+"/"+cohort).then(response => {
-            this.exams = response.content;            
+            this.exams = response.content;
+            this.error = null;
+            document.getElementById("exams").style.display = "";
+        }, response => {
+            if(response.statusCode == 404){
+                this.error = "Helaas er zijn geen examens gevonden.";
+                document.getElementById("exams").style.display = "none";
+            }
         });
     }
 
