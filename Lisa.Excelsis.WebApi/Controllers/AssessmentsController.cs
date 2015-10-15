@@ -78,7 +78,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                                  Cohort = e.Cohort,
                                  DocumentationId = e.DocumentationId
                              },
-                             Observations = _db.FetchObservations().Where(o => o.AssessmentId == id).Select( o => new
+                             Observations = _db.FetchObservations().Where(o => o.AssessmentId == id).Select(o => new
                              {
                                  Id = o.Id,
                                  Criterium = o.Criterium,
@@ -106,7 +106,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                          {
                              Id = a.Id,
                              Student = a.Student,
-                             Assessors = a.Assessors.Select( assessors => new
+                             Assessors = a.Assessors.Select(assessors => new
                              {
                                 Username = assessors.Username
                              }),
@@ -144,9 +144,9 @@ namespace Lisa.Excelsis.WebApi.Controllers
                 return new BadRequestObjectResult(errorList);
             }
              
-            var _exam =  _db.FetchExams().Where( e => e.Subject.Name.ToLower() == subject.ToLower()
-                                                   && e.Name.ToLower() == examName.ToLower()
-                                                   && e.Cohort.ToLower() == cohort.ToLower()).FirstOrDefault();
+            var _exam =  _db.FetchExams().Where(e => e.Subject.Name.ToLower() == subject.ToLower()
+                                                  && e.Name.ToLower() == examName.ToLower()
+                                                  && e.Cohort.ToLower() == cohort.ToLower()).FirstOrDefault();
 
             if (_exam != null && assessmentPost != null)
             {
@@ -154,7 +154,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                 List<Assessor> assessors = new List<Assessor>();
                 List<Observation> Observations = new List<Observation>();
                                
-                var _student = _db.FetchStudents().Where( s => s.Number.ToLower() == assessmentPost.Student.Number.ToLower()).FirstOrDefault();
+                var _student = _db.FetchStudents().Where(s => s.Number.ToLower() == assessmentPost.Student.Number.ToLower()).FirstOrDefault();
 
                 if (_student == null)
                 {
@@ -187,7 +187,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                 
                 _db.AddAssessment(assessment);
 
-                var _criteria = _db.FetchCriteria().Where( c => c.ExamId == _exam.Id);
+                var _criteria = _db.FetchCriteria().Where(c => c.ExamId == _exam.Id);
 
                 if (_criteria != null)
                 {                   
@@ -215,7 +215,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                     new
                     {
                         Id = assessment.Id,
-                        Assessors = assessment.Assessors.Select( a => new
+                        Assessors = assessment.Assessors.Select(a => new
                         {
                             Id = a.Id,
                             Username = a.Username
@@ -223,7 +223,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                         ExamId = assessment.ExamId,
                         Assessed = assessment.Assessed,
                         Student = assessment.Student,
-                        Observations = Observations.Where( o => o.AssessmentId == assessment.Id).Select( o => new                                        
+                        Observations = Observations.Where(o => o.AssessmentId == assessment.Id).Select(o => new                                        
                         {
                             Id = o.Id,
                             Criterium = o.Criterium,

@@ -11,8 +11,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var query = (from subjects in _db.FetchSubjects()
-                         select subjects);
+            var query = _db.FetchSubjects();
 
             if (query == null || query.Count() == 0)
             {
@@ -25,9 +24,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet("{name}")]
         public IActionResult Get(string name)
         {
-            var query = (from subjects in _db.FetchSubjects()
-                         where subjects.Name.ToLower() == name.ToLower()
-                         select subjects).FirstOrDefault();
+            var query = _db.FetchSubjects().Where(s => s.Name.ToLower() == name.ToLower()).FirstOrDefault();
 
             if (query == null)
             {

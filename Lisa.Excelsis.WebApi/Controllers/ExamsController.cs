@@ -11,15 +11,14 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var query = (from exam in _db.FetchExams()
-                         select new
-                         {
-                             Id = exam.Id,
-                             Name = exam.Name,
-                             Subject = exam.Subject.Name,
-                             Cohort = exam.Cohort,
-                             Organization = exam.Organization
-                         });
+            var query = _db.FetchExams().Select(e => new
+                        {
+                            Id = e.Id,
+                            Name = e.Name,
+                            Subject = e.Subject.Name,
+                            Cohort = e.Cohort,
+                            Organization = e.Organization
+                        });
 
             if(query == null || query.Count() == 0)
             {
@@ -30,23 +29,19 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var query = (from exam in _db.FetchExams()
-                         where exam.Id == id
-                         select new
-                         {
-                             Id = exam.Id,
-                             Name = exam.Name,
-                             Subject = exam.Subject.Name,
-                             Cohort = exam.Cohort,
-                             Organization = exam.Organization,
-                             Criteria = from criterium in _db.FetchCriteria()
-                                         where criterium.ExamId == id
-                                         select new
-                                         {
-                                             Id = criterium.Id,
-                                             Description = criterium.Description,
-                                             Rating = criterium.value
-                                         }
+            var query = _db.FetchExams().Where(e => e.Id == id).Select(e => new
+                        {
+                            Id = e.Id,
+                            Name = e.Name,
+                            Subject = e.Subject.Name,
+                            Cohort = e.Cohort,
+                            Organization = e.Organization,
+                            Criteria = _db.FetchCriteria().Where(c => c.ExamId == id).Select(c => new
+                                       {
+                                           Id = c.Id,
+                                           Description = c.Description,
+                                           Rating = c.value
+                                       })
                          }).FirstOrDefault();
 
             if (query == null)
@@ -60,16 +55,13 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet("{subject}/{cohort}")]
         public IActionResult Get(string subject = null, string cohort = null)
         {
-            var query = (from exams in _db.FetchExams()
-                         where exams.Subject.Name.ToLower() == subject.ToLower() &&
-                         exams.Cohort == cohort
-                         select new
+            var query = _db.FetchExams().Where(e => e.Subject.Name.ToLower() == subject.ToLower() && e.Cohort == cohort).Select(e => new
                          {
-                             Id = exams.Id,
-                             Name = exams.Name,
-                             Subject = exams.Subject.Name,
-                             Cohort = exams.Cohort,
-                             Organization = exams.Organization
+                             Id = e.Id,
+                             Name = e.Name,
+                             Subject = e.Subject.Name,
+                             Cohort = e.Cohort,
+                             Organization = e.Organization
                          }).FirstOrDefault();
 
             if (query == null)
