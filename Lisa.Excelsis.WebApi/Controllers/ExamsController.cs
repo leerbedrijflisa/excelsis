@@ -64,7 +64,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                             Cohort = e.Cohort,
                             Crebo = e.Crebo,
                             Organization = e.Organization
-                        }).FirstOrDefault();
+                        });
 
             if (query == null)
             {
