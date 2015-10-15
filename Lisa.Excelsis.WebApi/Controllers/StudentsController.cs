@@ -10,8 +10,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var query = (from student in _db.FetchStudents()
-                         select student);
+            var query = _db.FetchStudents();                        
 
             if (query == null || query.Count() == 0)
             {
@@ -23,10 +22,8 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var query = (from student in _db.FetchStudents()
-                         where student.Id == id
-                         select student).FirstOrDefault();
-
+            var query = _db.FetchStudents().Where(s => s.Id == id).FirstOrDefault();
+   
             if (query == null)
             {
                 var message = string.Format("The student with id {0} is not found.", id);

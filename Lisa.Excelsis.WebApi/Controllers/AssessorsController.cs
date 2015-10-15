@@ -10,11 +10,10 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var query = (from assessor in _db.FetchAssessors()
-                         select new
+            var query =  _db.FetchAssessors().Select(a => new
                          {
-                             id = assessor.Id,
-                             username = assessor.Username
+                             id = a.Id,
+                             username = a.Username
                          });
 
             if (query == null || query.Count() == 0)
@@ -27,13 +26,11 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var query = (from assessor in _db.FetchAssessors()
-                         where assessor.Id == id
-                         select new
-                         {
-                             id = assessor.Id,
-                             username = assessor.Username
-                         }).FirstOrDefault();
+            var query = _db.FetchAssessors().Where(a => a.Id == id).Select(a => new
+                        {
+                            id = a.Id,
+                            username = a.Username
+                        }).FirstOrDefault();
 
             if (query == null)
             {
