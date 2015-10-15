@@ -1,7 +1,11 @@
 ﻿using Lisa.Excelsis.Data;
+using Lisa.Excelsis.WebApi.TransferObjects;
 using Microsoft.AspNet.Mvc;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using System.Text.RegularExpressions;
 
 namespace Lisa.Excelsis.WebApi.Controllers
 {
@@ -10,20 +14,33 @@ namespace Lisa.Excelsis.WebApi.Controllers
     {
         // GET: subjects
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery] Filter filter )
         {
-            var query = _db.FetchSubjects().Select(s => new
-                        {
-                            Id = s.Id,
-                            Name = s.Name
-                        });
+            IEnumerable query;
+            if( filter.Assessor != null)
+            {
+                query = _db.FetchSubjects().OrderBy(x => x, new CustomCompare(filter.Assessor)).Select(s => new
+                {
+                    Id = s.Id,
+                    Name = s.Name
+                });
+            }
+            else
+            {
+                query = _db.FetchSubjects().OrderBy(x => x).Select(s => new
+                {
+                    Id = s.Id,
+                    Name = s.Name
+                });
+            }
+            
 
-            if (query == null || query.Count() == 0)
+            if (query == null)
             {
                 return new HttpNotFoundObjectResult(new { Error = "No subjects found." });
             }
             return new HttpOkObjectResult(query);
-        }
+        }       
 
         // GET subjects/{subject}
         [HttpGet("{name}")]
@@ -43,23 +60,6 @@ namespace Lisa.Excelsis.WebApi.Controllers
             if (query == null)
             {
                 var message = string.Format("The subject with the name {0} is not found.", name);
-                return new HttpNotFoundObjectResult(new { Error = message });
-            }
-            return new HttpOkObjectResult(query);
-        }
-
-        [HttpGet("assessor/{name}")]
-        public IActionResult Order(string name)
-        {
-            var query = _db.FetchSubjects().OrderBy(x => x, new CustomCompare(name)).Select(s => new
-            {
-                Id = s.Id,
-                Name = s.Name
-            });
-
-            if (query == null)
-            {
-                var message = string.Format("The subject with name {0} is not found.", name);
                 return new HttpNotFoundObjectResult(new { Error = message });
             }
             return new HttpOkObjectResult(query);
