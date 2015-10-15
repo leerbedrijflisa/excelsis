@@ -9,5 +9,6 @@ namespace Lisa.Excelsis.Data
         public int Id { get; set; }
         public string Username { get; set; }
         public virtual ICollection<Assessment> Assessments { get; set; }
+        public virtual ICollection<Subject> Subjects { get; set; }
     }
 }

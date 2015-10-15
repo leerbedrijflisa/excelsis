@@ -1,5 +1,6 @@
 namespace Lisa.Excelsis.Data.Migrations
 {
+    using System.Collections;
     using System.Data.Entity.Migrations;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Lisa.Excelsis.Data.ExcelsisDb>
@@ -11,15 +12,20 @@ namespace Lisa.Excelsis.Data.Migrations
 
         protected override void Seed(ExcelsisDb context)
         {
-            var dutch = new Subject { Name = "Nederlands" };
-            var softwareDevelopment = new Subject { Name = "Applicatieontwikkelaar" };
-            var english = new Subject { Name = "Engels" };
-            var mathematics = new Subject { Name = "Rekenen" };
+
+            var joost = new Assessor { Username = "joostronkesagerbeek" };
+
+            context.Assessors.AddOrUpdate(a => a.Username, new Assessor[] { joost });
+
+            var dutch = new Subject { Name = "Nederlands", Assessors = new Assessor[] { joost } };
+            var softwareDevelopment = new Subject { Name = "Applicatieontwikkelaar", Assessors = new Assessor[] { joost } };
+            var english = new Subject { Name = "Engels", Assessors = new Assessor[] { joost } };
+            var mathematics = new Subject { Name = "Rekenen", Assessors = new Assessor[] { joost } };
 
 
-            context.Subjects.AddOrUpdate(new Subject[] { dutch, softwareDevelopment, english, mathematics });
+            context.Subjects.AddOrUpdate(s => s.Name, new Subject[] { dutch, softwareDevelopment, english, mathematics });
 
-            context.Exams.AddOrUpdate(new Exam[] {
+            context.Exams.AddOrUpdate(e => e.Crebo, new Exam[] {
                 new Exam { Subject = dutch, Name = "Spreken", Cohort = "2015", Crebo = "9001", Organization = "Da Vinci College"},
                 new Exam { Subject = dutch, Name = "Schrijven", Cohort = "2015", Crebo = "9002", Organization = "Da Vinci College"},
                 new Exam { Subject = english, Name = "Spreken", Cohort = "2015", Crebo = "9003", Organization = "Da Vinci College"},
@@ -34,7 +40,7 @@ namespace Lisa.Excelsis.Data.Migrations
             {
                 for (var i = 1; i < 11; i++)
                 {
-                    context.Criteria.AddOrUpdate(new Criterium
+                    context.Criteria.AddOrUpdate(c => c.ExamId, new Criterium
                     {
                         Description = "De kandidaat doet wat van hem verwacht wordt.",
                         value = "V",

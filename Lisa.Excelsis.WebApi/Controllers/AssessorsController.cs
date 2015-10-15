@@ -29,8 +29,13 @@ namespace Lisa.Excelsis.WebApi.Controllers
             var query = _db.FetchAssessors().Where(a => a.Id == id).Select(a => new
                         {
                             id = a.Id,
-                            username = a.Username
-                        }).FirstOrDefault();
+                            username = a.Username,
+                            Subjects = a.Subjects.Select(s => new
+                            {
+                                Id = s.Id,
+                                Name = s.Name
+                            })
+            }).FirstOrDefault();
 
             if (query == null)
             {
