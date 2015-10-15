@@ -69,9 +69,12 @@ namespace Lisa.Excelsis.WebApi.Controllers
             if (query == null)
             {
                 var message = string.Format("The exam with subject {0} and cohort {1} is not found.", subject, cohort);
-                return new HttpNotFoundObjectResult( new { Error = message });
+                return new HttpNotFoundObjectResult(new { Error = message });
             }
-            return new HttpOkObjectResult(query);
+            else
+            {
+                return new HttpOkObjectResult(query);
+            }
         }
         private readonly Database _db = new Database();
     }
