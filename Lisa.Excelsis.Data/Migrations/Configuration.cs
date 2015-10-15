@@ -18,8 +18,8 @@ namespace Lisa.Excelsis.Data.Migrations
             context.Assessors.AddOrUpdate(a => a.Username, new Assessor[] { joost });
 
             var dutch = new Subject { Name = "Nederlands", Assessors = new Assessor[] { joost } };
-            var softwareDevelopment = new Subject { Name = "Applicatieontwikkelaar", Assessors = new Assessor[] { joost } };
-            var english = new Subject { Name = "Engels", Assessors = new Assessor[] { joost } };
+            var softwareDevelopment = new Subject { Name = "Applicatieontwikkelaar"};
+            var english = new Subject { Name = "Engels" };
             var mathematics = new Subject { Name = "Rekenen", Assessors = new Assessor[] { joost } };
 
 

@@ -1,5 +1,6 @@
 ﻿using Lisa.Excelsis.Data;
 using Microsoft.AspNet.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Lisa.Excelsis.WebApi.Controllers
@@ -42,6 +43,23 @@ namespace Lisa.Excelsis.WebApi.Controllers
             if (query == null)
             {
                 var message = string.Format("The subject with the name {0} is not found.", name);
+                return new HttpNotFoundObjectResult(new { Error = message });
+            }
+            return new HttpOkObjectResult(query);
+        }
+
+        [HttpGet("assessor/{name}")]
+        public IActionResult Order(string name)
+        {
+            var query = _db.FetchSubjects().OrderBy(x => x, new CustomCompare(name)).Select(s => new
+            {
+                Id = s.Id,
+                Name = s.Name
+            });
+
+            if (query == null)
+            {
+                var message = string.Format("The subject with name {0} is not found.", name);
                 return new HttpNotFoundObjectResult(new { Error = message });
             }
             return new HttpOkObjectResult(query);
