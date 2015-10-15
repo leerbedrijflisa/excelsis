@@ -13,9 +13,9 @@ export class Welcome
     }
 
     activate() {
-        this.message = "Een moment astublieft...";
+        this.message = "Een moment alstublieft...";
         this.heading = "Exam"; 
-        this.http.get("/subjects").then(response => {
+        this.http.get("/subjects?assessor=joostronkesagerbeek").then(response => {
             this.subjects = response.content;
             this.message = null;
         });        
