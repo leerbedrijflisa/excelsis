@@ -158,6 +158,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
 
                 if (_student == null)
                 {
+                    _student = new Student();
                     _student.Name = assessmentPost.Student.Name;
                     _student.Number = assessmentPost.Student.Number;
                     _db.AddStudent(_student);
@@ -193,18 +194,16 @@ namespace Lisa.Excelsis.WebApi.Controllers
                 {                   
                     foreach (var question in _criteria)
                     {
-                        if (assessmentPost.Observations != null)
-                        {
-                            var _observation = assessmentPost.Observations.Where(observation => question.Order == observation.CriteriumOrderId).FirstOrDefault();
-
-                            var o = new Observation();
-                            o.AssessmentId = assessment.Id;
-                            o.Criterium = question;
-                            o.Result = (_observation.Result != null) ? _observation.Result : "";
-                            o.Marks = (_observation.Marks != null) ? string.Join(";", _observation.Marks) : "";
+                         AssessmentPost.ObservationPost  _observation = assessmentPost.Observations?
+                                                                        .Where(observation => question.Order == observation.CriteriumOrderId).FirstOrDefault();
+                        
+                        var o = new Observation();
+                        o.AssessmentId = assessment.Id;
+                        o.Criterium = question;
+                        o.Result = (_observation != null && _observation.Result != null) ? _observation.Result : "";
+                        o.Marks = (_observation != null && _observation.Marks != null) ? string.Join(";", _observation.Marks) : "";
                             
-                            Observations.Add(o);
-                        }
+                        Observations.Add(o);                        
                     }
                 }
 
