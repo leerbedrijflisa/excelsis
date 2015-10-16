@@ -12,30 +12,13 @@ namespace Lisa.Excelsis.WebApi.Controllers
     [Route("[controller]")]
     public class SubjectsController : Controller
     {
-        // GET: subjects
         [HttpGet]
-        public IActionResult Get([FromQuery] Filter filter )
+        public IActionResult Get([FromQuery] Filter filter)
         {
-            IEnumerable query;
-            if( filter.Assessor != null)
-            {
-                query = _db.FetchSubjects().OrderBy(subject => subject, new CustomCompare(filter.Assessor)).Select(s => new
-                {
-                    Id = s.Id,
-                    Name = s.Name
-                });
-            }
-            else
-            {
-                query = _db.FetchSubjects().OrderBy(subject => subject.Name).Select(subject => new
-                {
-                    Id = subject.Id,
-                    Name = subject.Name
-                });
-            }
-            
-            return new HttpOkObjectResult(query);
-        }       
+            var subjects = _db.FetchSubjects(filter.Assessor);
+            var result = SubjectMapper.ToTransferObject(subjects);
+            return new HttpOkObjectResult(result);
+        }
 
         // GET subjects/{subject}
         [HttpGet("{name}")]

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Lisa.Excelsis.WebApi
+namespace Lisa.Excelsis.Data
 {
-    public class CustomCompare : IComparer<Subject>
+    public class SubjectComparer : IComparer<Subject>
     {
-        public CustomCompare(string name)
+        public SubjectComparer(string name)
         {
             Name = name;
         }

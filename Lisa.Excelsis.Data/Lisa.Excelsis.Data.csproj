@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SubjectComparer.cs" />
     <Compile Include="Database\Database.Assessors.cs" />
     <Compile Include="Database\Database.Criteria.cs" />
     <Compile Include="Database.cs" />
