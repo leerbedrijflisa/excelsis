@@ -19,7 +19,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
             IEnumerable query;
             if( filter.Assessor != null)
             {
-                query = _db.FetchSubjects().OrderBy(x => x, new CustomCompare(filter.Assessor)).Select(s => new
+                query = _db.FetchSubjects().OrderBy(subject => subject, new CustomCompare(filter.Assessor)).Select(s => new
                 {
                     Id = s.Id,
                     Name = s.Name
@@ -27,18 +27,13 @@ namespace Lisa.Excelsis.WebApi.Controllers
             }
             else
             {
-                query = _db.FetchSubjects().OrderBy(x => x).Select(s => new
+                query = _db.FetchSubjects().OrderBy(subject => subject.Name).Select(subject => new
                 {
-                    Id = s.Id,
-                    Name = s.Name
+                    Id = subject.Id,
+                    Name = subject.Name
                 });
             }
             
-
-            if (query == null)
-            {
-                return new HttpNotFoundObjectResult(new { Error = "No subjects found." });
-            }
             return new HttpOkObjectResult(query);
         }       
 
