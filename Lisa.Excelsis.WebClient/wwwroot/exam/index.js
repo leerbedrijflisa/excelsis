@@ -1,8 +1,8 @@
 ﻿import {Router} from 'aurelia-router';
 import {HttpClient} from 'aurelia-http-client';
 
-export class Welcome
-{
+export class Exam{
+    
     static inject() {
         return [ Router, HttpClient ];
     }
