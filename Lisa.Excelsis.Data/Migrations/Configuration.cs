@@ -12,7 +12,6 @@ namespace Lisa.Excelsis.Data.Migrations
 
         protected override void Seed(ExcelsisDb context)
         {
-
             var joost = new Assessor { Username = "joostronkesagerbeek" };
 
             context.Assessors.AddOrUpdate(a => a.Username, new Assessor[] { joost });
@@ -21,7 +20,6 @@ namespace Lisa.Excelsis.Data.Migrations
             var softwareDevelopment = new Subject { Name = "Applicatieontwikkelaar"};
             var english = new Subject { Name = "Engels" };
             var mathematics = new Subject { Name = "Rekenen", Assessors = new Assessor[] { joost } };
-
 
             context.Subjects.AddOrUpdate(s => s.Name, new Subject[] { dutch, softwareDevelopment, english, mathematics });
 
@@ -35,6 +33,8 @@ namespace Lisa.Excelsis.Data.Migrations
                 new Exam { Subject = mathematics, Name = "Verhoudingen", Cohort = "2015", Crebo = "9007", Organization = "Da Vinci College"},
                 new Exam { Subject = mathematics, Name = "Meten en meetkunde", Cohort = "2015", Crebo = "9008", Organization = "Da Vinci College"}
             });
+
+            context.SaveChanges();
 
             foreach (var exam in context.Exams)
             {
