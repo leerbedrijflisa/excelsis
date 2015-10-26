@@ -16,7 +16,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
         public IActionResult Get([FromQuery] Filter filter)
         {
             var subjects = _db.FetchSubjects(filter.Assessor);
-            var result = SubjectMapper.ToTransferObject(subjects);
+            var result = SubjectMapper.ToTransferObjects(subjects);
             return new HttpOkObjectResult(result);
         }
 
@@ -24,23 +24,9 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet("{name}")]
         public IActionResult Get(string name)
         {
-            var query = _db.FetchSubjects().Where(s => s.Name.ToLower() == name.ToLower()).Select(s => new
-            {
-                Id = s.Id,
-                Name = s.Name,
-                Assessors = s.Assessors.Select(a => new
-                {
-                    Id = a.Id,
-                    Username = a.Username
-                })
-            }).FirstOrDefault();
-
-            if (query == null)
-            {
-                var message = string.Format("The subject with the name {0} is not found.", name);
-                return new HttpNotFoundObjectResult(new { Error = message });
-            }
-            return new HttpOkObjectResult(query);
+            var subject = _db.FetchSubjects().Where(s => s.Name.ToLower() == name.ToLower());
+            var result = SubjectMapper.ToTransferObject(subject);
+            return new HttpOkObjectResult(result);
         }
 
         private readonly Database _db = new Database();
