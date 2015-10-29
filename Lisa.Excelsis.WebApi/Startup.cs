@@ -16,7 +16,7 @@ namespace Lisa.Excelsis.WebApi
                 options.SerializerSettings.MissingMemberHandling = MissingMemberHandling.Error;
             });
 
-            services.ConfigureCors(options =>
+            services.AddCors(options =>
             {
                 options.AddPolicy(
                    "CorsExcelsis",
@@ -32,6 +32,7 @@ namespace Lisa.Excelsis.WebApi
             app.UseCors("CorsExcelsis");
             app.UseMvcWithDefaultRoute();
             app.UseStaticFiles();
+            app.UseIISPlatformHandler();
         }
     }
 }
