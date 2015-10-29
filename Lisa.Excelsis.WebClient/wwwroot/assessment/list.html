@@ -1,8 +1,17 @@
 ﻿<template>
     <h1>Beoordelingen:</h1>
 
-    <ul id="assessments">
-        <li repeat.for="assessment of assessments">
+    <div id="selectBar">
+        <select value.bind="student" id="student">
+            <option repeat.for="student of students" value="${student.number}">${student.name}</option>
+        </select>
+
+        <button click.delegate="showAssessments('student')">Zoek op student</button>
+        <button click.delegate="showAssessments()">Bekijk alle assessments</button>
+    </div>
+
+    <ul class="results" id="assessments">
+        <li repeat.for="assessment of assessments" click.delegate="$parent.openAssessment(assessment.exam.name, assessment.exam.subject, assessment.exam.cohort, assessment.id)">
             <p>Examen: ${assessment.exam.subject} - ${assessment.exam.name}</p>
             <p>Cohort: ${assessment.exam.cohort}</p>
             <p>Datum: ${assessment.assessed.date}</p>

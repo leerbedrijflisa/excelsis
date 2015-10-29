@@ -23,18 +23,18 @@ form li {
 img{
     width: 16px;
 }
-ul.exams {
+ul.results {
     list-style-type: none;
     padding: 0px;
     margin: 0px;
 }
-ul.exams > li {
+ul.results > li {
     border: 1px solid black;
     margin: 10px;
     padding: 10px;
     max-width: 250px;
 }
-ul.exams > li:hover {
+ul.results > li:hover {
     background-color:gray;
     border-color: Highlight;
     cursor: pointer;
