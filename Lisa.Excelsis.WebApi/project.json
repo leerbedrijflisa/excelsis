@@ -1,4 +1,4 @@
-{
+﻿{
   "webroot": "wwwroot",
   "version": "1.0.0-*",
 
@@ -18,7 +18,8 @@
     "dnx451": {
       "dependencies": {
         "Lisa.Excelsis.Data": "1.0.0-*"
-      }
+      },
+      "dnxcore50": { }
     }
   },
 

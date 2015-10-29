@@ -24,15 +24,15 @@ namespace Lisa.Excelsis.WebApi
                     {
                         builder.WithOrigins("*").AllowAnyHeader().AllowAnyMethod();
                     });
-            });            
+            });
         }
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseIISPlatformHandler();
             app.UseCors("CorsExcelsis");
             app.UseMvcWithDefaultRoute();
-            app.UseStaticFiles();
-            app.UseIISPlatformHandler();
+            app.UseStaticFiles();            
         }
     }
 }

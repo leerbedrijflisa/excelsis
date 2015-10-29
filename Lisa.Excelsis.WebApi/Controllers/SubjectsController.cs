@@ -27,7 +27,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
             }
             else
             {
-                query = _db.FetchSubjects().OrderBy(x => x).Select(s => new
+                query = _db.FetchSubjects().OrderBy(x => x.Name).Select(s => new
                 {
                     Id = s.Id,
                     Name = s.Name

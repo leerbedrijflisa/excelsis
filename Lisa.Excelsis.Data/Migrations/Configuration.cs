@@ -36,6 +36,8 @@ namespace Lisa.Excelsis.Data.Migrations
                 new Exam { Subject = mathematics, Name = "Meten en meetkunde", Cohort = "2015", Crebo = "9008", Organization = "Da Vinci College"}
             });
 
+            context.SaveChanges();
+
             foreach (var exam in context.Exams)
             {
                 for (var i = 1; i < 11; i++)
