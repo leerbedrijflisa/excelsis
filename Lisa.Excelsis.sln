@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lisa.Excelsis.Data", "Lisa.
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Lisa.Excelsis.WebApi", "Lisa.Excelsis.WebApi\Lisa.Excelsis.WebApi.xproj", "{EB87AC46-ECF4-401D-AC0B-DF5FC1965FC9}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Lisa.Excelsis.WebClient2", "Lisa.Excelsis.WebClient2\Lisa.Excelsis.WebClient2.xproj", "{F017C678-CBB2-4565-BBD8-A53A23E7ABBB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{EB87AC46-ECF4-401D-AC0B-DF5FC1965FC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB87AC46-ECF4-401D-AC0B-DF5FC1965FC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB87AC46-ECF4-401D-AC0B-DF5FC1965FC9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F017C678-CBB2-4565-BBD8-A53A23E7ABBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F017C678-CBB2-4565-BBD8-A53A23E7ABBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F017C678-CBB2-4565-BBD8-A53A23E7ABBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F017C678-CBB2-4565-BBD8-A53A23E7ABBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
