@@ -1,6 +1,7 @@
 ﻿using Lisa.Excelsis.Data;
 using Lisa.Excelsis.WebApi.Models;
 using Microsoft.AspNet.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -135,6 +136,9 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpPost("/assessments/{subject}/{examName}/{cohort}")]
         public IActionResult Post([FromBody] AssessmentPost assessmentPost, string subject, string examName, string cohort)
         {
+
+            examName = Uri.UnescapeDataString(examName);
+
             if (!ModelState.IsValid)
             {
                 var errorList = ModelState.Values.SelectMany(m => m.Errors)
