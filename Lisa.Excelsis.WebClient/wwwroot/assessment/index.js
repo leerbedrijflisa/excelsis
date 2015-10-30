@@ -30,6 +30,8 @@ export class Index{
             "name": params.name,
             "cohort": params.cohort
         }
+
+        this.assessor = params.assessor;
     }
 
     startAssessment() { 
@@ -39,7 +41,7 @@ export class Index{
                 "number": this.number
             },
             "assessors": [{
-                "userName": "joostronkesagerbeek"
+                "userName": this.assessor
             }],
             "assessed" : this.utils.formatDate(this.newDate, this.newTime)       
         };

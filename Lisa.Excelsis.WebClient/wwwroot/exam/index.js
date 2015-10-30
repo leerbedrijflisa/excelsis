@@ -26,9 +26,9 @@ export class Exam{
 
     selectAssessor()
     {
-        var assessor = document.getElementById('assessor').value;
+        this.assessor = document.getElementById('assessor').value;
         this.message = "Een moment alstublieft...";
-        this.http.get("/subjects?assessor="+assessor).then(response => {
+        this.http.get("/subjects?assessor="+this.assessor).then(response => {
             this.subjects = response.content;
             this.message = null;
         });
@@ -50,6 +50,6 @@ export class Exam{
     }
 
     startAssessment(name, subject, cohort) {
-        this.router.navigateToRoute('assessment', { subject: subject, name: name,  cohort: cohort });
+        this.router.navigateToRoute('assessment', { subject: subject, name: name,  cohort: cohort, assessor: this.assessor });
     }
 }
