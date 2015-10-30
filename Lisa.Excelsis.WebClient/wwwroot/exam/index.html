@@ -1,16 +1,33 @@
 ﻿<template>
+
     <h2>${heading}</h2>
 
+    <p>Selecteer hier voor welke leraar u een examen gaat invullen:</p>
     <div id="selectBar">
-        <select value.bind="subject" id="subject">
-            <option repeat.for="subject of subjects" value="${subject.name}">${subject.name}</option>
+        <select value.bind="assessor" id="assessor">
+            <option repeat.for="assessor of assessors" value="${assessor.username}">${assessor.username}</option>
         </select>
 
-        <select value.bind="cohort" id="cohort">
-            <option repeat.for="cohort of cohorts">${cohort}</option>
-        </select>
+        <button click.delegate="selectAssessor()">Zoek</button>
+    </div>
 
-        <button click.delegate="showExams()">Zoek</button>
+    <p>${message}</p>
+
+    <div if.bind="subjects">
+        <p>Selecteer hier voor welke vak en cohort u een examen gaat invullen:</p>
+
+        <div id="selectBar">
+            <select id="subject">
+                <option repeat.for="subject of subjects" value="${subject.name}">${subject.name}</option>
+            </select>
+
+            <select value.bind="cohort" id="cohort">
+                <option repeat.for="cohort of cohorts">${cohort}</option>
+            </select>
+
+            <button click.delegate="showExams()">Zoek</button>
+        </div>
+
     </div>
     
     <ul class="results" id="exams">        
@@ -23,6 +40,6 @@
         </li>       
     </ul>
 
-    <p>${message}</p>
+    <p>${message2}</p>
 
 </template>

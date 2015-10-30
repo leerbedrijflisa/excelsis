@@ -14,12 +14,25 @@ export class Exam{
 
     activate() {
         this.message = "Een moment alstublieft...";
-        this.heading = "Exam"; 
-        this.http.get("/subjects?assessor=joostronkesagerbeek").then(response => {
-            this.subjects = response.content;
+        this.heading = "Exam";
+        
+        this.http.get("/assessors").then(response => {
+            this.assessors = response.content;
             this.message = null;
         });        
+        
         this.cohorts = [ "2015", "2014", "2013", "2012" ];
+    }
+
+    selectAssessor()
+    {
+        var assessor = document.getElementById('assessor').value;
+        this.message = "Een moment alstublieft...";
+        this.http.get("/subjects?assessor="+assessor).then(response => {
+            this.subjects = response.content;
+            this.message = null;
+            document.getElementById("subject").selectedIndex = "1";
+        });
     }
 
     showExams() {       
@@ -27,11 +40,11 @@ export class Exam{
         var cohort = document.getElementById('cohort').value;
         this.http.get("/exams/"+subject+"/"+cohort).then(response => {
             this.exams = response.content;
-            this.message = null;
+            this.message2 = null;
             document.getElementById("exams").style.display = "inline";
         }, response => {
             if(response.statusCode == 404){
-                this.message = "Helaas er zijn geen examens gevonden.";
+                this.message2 = "Helaas er zijn geen examens gevonden.";
                 document.getElementById("exams").style.display = "none";
             }
         });
