@@ -2,10 +2,7 @@
 using Lisa.Excelsis.WebApi.TransferObjects;
 using Microsoft.AspNet.Mvc;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System;
-using System.Text.RegularExpressions;
 
 namespace Lisa.Excelsis.WebApi.Controllers
 {
