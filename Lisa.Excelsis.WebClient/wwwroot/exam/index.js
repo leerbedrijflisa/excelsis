@@ -31,7 +31,6 @@ export class Exam{
         this.http.get("/subjects?assessor="+assessor).then(response => {
             this.subjects = response.content;
             this.message = null;
-            document.getElementById("subject").selectedIndex = "1";
         });
     }
 
