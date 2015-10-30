@@ -27,10 +27,10 @@ export class Exam{
     selectAssessor()
     {
         var assessor = document.getElementById('assessor').value;
-        this.messageExam = "Een moment alstublieft...";
+        this.message = "Een moment alstublieft...";
         this.http.get("/subjects?assessor="+assessor).then(response => {
             this.subjects = response.content;
-            this.messageExam = null;
+            this.message = null;
         });
     }
 
@@ -39,11 +39,11 @@ export class Exam{
         var cohort = document.getElementById('cohort').value;
         this.http.get("/exams/"+subject+"/"+cohort).then(response => {
             this.exams = response.content;
-            this.message2 = null;
+            this.messageExam = null;
             document.getElementById("exams").style.display = "inline";
         }, response => {
             if(response.statusCode == 404){
-                this.message2 = "Helaas er zijn geen examens gevonden.";
+                this.messageExam = "Helaas er zijn geen examens gevonden.";
                 document.getElementById("exams").style.display = "none";
             }
         });
