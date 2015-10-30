@@ -27,10 +27,10 @@ export class Exam{
     selectAssessor()
     {
         var assessor = document.getElementById('assessor').value;
-        this.message = "Een moment alstublieft...";
+        this.messageExam = "Een moment alstublieft...";
         this.http.get("/subjects?assessor="+assessor).then(response => {
             this.subjects = response.content;
-            this.message = null;
+            this.messageExam = null;
         });
     }
 
