@@ -14,16 +14,20 @@ namespace Lisa.Excelsis.Data.Migrations
         {
 
             var joost = new Assessor { Username = "joostronkesagerbeek" };
+            var peter = new Assessor { Username = "petersnoek" };
+            var frits = new Assessor { Username = "fritssilano" };
+            var chantal = new Assessor { Username = "chantaltouw" };
 
-            context.Assessors.AddOrUpdate(a => a.Username, new Assessor[] { joost });
+            context.Assessors.AddOrUpdate(a => a.Username, new Assessor[] { joost, peter, frits, chantal });
 
-            var dutch = new Subject { Name = "Nederlands", Assessors = new Assessor[] { joost } };
-            var softwareDevelopment = new Subject { Name = "Applicatieontwikkelaar"};
-            var english = new Subject { Name = "Engels" };
-            var mathematics = new Subject { Name = "Rekenen", Assessors = new Assessor[] { joost } };
-
+            var dutch = new Subject { Name = "Nederlands", Assessors = new Assessor[] { chantal } };
+            var softwareDevelopment = new Subject { Name = "Applicatieontwikkelaar", Assessors = new Assessor[] { peter, joost } };
+            var english = new Subject { Name = "Engels", Assessors = new Assessor[] { joost } };
+            var mathematics = new Subject { Name = "Rekenen", Assessors = new Assessor[] { frits } };
 
             context.Subjects.AddOrUpdate(s => s.Name, new Subject[] { dutch, softwareDevelopment, english, mathematics });
+
+            context.SaveChanges();
 
             context.Exams.AddOrUpdate(e => e.Crebo, new Exam[] {
                 new Exam { Subject = dutch, Name = "Spreken", Cohort = "2015", Crebo = "9001", Organization = "Da Vinci College"},
@@ -42,7 +46,7 @@ namespace Lisa.Excelsis.Data.Migrations
             {
                 for (var i = 1; i < 11; i++)
                 {
-                    context.Criteria.AddOrUpdate(c => c.ExamId, new Criterium
+                    context.Criteria.AddOrUpdate(c => new { c.ExamId, c.Order }, new Criterium
                     {
                         Description = "De kandidaat doet wat van hem verwacht wordt.",
                         value = "V",
