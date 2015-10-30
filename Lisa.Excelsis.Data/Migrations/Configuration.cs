@@ -33,11 +33,11 @@ namespace Lisa.Excelsis.Data.Migrations
                 new Exam { Subject = dutch, Name = "Spreken", Cohort = "2015", Crebo = "9001", Organization = "Da Vinci College"},
                 new Exam { Subject = dutch, Name = "Schrijven", Cohort = "2015", Crebo = "9002", Organization = "Da Vinci College"},
                 new Exam { Subject = english, Name = "Spreken", Cohort = "2015", Crebo = "9003", Organization = "Da Vinci College"},
-                new Exam { Subject = softwareDevelopment, Name = "Ontwerpen van een applicatie", Cohort = "2015", Crebo = "9004", Organization = "Da Vinci College"},
-                new Exam { Subject = softwareDevelopment, Name = "Realiseren van een applicatie", Cohort = "2015", Crebo = "9005", Organization = "Da Vinci College"},
-                new Exam { Subject = softwareDevelopment, Name = "Opleveren van een applicatie", Cohort = "2015", Crebo = "9006", Organization = "Da Vinci College"},
+                new Exam { Subject = softwareDevelopment, Name = "Ontwerpen-van-een-applicatie", Cohort = "2015", Crebo = "9004", Organization = "Da Vinci College"},
+                new Exam { Subject = softwareDevelopment, Name = "Realiseren-van-een-applicatie", Cohort = "2015", Crebo = "9005", Organization = "Da Vinci College"},
+                new Exam { Subject = softwareDevelopment, Name = "Opleveren-van-een-applicatie", Cohort = "2015", Crebo = "9006", Organization = "Da Vinci College"},
                 new Exam { Subject = mathematics, Name = "Verhoudingen", Cohort = "2015", Crebo = "9007", Organization = "Da Vinci College"},
-                new Exam { Subject = mathematics, Name = "Meten en meetkunde", Cohort = "2015", Crebo = "9008", Organization = "Da Vinci College"}
+                new Exam { Subject = mathematics, Name = "Meten-en-meetkunde", Cohort = "2015", Crebo = "9008", Organization = "Da Vinci College"}
             });
 
             context.SaveChanges();
