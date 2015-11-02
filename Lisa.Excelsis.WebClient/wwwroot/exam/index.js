@@ -1,15 +1,17 @@
 ﻿import {Router} from 'aurelia-router';
 import {HttpClient} from 'aurelia-http-client';
+import {Utils} from "utils";
 
 export class Exam{
     
     static inject() {
-        return [ Router, HttpClient ];
+        return [ Router, HttpClient, Utils ];
     }
 
-    constructor(router, http){
+    constructor(router, http, utils){
         this.router = router;
         this.http = http;
+        this.utils = utils;
     }
 
     activate() {
