@@ -137,7 +137,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
         public IActionResult Post([FromBody] AssessmentPost assessmentPost, string subject, string examName, string cohort)
         {
 
-            examName = Uri.UnescapeDataString(examName);
+            examName = examName.Replace("-", " ");
 
             if (!ModelState.IsValid)
             {

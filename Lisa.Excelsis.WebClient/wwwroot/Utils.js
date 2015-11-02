@@ -28,6 +28,9 @@
     }
 
     spaceToDash(url){
-        return url.ToString().Trim().Replace(" ","-");
+        return url.toString().trim().replace(/\s+/g, '-');
+    }
+    dashToSpace(string){
+        return string.toString().replace(/-/g, ' ');
     }
 }

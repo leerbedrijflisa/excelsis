@@ -27,7 +27,7 @@ export class Index{
        
         this.exam = {
             "subject": params.subject,
-            "name": params.name,
+            "name": this.utils.dashToSpace(params.name),
             "cohort": params.cohort
         }
 
@@ -45,8 +45,8 @@ export class Index{
             }],
             "assessed" : this.utils.formatDate(this.newDate, this.newTime)       
         };
-
-        this.http.post("assessments/"+this.exam.subject+"/"+this.exam.name+"/"+this.exam.cohort, Content).then(response => {
+        var url = this.utils.spaceToDash("assessments/"+this.exam.subject+"/"+this.exam.name+"/"+this.exam.cohort);
+        this.http.post(url, Content).then(response => {
             this.assessment = response.content;
             this.router.navigateToRoute('assessmentId', {subject: this.exam.subject, name: this.exam.name, cohort: this.exam.cohort, assessmentid: this.assessment.id });
         });
