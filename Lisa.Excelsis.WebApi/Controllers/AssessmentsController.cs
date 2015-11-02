@@ -68,7 +68,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
                              }),
                              Assessed = new
                              {
-                                 Date = string.Format("{0}/{1}/{2}", a.Assessed.Day, a.Assessed.Month, a.Assessed.Year),
+                                 Date = string.Format("{0}/{1}/{2}", addZero(a.Assessed.Day), a.Assessed.Month, a.Assessed.Year),
                                  Time = string.Format("{0}:{1}", addZero(a.Assessed.Hour), addZero(a.Assessed.Minute))
                              },
                              Exam = new
