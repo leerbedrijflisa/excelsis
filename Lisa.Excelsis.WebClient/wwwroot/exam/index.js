@@ -24,8 +24,7 @@ export class Exam{
         this.cohorts = [ "2015", "2014", "2013", "2012" ];
     }
 
-    selectAssessor()
-    {
+    selectAssessor(){
         this.assessor = document.getElementById('assessor').value;
         this.message = "Een moment alstublieft...";
         this.http.get("/subjects?assessor="+this.assessor).then(response => {
