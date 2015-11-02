@@ -51,6 +51,6 @@ export class Exam{
     }
 
     startAssessment(name, subject, cohort) {
-        this.router.navigateToRoute('assessment', { subject: subject, name: name,  cohort: cohort, assessor: this.assessor });
+        this.router.navigateToRoute('assessment', { subject: subject, name: this.utils.spaceToDash(name),  cohort: cohort, assessor: this.assessor });
     }
 }
