@@ -205,3 +205,4 @@ Lisa.Excelsis.WebApi/Migrations/20150928121919_everyting.cs
 Lisa.Excelsis.WebApi/Properties/PublishProfiles/Excelsis-API-publish.ps1
 Lisa.Excelsis.WebApi/Properties/PublishProfiles/excelsis-develop-webapi - Web Deploy-publish.ps1
 Lisa.Excelsis.WebClient/Properties/PublishProfiles/excelsis-develop-webclient - Web Deploy-publish.ps1
+wrap/Lisa.Excelsis.Data/project.lock.json
