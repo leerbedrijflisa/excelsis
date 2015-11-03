@@ -29,7 +29,7 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet("{subject}/{cohort}")]
         public IActionResult Get(string subject, string cohort)
         {
-            var result = _db.FetchExam(subject, cohort);
+            var result = _db.FetchExams(subject, cohort);
             if (result == null)
             {
                 return new HttpNotFoundResult();
