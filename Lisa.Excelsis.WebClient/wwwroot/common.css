@@ -39,3 +39,25 @@ ul.results > li:hover {
     border-color: Highlight;
     cursor: pointer;
 }
+label.questionmark1 {
+    font-weight: bold;
+    display: inline;
+    color: #4cff00;
+    border: 2px thick red;
+}
+label.questionmark2 {
+    font-weight: bold;
+    display: inline;
+    color: #ffd800;
+}
+
+input[type="radio"]:checked + label.questionmark1{
+    border: solid 1px red;
+}
+input[type="radio"]:checked + label.questionmark2{
+    border: solid 1px blue;
+}
+
+ul.questions{
+    display:inline;
+}
