@@ -1,5 +1,6 @@
 ﻿using Lisa.Excelsis.WebApi.TransferObjects;
 using Microsoft.AspNet.Mvc;
+using System.Linq;
 
 namespace Lisa.Excelsis.WebApi
 {
@@ -10,6 +11,7 @@ namespace Lisa.Excelsis.WebApi
         public IActionResult Get([FromQuery] Filter filter)
         {
             var results = _db.FetchSubjects();
+                //.OrderBy(x => x, new CustomCompare(filter.Assessor));
             return new HttpOkObjectResult(results);
         }
 
