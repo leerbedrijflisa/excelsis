@@ -43,22 +43,20 @@ namespace Lisa.Excelsis.WebApi
             return Select<Subject>(query, parameters).SingleOrDefault();
         }
 
-        public IEnumerable<ExamInfo> FetchExams()
-        {
-            var query = @"Select *, Subjects.Name as SubjectName 
-                          from Exams
-                          left join Subjects on Subjects.Id = Exams.Subject_Id";
-            return Select<ExamInfo>(query);
-        }
-
-        public IEnumerable<ExamInfo> FetchExam(string subject, string cohort)
+        public IEnumerable<ExamInfo> FetchExams(string subject = null, string cohort = null)
         {
             var query = @"Select *, Subjects.Name as SubjectName
                           from Exams                           
-                          left join Subjects on Subjects.Id = Exams.Subject_Id
-                          where Subjects.Name = @subject and Exams.Cohort = @cohort";
-            var parameters = new { subject = subject, cohort = cohort };
-            return Select<ExamInfo>(query, parameters);
+                          left join Subjects on Subjects.Id = Exams.Subject_Id";
+
+            if( subject != null && cohort != null)
+            {
+                query = query + " where Subjects.Name = @subject and Exams.Cohort = @cohort";
+                var parameters = new { subject = subject, cohort = cohort };
+                return Select<ExamInfo>(query, parameters);
+            }
+
+            return Select<ExamInfo>(query);
         }
 
         public Exam FetchExam(string subject, string name, string cohort)
