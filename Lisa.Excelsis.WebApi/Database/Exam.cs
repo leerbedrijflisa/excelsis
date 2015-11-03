@@ -2,7 +2,7 @@
 
 namespace Lisa.Excelsis.WebApi
 {
-    public class ExamInfo : IDataObject
+    public class ExamInfo : IDataObject, ISubObject
     {
         public int Id { get; set; }
         public string Name { get; set; }

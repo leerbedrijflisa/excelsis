@@ -2,7 +2,24 @@
 <ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ArrayOfArrayOfString>
     <ArrayOfString>
-      <string>D:\PROJECTS\_LISA\Lisa.Excelsis\Lisa.Excelsis.WebClient\wwwroot\app.js</string>
+      <string>D:\PROJECTS\backup\Lisa.Excelsis\Lisa.Excelsis.Data\Models\Assessment.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\PROJECTS\_LISA\Lisa.Excelsis\Lisa.Excelsis.WebApi\Database\Assessment.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\PROJECTS\_LISA\Lisa.Excelsis\Lisa.Excelsis.WebApi\Database\Database.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\PROJECTS\_LISA\Lisa.Excelsis\Lisa.Excelsis.WebApi\Database\Exam.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>D:\PROJECTS\_LISA\Lisa.Excelsis\Lisa.Excelsis.WebApi\Controllers\ExamsController.cs</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>D:\PROJECTS\backup\Lisa.Excelsis\Lisa.Excelsis.WebApi\Controllers\AssessmentsController.cs</string>
     </ArrayOfString>
   </ArrayOfArrayOfString>
 </ArrayOfArrayOfArrayOfString>
