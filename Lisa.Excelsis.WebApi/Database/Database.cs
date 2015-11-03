@@ -7,25 +7,20 @@ using System.Data.SqlClient;
 
 namespace Lisa.Excelsis.WebApi
 {
-    interface IDataObject
-    {
-        int Id { get; set; }
-    }
-
-    interface ISubObject
-    {
-    }
-
+  
     public class Database
     {
         public IEnumerable<Student> FetchStudents()
         {
-            return Select<Student>("Select * from Students");
+            var query = "Select * from Students";
+            return Select<Student>(query);
         }
 
         public Student FetchStudent(string number)
         {
-            return Select<Student>("Select * from Students where Number = @number", new { number = number }).SingleOrDefault();
+            var query = "Select * from Students where Number = @number";
+            var parameters = new { number = number };
+            return Select<Student>(query, parameters).SingleOrDefault();
         }
 
         private IEnumerable<T> Select<T>(string query, object parameters = null) where T : IDataObject, new()
