@@ -30,6 +30,13 @@ namespace Lisa.Excelsis.WebApi
             return Select<SubjectInfo>(query);
         }
 
+        public IEnumerable<ExamInfo> FetchExams()
+        {
+            var query = "Select * from Exams";
+            return Select<ExamInfo>(query);
+        }
+
+
         public Subject FetchSubject(string name)
         {
             var query = @"Select * 
