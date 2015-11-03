@@ -19,7 +19,9 @@ namespace Lisa.Excelsis.WebApi
 
         public Student FetchStudent(string number)
         {
-            var query = "Select * from Students where Number = @number";
+            var query = @"Select * 
+                          from Students
+                          where Students.Number = @number";
             var parameters = new { number = number };
             return Select<Student>(query, parameters).SingleOrDefault();
         }
@@ -30,22 +32,34 @@ namespace Lisa.Excelsis.WebApi
             return Select<SubjectInfo>(query);
         }
 
-        public IEnumerable<ExamInfo> FetchExams()
-        {
-            var query = "Select * from Exams";
-            return Select<ExamInfo>(query);
-        }
-
-
         public Subject FetchSubject(string name)
         {
             var query = @"Select * 
                           from Subjects                           
                           left join SubjectAssessors on Subject_Id = Subjects.Id
                           left join Assessors on Assessors.Id = Assessor_Id
-                          where Name = @name";
+                          where Subjects.Name = @name";
             var parameters = new { name = name };
             return Select<Subject>(query, parameters).SingleOrDefault();
+        }
+
+        public IEnumerable<ExamInfo> FetchExams()
+        {
+            var query = @"Select *, Subjects.Name as SubjectName 
+                          from Exams
+                          left join Subjects on Subjects.Id = Exams.Subject_Id";
+            return Select<ExamInfo>(query);
+        }
+
+        public Exam FetchExam(string subject, string name, string cohort)
+        {
+            var query = @"Select *, Subjects.Name as SubjectName
+                          from Exams                           
+                          left join Subjects on Subjects.Id = Exams.Subject_Id
+                          left join Criteriums on Criteriums.ExamId = Exams.Id
+                          where Subjects.Name = @subject and Exams.Name = @name and Exams.Cohort = @cohort";
+            var parameters = new { subject = subject, name = name, cohort = cohort };
+            return Select<Exam>(query, parameters).SingleOrDefault();
         }
 
         private IEnumerable<T> Select<T>(string query, object parameters = null) where T : IDataObject, new()

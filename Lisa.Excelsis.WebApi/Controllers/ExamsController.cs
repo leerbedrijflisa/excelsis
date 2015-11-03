@@ -12,32 +12,18 @@ namespace Lisa.Excelsis.WebApi.Controllers
             var query = _db.FetchExams();
             return new HttpOkObjectResult(query);
         }
-        //[HttpGet("{id}")]
-        //public IActionResult Get(int id)
-        //{
-        //    var query = _db.FetchExams().Where(e => e.Id == id).Select(e => new
-        //    {
-        //        Id = e.Id,
-        //        Name = e.Name,
-        //        Subject = e.Subject.Name,
-        //        Cohort = e.Cohort,
-        //        Crebo = e.Crebo,
-        //        Organization = e.Organization,
-        //        Criteria = _db.FetchCriteria().Where(c => c.ExamId == id).Select(c => new
-        //        {
-        //            Id = c.Id,
-        //            Description = c.Description,
-        //            Rating = c.value
-        //        })
-        //    }).FirstOrDefault();
 
-        //    if (query == null)
-        //    {
-        //        var message = string.Format("The exam with id {0} is not found.", id);
-        //        return new HttpNotFoundObjectResult(new { Error = message });
-        //    }
-        //    return new HttpOkObjectResult(query);
-        //}
+        [HttpGet("{subject}/{name}/{cohort}")]
+        public IActionResult Get(string subject, string name, string cohort)
+        {
+            var result = _db.FetchExam(subject, name, cohort);
+            if (result == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            return new HttpOkObjectResult(result);
+        }
 
         //[HttpGet("{subject}/{cohort}")]
         //public IActionResult Get(string subject = null, string cohort = null)

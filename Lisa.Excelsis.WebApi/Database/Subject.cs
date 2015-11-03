@@ -2,12 +2,12 @@
 
 namespace Lisa.Excelsis.WebApi
 {
-    public class SubjectInfo : IDataObject
+    public class SubjectInfo : IDataObject, ISubObject
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string SubjectName { get; set; }
     }
-    public class Subject : SubjectInfo, IDataObject
+    public class Subject : SubjectInfo
     {
         public IList<AssessorInfo> Assessors { get; set; }
     }
