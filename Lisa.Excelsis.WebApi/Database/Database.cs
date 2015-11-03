@@ -34,7 +34,7 @@ namespace Lisa.Excelsis.WebApi
 
         public Subject FetchSubject(string name)
         {
-            var query = @"Select * 
+            var query = @"Select *, Subjects.Name as SubjectName 
                           from Subjects                           
                           left join SubjectAssessors on Subject_Id = Subjects.Id
                           left join Assessors on Assessors.Id = Assessor_Id
@@ -70,6 +70,11 @@ namespace Lisa.Excelsis.WebApi
             return Select<Exam>(query, parameters).SingleOrDefault();
         }
 
+        public IEnumerable<AssessorInfo> FetchAssessors()
+        {
+            var query = "Select * from Assessors";
+            return Select<AssessorInfo>(query);
+        }
         private IEnumerable<T> Select<T>(string query, object parameters = null) where T : IDataObject, new()
         {
             var results = new List<T>();
