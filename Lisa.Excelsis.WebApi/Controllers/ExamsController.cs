@@ -16,7 +16,20 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet("{subject}/{name}/{cohort}")]
         public IActionResult Get(string subject, string name, string cohort)
         {
-            var result = _db.FetchExam(subject, name, cohort);
+            string examName = name.Replace("-", " ");
+            var result = _db.FetchExam(subject, examName, cohort);
+            if (result == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            return new HttpOkObjectResult(result);
+        }
+
+        [HttpGet("{subject}/{cohort}")]
+        public IActionResult Get(string subject, string cohort)
+        {
+            var result = _db.FetchExam(subject, cohort);
             if (result == null)
             {
                 return new HttpNotFoundResult();
