@@ -16,6 +16,11 @@ namespace Lisa.Excelsis.WebApi
         public IActionResult Get(string number)
         {
             var result = _db.FetchStudent(number);
+            if (result == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            
             return new HttpOkObjectResult(result);
         }
 
