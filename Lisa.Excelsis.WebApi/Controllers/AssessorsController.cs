@@ -10,6 +10,13 @@ namespace Lisa.Excelsis.WebApi.Controllers
         public IActionResult Get()
         {
             var result = _db.FetchAssessors();
+            return new HttpOkObjectResult(result);
+        }
+
+        [HttpGet("{username}")]
+        public IActionResult Get(string username)
+        {
+            var result = _db.FetchAssessor(username);
             if (result == null)
             {
                 return new HttpNotFoundResult();
@@ -17,28 +24,6 @@ namespace Lisa.Excelsis.WebApi.Controllers
 
             return new HttpOkObjectResult(result);
         }
-
-        //[HttpGet("{id}")]
-        //public IActionResult Get(int id)
-        //{
-        //    var query = _db.FetchAssessors().Where(a => a.Id == id).Select(a => new
-        //    {
-        //        id = a.Id,
-        //        username = a.Username,
-        //        Subjects = a.Subjects.Select(s => new
-        //        {
-        //            Id = s.Id,
-        //            Name = s.Name
-        //        })
-        //    }).FirstOrDefault();
-
-        //    if (query == null)
-        //    {
-        //        var message = string.Format("The assessor with id {0} is not found.", id);
-        //        return new HttpNotFoundObjectResult(new { Error = message });
-        //    }
-        //    return new HttpOkObjectResult(query);
-        //}
 
         private readonly Database _db = new Database();
     }

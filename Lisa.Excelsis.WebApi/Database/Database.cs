@@ -28,7 +28,7 @@ namespace Lisa.Excelsis.WebApi
 
         public IEnumerable<SubjectInfo> FetchSubjects()
         {
-            var query = "Select * from Subjects";
+            var query = "Select *, Subjects.Name as SubjectName from Subjects";
             return Select<SubjectInfo>(query);
         }
 
@@ -75,6 +75,18 @@ namespace Lisa.Excelsis.WebApi
             var query = "Select * from Assessors";
             return Select<AssessorInfo>(query);
         }
+
+        public Assessor FetchAssessor(string username)
+        {
+            var query = @"Select *, Subjects.Name as SubjectName
+                          from Assessors                           
+                          left join SubjectAssessors on Assessor_Id = Assessors.Id
+                          left join Subjects on Subjects.Id = Subject_Id
+                          where Assessors.Username = @username";
+            var parameters = new { username = username };
+            return Select<Assessor>(query, parameters).SingleOrDefault();
+        }
+
         private IEnumerable<T> Select<T>(string query, object parameters = null) where T : IDataObject, new()
         {
             var results = new List<T>();
