@@ -13,16 +13,17 @@ namespace Lisa.Excelsis.WebApi
             return new HttpOkObjectResult(results);
         }
 
-        //// GET subjects/{subject}
-        //[HttpGet("{name}")]
-        //public IActionResult Get(string name)
-        //{
-        //    var result = _db.Select<Subject>(
-        //          "Select * from Subjects " +
-        //          "where Name = '" + name + "'");
+        [HttpGet("{name}")]
+        public IActionResult Get(string name)
+        {
+            var result = _db.FetchSubject(name);
+            if (result == null)
+            {
+                return new HttpNotFoundResult();
+            }
 
-        //    return new HttpOkObjectResult(result);
-        //}
+            return new HttpOkObjectResult(result);
+        }
 
         private readonly Database _db = new Database();
     }
