@@ -6,14 +6,12 @@ namespace Lisa.Excelsis.WebApi
     [Route("[controller]")]
     public class SubjectsController : Controller
     {
-        //[HttpGet]
-        //public IActionResult Get([FromQuery] Filter filter)
-        //{
-        //    var results = _db.Select<SubjectInfo>(
-        //          "select * from Subjects");
-
-        //    return new HttpOkObjectResult(results);
-        //}
+        [HttpGet]
+        public IActionResult Get([FromQuery] Filter filter)
+        {
+            var results = _db.FetchSubjects();
+            return new HttpOkObjectResult(results);
+        }
 
         //// GET subjects/{subject}
         //[HttpGet("{name}")]

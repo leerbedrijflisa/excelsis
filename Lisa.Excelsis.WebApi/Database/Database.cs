@@ -23,6 +23,19 @@ namespace Lisa.Excelsis.WebApi
             return Select<Student>(query, parameters).SingleOrDefault();
         }
 
+        public IEnumerable<SubjectInfo> FetchSubjects()
+        {
+            var query = "Select * from Subjects";
+            return Select<SubjectInfo>(query);
+        }
+
+        //public Student FetchStudent(string name)
+        //{
+        //    var query = "Select * from Students where Number = @number";
+        //    var parameters = new { number = number };
+        //    return Select<Student>(query, parameters).SingleOrDefault();
+        //}
+
         private IEnumerable<T> Select<T>(string query, object parameters = null) where T : IDataObject, new()
         {
             var results = new List<T>();
