@@ -1,8 +1,6 @@
-﻿using Lisa.Excelsis.Data;
-using Microsoft.AspNet.Mvc;
-using System.Linq;
+﻿using Microsoft.AspNet.Mvc;
 
-namespace Lisa.Excelsis.WebApi.Controllers
+namespace Lisa.Excelsis.WebApi
 {
     [Route("[controller]")]
     public class StudentsController : Controller
@@ -10,26 +8,15 @@ namespace Lisa.Excelsis.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var query = _db.FetchStudents();                        
-
-            if (query == null || query.Count() == 0)
-            {
-                return new HttpNotFoundObjectResult(new { Error = "No students found." });
-            }
-            return new HttpOkObjectResult(query);
+            var result = _db.FetchStudents();
+            return new HttpOkObjectResult(result);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet("{number}")]
+        public IActionResult Get(string number)
         {
-            var query = _db.FetchStudents().Where(s => s.Id == id).FirstOrDefault();
-   
-            if (query == null)
-            {
-                var message = string.Format("The student with id {0} is not found.", id);
-                return new HttpNotFoundObjectResult(new { Error = message });
-            }
-            return new HttpOkObjectResult(query);
+            var result = _db.FetchStudent(number);
+            return new HttpOkObjectResult(result);
         }
 
         private readonly Database _db = new Database();
