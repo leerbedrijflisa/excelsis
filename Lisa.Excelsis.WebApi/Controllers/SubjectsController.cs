@@ -9,7 +9,8 @@ namespace Lisa.Excelsis.WebApi
         [HttpGet]
         public IActionResult Get([FromQuery] Filter filter)
         {
-            var results = _db.FetchSubjects();
+            string username = (filter.Assessor == null) ? "" : filter.Assessor;
+            var results = _db.FetchSubjects(username);
             return new HttpOkObjectResult(results);
         }
 
