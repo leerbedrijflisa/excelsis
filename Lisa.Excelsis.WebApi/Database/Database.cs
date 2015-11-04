@@ -174,12 +174,37 @@ namespace Lisa.Excelsis.WebApi
 
                             foreach (var p in elementType.GetProperties())
                             {
-                                var value = reader[p.Name];
-
-                                if (!(value is DBNull))
+                                if (Implements(p, typeof(ISubObject)))
                                 {
-                                    p.SetValue(o, reader[p.Name]);
-                                    hasValues = true;
+                                    var elementType2 = p.PropertyType;
+                                    object o2 = Activator.CreateInstance(elementType2);
+                                    bool hasValues2 = false;
+
+                                    foreach (var p2 in elementType2.GetProperties())
+                                    {
+                                        var value = reader[p2.Name];
+
+                                        if (!(value is DBNull))
+                                        {
+                                            p2.SetValue(o2, reader[p2.Name]);
+                                            hasValues2 = true;
+                                        }
+                                    }
+
+                                    if (hasValues2)
+                                    {
+                                        p.SetValue(o, o2);
+                                    }
+                                }
+                                else
+                                {
+                                    var value = reader[p.Name];
+
+                                    if (!(value is DBNull))
+                                    {
+                                        p.SetValue(o, reader[p.Name]);
+                                        hasValues = true;
+                                    }
                                 }
                             }
 
