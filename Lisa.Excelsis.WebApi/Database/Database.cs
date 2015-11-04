@@ -131,98 +131,83 @@ namespace Lisa.Excelsis.WebApi
 
                     foreach (var property in typeof(T).GetProperties())
                     {
-                        if (property.PropertyType.IsConstructedGenericType)
-                        {
-                            var elementType = property.PropertyType.GetGenericArguments()[0];
-                            IList list;
-
-                            if (property.GetValue(row) == null)
-                            {
-                                Type listType = typeof(List<>).MakeGenericType(elementType);
-                                list = (IList)Activator.CreateInstance(listType);
-                                property.SetValue(row, list);
-                            }
-                            else
-                            {
-                                list = (IList)property.GetValue(row);
-                            }
-
-                            object o = Activator.CreateInstance(elementType);
-                            bool hasValues = false;
-
-                            foreach (var p in elementType.GetProperties())
-                            {
-                                var value = reader[p.Name];
-
-                                if (!(value is DBNull))
-                                {
-                                    p.SetValue(o, reader[p.Name]);
-                                    hasValues = true;
-                                }
-                            }
-
-                            if (hasValues)
-                            {
-                                list.Add(o);
-                            }
-                        }
-                        else if (Implements(property, typeof(ISubObject)))
-                        {
-                            var elementType = property.PropertyType;
-                            object o = Activator.CreateInstance(elementType);
-                            bool hasValues = false;
-
-                            foreach (var p in elementType.GetProperties())
-                            {
-                                if (Implements(p, typeof(ISubObject)))
-                                {
-                                    var elementType2 = p.PropertyType;
-                                    object o2 = Activator.CreateInstance(elementType2);
-                                    bool hasValues2 = false;
-
-                                    foreach (var p2 in elementType2.GetProperties())
-                                    {
-                                        var value = reader[p2.Name];
-
-                                        if (!(value is DBNull))
-                                        {
-                                            p2.SetValue(o2, reader[p2.Name]);
-                                            hasValues2 = true;
-                                        }
-                                    }
-
-                                    if (hasValues2)
-                                    {
-                                        p.SetValue(o, o2);
-                                    }
-                                }
-                                else
-                                {
-                                    var value = reader[p.Name];
-
-                                    if (!(value is DBNull))
-                                    {
-                                        p.SetValue(o, reader[p.Name]);
-                                        hasValues = true;
-                                    }
-                                }
-                            }
-
-                            if (hasValues)
-                            {
-                                property.SetValue(row, o);
-                            }
-                        }
-                        else
-                        {
-                            property.SetValue(row, reader[property.Name]);
-                        }
+                        Something(reader, row, property);
                     }
-                }
+                } 
             }
 
             return results;
         }
+        private bool Something(SqlDataReader reader, dynamic row, PropertyInfo property)
+        {
+            if (property.PropertyType.IsConstructedGenericType)
+            {
+                var elementType = property.PropertyType.GetGenericArguments()[0];
+                IList list;
+
+                if (property.GetValue(row) == null)
+                {
+                    Type listType = typeof(List<>).MakeGenericType(elementType);
+                    list = (IList)Activator.CreateInstance(listType);
+                    property.SetValue(row, list);
+                }
+                else
+                {
+                    list = (IList)property.GetValue(row);
+                }
+
+                object o = Activator.CreateInstance(elementType);
+                bool hasValues = false;
+
+                foreach (var p in elementType.GetProperties())
+                {
+                    var value = reader[p.Name];
+
+                    if (!(value is DBNull))
+                    {
+                        p.SetValue(o, reader[p.Name]);
+                        hasValues = true;
+                    }
+                }
+
+                if (hasValues)
+                {
+                    list.Add(o);
+                }
+                return true;
+            }
+            else if (Implements(property, typeof(ISubObject)))
+            {
+                var elementType = property.PropertyType;
+                object o = Activator.CreateInstance(elementType);
+                bool hasValues = false;
+
+                foreach (var p in elementType.GetProperties())
+                {
+                    if(!Something(reader, o, p))
+                    {
+                        var value = reader[p.Name];
+
+                        if (!(value is DBNull))
+                        {
+                            p.SetValue(o, reader[p.Name]);
+                            hasValues = true;
+                        }
+                    }          
+                }
+
+                if (hasValues)
+                {
+                    property.SetValue(row, o);
+                }
+                return true;
+            }
+            else
+            {
+                property.SetValue(row, reader[property.Name]);
+            }
+            return false;
+        }    
 
         private bool Implements(PropertyInfo property, Type interfaceType)
         {
