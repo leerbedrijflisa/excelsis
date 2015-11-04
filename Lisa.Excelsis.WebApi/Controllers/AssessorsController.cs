@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNet.Mvc;
-using System.Linq;
 
-namespace Lisa.Excelsis.WebApi.Controllers
+namespace Lisa.Excelsis.WebApi
 {
     [Route("[controller]")]
     public class AssessorsController : Controller
