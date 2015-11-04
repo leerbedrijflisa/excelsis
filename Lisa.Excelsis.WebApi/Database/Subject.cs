@@ -5,7 +5,7 @@ namespace Lisa.Excelsis.WebApi
     public class SubjectInfo : IDataObject, ISubObject
     {
         public int Id { get; set; }
-        public string SubjectName { get; set; }
+        public string Name { get; set; }
     }
     public class Subject : SubjectInfo
     {

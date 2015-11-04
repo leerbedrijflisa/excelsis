@@ -1,6 +1,6 @@
 ﻿namespace Lisa.Excelsis.WebApi
 {
-    public class Criterium : IDataObject
+    public class Criterium : ISubObject
     {
         public int Id { get; set; }
         public int Order { get; set; }

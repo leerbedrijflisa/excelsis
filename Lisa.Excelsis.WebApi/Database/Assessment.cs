@@ -12,8 +12,8 @@ namespace Lisa.Excelsis.WebApi
         public IList<AssessorInfo> Assessors { get; set; }
     }
 
-    public class Assessment
+    public class Assessment : AssessmentInfo
     {
-        
+        public IList<Observation> Observations { get; set; }
     }
 }

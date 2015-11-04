@@ -7,8 +7,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 
 namespace Lisa.Excelsis.WebApi
-{
-  
+{  
     public class Database
     {
         public IEnumerable<Student> FetchStudents()
@@ -26,15 +25,34 @@ namespace Lisa.Excelsis.WebApi
             return Select<Student>(query, parameters).SingleOrDefault();
         }
 
-        public IEnumerable<SubjectInfo> FetchSubjects()
+        public IEnumerable<SubjectInfo> FetchSubjects(string username)
         {
-            var query = "Select *, Subjects.Name as SubjectName from Subjects";
-            return Select<SubjectInfo>(query);
+            var query = @"IF EXISTS (SELECT * FROM Assessors WHERE Username = @username)
+                            BEGIN
+                                Select Subjects.*
+                                from Subjects
+                                left join SubjectAssessors on Subject_Id = Subjects.Id
+                                left join Assessors on Assessors.Id = Assessor_Id
+                                order by case Username
+                                    when @username then Username
+                                end
+                                desc
+                            END
+                        ELSE
+                            BEGIN
+                                Select *
+                                from Subjects
+                                order by Name asc
+                            END";
+            var parameters = new { username = username };
+            return Select<SubjectInfo>(query, parameters);
         }
 
         public Subject FetchSubject(string name)
         {
-            var query = @"Select *, Subjects.Name as SubjectName 
+            var query = @"Select *, Subjects.Id as SubjectId,
+                                    Subjects.Name as SubjectName, 
+                                    Assessors.Id as AssessorsId
                           from Subjects                           
                           left join SubjectAssessors on Subject_Id = Subjects.Id
                           left join Assessors on Assessors.Id = Assessor_Id
@@ -45,7 +63,8 @@ namespace Lisa.Excelsis.WebApi
 
         public IEnumerable<ExamInfo> FetchExams(string subject = null, string cohort = null)
         {
-            var query = @"Select *, Subjects.Name as SubjectName
+            var query = @"Select *, Subjects.Id as SubjectId,
+                                    Subjects.Name as SubjectName
                           from Exams                           
                           left join Subjects on Subjects.Id = Exams.Subject_Id";
 
@@ -61,7 +80,9 @@ namespace Lisa.Excelsis.WebApi
 
         public Exam FetchExam(string subject, string name, string cohort)
         {
-            var query = @"Select *, Subjects.Name as SubjectName
+            var query = @"Select *, Subjects.Id as SubjectId,
+                                    Subjects.Name as SubjectName,
+                                    Criteriums.Id as CriteriumsId
                           from Exams                           
                           left join Subjects on Subjects.Id = Exams.Subject_Id
                           left join Criteriums on Criteriums.ExamId = Exams.Id
@@ -78,7 +99,9 @@ namespace Lisa.Excelsis.WebApi
 
         public Assessor FetchAssessor(string username)
         {
-            var query = @"Select *, Subjects.Name as SubjectName
+            var query = @"Select *, Assessors.Id as AssessorsId,
+                                    Subjects.Id as SubjectsId,
+                                    Subjects.Name as SubjectsName                                    
                           from Assessors                           
                           left join SubjectAssessors on Assessor_Id = Assessors.Id
                           left join Subjects on Subjects.Id = Subject_Id
@@ -89,7 +112,10 @@ namespace Lisa.Excelsis.WebApi
 
         public IEnumerable<AssessmentInfo> FetchAssessments()
         {
-            var query = @"Select *, Subjects.Name as SubjectName
+            var query = @"Select *, Assessors.Id as AssessorsId,
+                                    Exams.Id as ExamId, Exams.Name as ExamName,
+                                    Subjects.Id as SubjectId, Subjects.Name as SubjectName, 
+                                    Students.Id as StudentId, Students.Name as StudentName    
                           from Assessments          
                           left join Students on Students.Id = Assessments.Student_Id
                           left join Exams on Exams.Id = Assessments.ExamId
@@ -97,6 +123,27 @@ namespace Lisa.Excelsis.WebApi
                           left join AssessorAssessments on Assessment_Id = Assessments.Id
                           left join Assessors on Assessors.Id = Assessor_Id"; 
             return Select<AssessmentInfo>(query);
+        }
+
+        public Assessment FetchAssessment(int id)
+        {
+            var query = @"Select *, Assessors.Id as AssessorsId,
+                                    Observations.Id as ObservationsId,
+                                    Criteriums.Id as CriteriumId,
+                                    Exams.Id as ExamId, Exams.Name as ExamName,
+                                    Subjects.Id as SubjectId, Subjects.Name as SubjectName, 
+                                    Students.Id as StudentId, Students.Name as StudentName                                
+                          from Assessments          
+                          left join Students on Students.Id = Assessments.Student_Id
+                          left join Exams on Exams.Id = Assessments.ExamId
+                          left join Subjects on Subjects.Id = Exams.Subject_Id
+                          left join AssessorAssessments on Assessment_Id = Assessments.Id
+                          left join Assessors on Assessors.Id = Assessor_Id
+                          left join Observations on Observations.AssessmentId = Assessments.Id
+                          left join Criteriums on Criteriums.Id = Observations.Criterium_Id
+                          where Assessments.Id = @id";
+            var parameters = new { id = id };
+            return Select<Assessment>(query, parameters).SingleOrDefault();
         }
 
         private IEnumerable<T> Select<T>(string query, object parameters = null) where T : IDataObject, new()
@@ -138,7 +185,7 @@ namespace Lisa.Excelsis.WebApi
 
             return results;
         }
-        private bool Something(SqlDataReader reader, dynamic row, PropertyInfo property)
+        private bool Something(SqlDataReader reader, dynamic row, PropertyInfo property, string propertyName = null)
         {
             if (property.PropertyType.IsConstructedGenericType)
             {
@@ -161,12 +208,19 @@ namespace Lisa.Excelsis.WebApi
 
                 foreach (var p in elementType.GetProperties())
                 {
-                    var value = reader[p.Name];
-
-                    if (!(value is DBNull))
+                    if (!Something(reader, o, p, property.Name))
                     {
-                        p.SetValue(o, reader[p.Name]);
-                        hasValues = true;
+                        var value = reader[p.Name];
+
+                        if (!(value is DBNull))
+                        {
+                            string name = (p.Name == "Id" || p.Name == "Name") ? property.Name + p.Name : p.Name;
+                            if (!(reader[name] is DBNull))
+                            {
+                                p.SetValue(o, reader[name]);
+                                hasValues = true;
+                            }
+                        }
                     }
                 }
 
@@ -190,7 +244,8 @@ namespace Lisa.Excelsis.WebApi
 
                         if (!(value is DBNull))
                         {
-                            p.SetValue(o, reader[p.Name]);
+                            string name = (p.Name == "Id" || p.Name == "Name") ? property.Name + p.Name : p.Name;
+                            p.SetValue(o, reader[name]);
                             hasValues = true;
                         }
                     }          
