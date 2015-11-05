@@ -52,6 +52,7 @@ ul.results
 ul.results > li 
 {
     border: 1px solid black;
+    border-radius: 3px;
     margin: 10px;
     padding: 10px;
     max-width: 250px;
@@ -133,6 +134,10 @@ select
 {
     border: 1px solid #DB4105;
     padding: 3px;
+    outline: none;
+   font-size: 20px;
+   margin: 5px;
+   border-radius: 3px;
 }
 
 form
@@ -150,7 +155,8 @@ form
     margin-bottom: 10px;
 }
 
-input[type=text], textarea {
+input[type=text], textarea
+{
    -webkit-transition: all 0.2s ease-in-out;
    -moz-transition: all 0.2s ease-in-out;
    -o-transition: all 0.2s ease-in-out;
