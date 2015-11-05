@@ -1,32 +1,39 @@
 ﻿<template>
-    <ul class="questions">
+    
+        <ul>    
         <li repeat.for="observation of assessment.observations">
-            <span>${observation.criterium.description}</span>
-            
-            
-                <div>
-                    <input type="radio" class="questionmark1" name="rating-${observation.criterium.order}" id="rating-done-${observation.criterium.order}">
-                    <label class="questionmark1" for="rating-notdone-${observation.criterium.order}">voldaan</label>
-                </div>
-            
-            
-                <div>
-                    <input type="radio" class="questionmark2" name="rating-${observation.criterium.order}" id="rating-notdone-${observation.criterium.order}">
-                    <label class="questionmark2" for="rating-notdone-${observation.criterium.order}">niet voldaan</label>
-                </div>
-            
-            
-                <div>
-                    <input type="image" src="/icons/x_solid_red_25.gif" name="rating-${observation.criterium.order}" id="rating-notrated-${observation.criterium.order}" />
-                    <label for="rating-notrated-${observation.criterium.order}">niet beoordeeld</label>
-                </div>
-            
+                <span>${observation.criterium.description}</span>
 
+                
+            <div class="questions">
+                    <div class="onoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                        <label class="onoffswitch-label" for="myonoffswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div> 
+            
+                <!--<div class="done">
+            <input type="radio" class="questionmark" name="rating-${observation.criterium.order}" id="rating-done-${observation.criterium.order}">
+            <label class="questionmark1" for="rating-notdone-${observation.criterium.order}">voldaan</label>
+        </div>
+        <div class="not-done">
+            <input type="range" class="questionmark" name="rating-${observation.criterium.order}" id="rating-notdone-${observation.criterium.order}">
+            <label class="questionmark2" for="rating-notdone-${observation.criterium.order}">niet voldaan</label>
+        </div>-->
+                <div class="not-rated">
+                    <input type="radio" class="not-rated" name="rating-${observation.criterium.order}" id="rating-notrated-${observation.criterium.order}" />
+                    <label class="notrated" for="rating-notrated-${observation.criterium.order}">niet beoordeeld</label>
+                </div>
                 <input type="checkbox" name="thumbsup-${observation.criterium.order}"><img src="Icons/ok.png">
                 <input type="checkbox" name="thumbsdown-${observation.criterium.order}"><img src="Icons/question.png">
                 <input type="checkbox" name="questionmark-${observation.criterium.order}"><img src="Icons/star.png">
                 <input type="checkbox" name="asterisk-${observation.criterium.order}"><img src="Icons/Warning_icon.png">
-        
-        </li>
-    </ul>
+            </div>
+            </li>
+        </ul>
+    
+
+
 </template>
