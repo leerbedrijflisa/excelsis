@@ -5,7 +5,7 @@
     font-family: 'Open Sans', sans-serif;
     font-size: 10pt;
     text-align: center;
-    min-width: 333px;
+    min-width: 400px;
 }
 
 form div 
@@ -13,10 +13,13 @@ form div
     margin-bottom: 5px;
 }
 
-form label 
+form label
 {
     display: inline-block;
-    min-width: 200px;
+    text-align: left;
+    font-size: 20px;
+    width: 200px;
+    margin-right: 15px;
 }
 
 form button 
@@ -133,7 +136,7 @@ ul li a
 select
 {
     border: 1px solid #DB4105;
-    padding: 3px;
+    padding: 6px;
     outline: none;
    font-size: 20px;
    margin: 5px;
@@ -148,6 +151,7 @@ form
 
 .question
 {
+    overflow: hidden;
     border-bottom: 1px solid #DB4105;
     border-top: 1px solid #DB4105;
     padding: 10px;
@@ -162,7 +166,8 @@ input[type=text], textarea
    -o-transition: all 0.2s ease-in-out;
    outline: none;
    font-size: 20px;
-   padding: 5px;
+   padding: 6px;
+   width: 50% auto;
    margin: 5px;
    border: 1px solid #DDDDDD;
    border-radius: 3px;
@@ -174,14 +179,39 @@ input[type=text]:focus, textarea:focus
    border: 1px solid #DB4105;
 }
 
-label
-{
-    font-size: 20px;
-}
-
 .observation
 {
    border: 1px solid #DB4105;
    padding: 10px;
+   margin: 10px;
    background-color: #ededed;
+   font-size: 20px;
+}
+
+.observation:hover
+{
+    border: 2px solid #DB4105;
+}
+
+button {
+    padding: 10px;
+  border-radius: 3px;
+  height: 37px auto;
+  width: 70px auto;
+  border: 1px solid #ededed;
+}
+button:hover{
+
+  border: 1px solid;
+  border-color: #DB4105;
+}
+
+.checkbox
+{
+    width: 200px auto;
+}
+
+.criterium
+{
+    color: #DB4105;
 }

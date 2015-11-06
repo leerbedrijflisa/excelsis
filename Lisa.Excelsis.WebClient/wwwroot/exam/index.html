@@ -3,7 +3,7 @@
 
         <p>Selecteer hier voor welke leraar u een examen gaat invullen:</p>
         <div id="selectBar">
-            <select value.bind="assessor" id="assessor">
+            <select value.bind="assessor" id="assessor" autofocus>
                 <option repeat.for="assessor of assessors" value="${assessor.username}">${assessor.username}</option>
             </select>
 
