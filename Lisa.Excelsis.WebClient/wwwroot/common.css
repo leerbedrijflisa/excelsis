@@ -13,7 +13,7 @@ form div
     margin-bottom: 5px;
 }
 
-.labeltest
+form label
 {
     width: 140px;
     display: inline-block;
