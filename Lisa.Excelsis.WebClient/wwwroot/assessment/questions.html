@@ -2,8 +2,8 @@
     <ul class="question">
         <li class="observation"repeat.for="observation of assessment.observations">
 
-            <div>
-                <span class="questionTitle style="color: red;">${observation.criterium.description}</span><br />
+            <div class="questions">
+                <span>${observation.criterium.description}</span><br />
                 <input type="radio" name="rating-${observation.criterium.order}" id="rating-done-${observation.criterium.order}">
                 <label for="rating-done-${observation.criterium.order}" class="criterium">voldaan</label>
 
