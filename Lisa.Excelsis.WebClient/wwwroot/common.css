@@ -13,18 +13,13 @@ form div
     margin-bottom: 5px;
 }
 
-form label 
+.labeltest
 {
     width: 140px;
     display: inline-block;
     text-align: left;
     font-size: 20px;
     margin-right: 15px;
-}
-
-.studentinfo ~ label
-{
-
 }
 
 form button 
@@ -80,7 +75,6 @@ ul.results > li:hover
    -webkit-transition: all 0.2s ease-in-out;
    -moz-transition: all 0.2s ease-in-out;
    -o-transition: all 0.2s ease-in-out;
-
 }
 
 ul
@@ -201,15 +195,17 @@ input[type=text]:focus, textarea:focus
     border: 2px solid #DB4105;
 }
 
-button {
+button 
+{
     padding: 10px;
   border-radius: 3px;
   height: 37px auto;
   width: 70px auto;
   border: 1px solid #ededed;
 }
-button:hover{
 
+button:hover
+{
   border: 1px solid;
   border-color: #DB4105;
 }

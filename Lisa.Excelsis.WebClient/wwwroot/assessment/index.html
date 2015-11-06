@@ -1,26 +1,26 @@
 ﻿<template>
     <h1>${exam.subject} &ndash; ${exam.name}</h1>
-        <form>
-            <div>
-                <label class="studentinfo">Naam</label>
-                <input type="text" value.bind="name">
-            </div>
+    <form> 
+        <div>
+            <label>Naam</label>
+            <input type="text" value.bind="name">
+        </div>
 
-            <div>
-                <label class="studentinfo">Studentnummer</label>
-                <input type="text" value.bind="number">
-            </div>
+        <div>
+            <label>Studentnummer</label>
+            <input type="text" value.bind="number">
+        </div>
 
-            <div>
-                <label class="studentinfo">Datum</label>
-                <input type="text" value.bind="newDate">
-            </div>
+        <div>
+            <label>Datum</label>
+            <input type="text" value.bind="newDate">
+        </div>
 
-            <div>
-                <label class="studentinfo">Tijd</label>
-                <input type="text" value.bind="newTime">
-            </div>
+        <div>
+            <label>Tijd</label>
+            <input type="text" value.bind="newTime">
+        </div>
 
-            <button click.delegate="startAssessment()">Start beoordeling</button>
-        </form>
+        <button click.delegate="startAssessment()">Start beoordeling</button>
+    </form>
 </template>
