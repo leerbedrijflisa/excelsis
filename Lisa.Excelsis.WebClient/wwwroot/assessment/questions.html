@@ -1,7 +1,6 @@
 ﻿<template>
     <ul class="question">
         <li class="observation"repeat.for="observation of assessment.observations">
-
             <div class="questions">
                 <span>${observation.criterium.description}</span><br />
                 <input type="radio" name="rating-${observation.criterium.order}" id="rating-done-${observation.criterium.order}">
