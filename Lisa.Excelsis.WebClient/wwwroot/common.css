@@ -40,10 +40,6 @@ ul.results > li:hover {
     cursor: pointer;
 }
 
-input[type="radio"] + label.questionmark{
-    border: 2px solid black;
-    background-color: yellow;
-}
 
 label.not-rated{
     width: 200px;
@@ -53,20 +49,34 @@ div.questions{
     display: inline;
 }   
 
+input[type=button]+ label.questionmark1{
+    background-color: red;
+}
+
+input[type=radio]{
+    width: auto;
+    height: auto;
+
+}
+
+input[type="button"]:checked+label.questionmark1{ font-weight: bold; } 
+
 div.done{
     display:inline;
     width: 100px;
+    padding: 5px;
 }
+
 div.not-done{
     display:inline;
     width: 100px;
+    padding: 5px;
 }
+
 div.not-rated{
     display:inline;
 
 }
-
-
 
 
 

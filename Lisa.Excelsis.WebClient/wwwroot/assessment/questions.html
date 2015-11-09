@@ -1,27 +1,39 @@
 ﻿<template>
-    
+
+    <script>
+    if(document.getElementById('button').clicked == true)
+    {
+    alert("button was clicked");
+    }
+    </script>
         <ul>    
         <li repeat.for="observation of assessment.observations">
                 <span>${observation.criterium.description}</span>
 
                 
             <div class="questions">
-                    <div class="onoffswitch">
+                    <!--<div class="onoffswitch">
                         <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
                         <label class="onoffswitch-label" for="myonoffswitch">
                             <span class="onoffswitch-inner"></span>
                             <span class="onoffswitch-switch"></span>
                         </label>
-                    </div> 
+                    </div>-->
+
             
-                <!--<div class="done">
-            <input type="radio" class="questionmark" name="rating-${observation.criterium.order}" id="rating-done-${observation.criterium.order}">
-            <label class="questionmark1" for="rating-notdone-${observation.criterium.order}">voldaan</label>
-        </div>
-        <div class="not-done">
-            <input type="range" class="questionmark" name="rating-${observation.criterium.order}" id="rating-notdone-${observation.criterium.order}">
-            <label class="questionmark2" for="rating-notdone-${observation.criterium.order}">niet voldaan</label>
-        </div>-->
+                <div class="done">
+                    <label class="questionmark1" for="rating-done-${observation.criterium.order}">
+                        <input type="button" value="voldaan" class="questionmark" name="rating-${observation.criterium.order}" id="rating-done-${observation.criterium.order}">
+                        
+                    </label>
+                </div>
+                <div class="not-done">
+                    <label class="questionmark2" for="rating-notdone-${observation.criterium.order}">
+                        <input type="button" value="niet voldaan" class="questionmark" name="rating-${observation.criterium.order}" id="rating-notdone-${observation.criterium.order}">
+                        
+                    </label>
+                </div>
+            
                 <div class="not-rated">
                     <input type="radio" class="not-rated" name="rating-${observation.criterium.order}" id="rating-notrated-${observation.criterium.order}" />
                     <label class="notrated" for="rating-notrated-${observation.criterium.order}">niet beoordeeld</label>
@@ -31,6 +43,7 @@
                 <input type="checkbox" name="questionmark-${observation.criterium.order}"><img src="Icons/star.png">
                 <input type="checkbox" name="asterisk-${observation.criterium.order}"><img src="Icons/Warning_icon.png">
             </div>
+            
             </li>
         </ul>
     
