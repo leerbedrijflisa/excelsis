@@ -10,10 +10,6 @@ export class Start{
     constructor(utils, http) {
         this.utils = utils;
         this.http = http;
-        this.done = false;
-        this.notDone = false;
-        this.rated = false;
-
     }
 
     activate(params) {
@@ -39,31 +35,26 @@ export class Start{
             this.number = this.assessment.student.number;
             this.newDate = this.assessment.assessed.date;
             this.newTime = this.assessment.assessed.time;
+
+            for(var i = 0; i < this.assessment.observations.length; i++){                
+                 this.assessment.observations[i].result = "notRated";
+            }
         });
     }   
 
-    criteriumAnswerButton(name){
-        switch(name) {
-            case "done":
-                if(this.done){
-                    this.done = false;
-                    this.rated = false;
-                }else{
-                    this.done = true;
-                    this.notDone = false;
-                    this.rated = true;
+    criteriumAnswerButton(id, name){
+        for(var i = 0; i < this.assessment.observations.length; i++){ 
+            if(this.assessment.observations[i].id == id){
+                if((this.assessment.observations[i].result == "done" && name == "done") || (this.assessment.observations[i].result == "notDone" && name == "notDone")){
+                    this.assessment.observations[i].result = "notRated";
                 }
-                break;
-            case "notDone":
-                if(this.notDone){
-                    this.notDone = false;
-                    this.rated = false;
-                }else{
-                    this.notDone = true;
-                    this.done = false;
-                    this.rated = true;
+                else if((this.assessment.observations[i].result == "done" && name != "done") || (this.assessment.observations[i].result == "notRated" && name != "done")){
+                    this.assessment.observations[i].result = "notDone";
                 }
-                break;
-        }   
+                else if((this.assessment.observations[i].result == "notDone" && name != "notDone") || (this.assessment.observations[i].result == "notRated" && name != "notDone")){
+                    this.assessment.observations[i].result = "done";
+                }
+            }
+        }
     }
 }

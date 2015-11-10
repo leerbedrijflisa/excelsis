@@ -37,21 +37,18 @@
                 </div>-->
 
 
-                    <div class="${done ? 'Active' : 'notActive'}">
+                    <div class="answer" class.bind="observation.result == 'done' ? 'done' : 'notRated' ">
                         <label class="questionmark1" for="rating-done-${observation.criterium.order}">
-                            <button click.delegate="$parent.criteriumAnswerButton('done')" class="questionmark" name="rating-${observation.criterium.order}" id="rating-done-${observation.criterium.order}">voldaan</button>
+                            <button click.delegate="$parent.criteriumAnswerButton(observation.id, 'done')" class="questionmark" name="rating-${observation.criterium.order}" id="rating-done-${observation.criterium.order}">voldaan</button>
                         </label>
                     </div>
-                    <div class="${notDone ? 'Active' : 'notActive'}">
+                    <div  class="answer" class.bind="observation.result == 'notDone' ? 'notDone' : 'notRated' ">
                         <label class="questionmark2" for="rating-notdone-${observation.criterium.order}">
-                            <button click.delegate="$parent.criteriumAnswerButton('notDone')" class="questionmark " name="rating-${observation.criterium.order}" id="rating-notdone-${observation.criterium.order}">niet voldaan</button>
+                            <button click.delegate="$parent.criteriumAnswerButton(observation.id, 'notDone')" class="questionmark " name="rating-${observation.criterium.order}" id="rating-notdone-${observation.criterium.order}">niet voldaan</button>
                         </label>
                     </div>
 
-                    <div class="not-rated">
-                        <input type="radio" class="not-rated" name="rating-${observation.criterium.order}" id="rating-notrated-${observation.criterium.order}" />
-                        <label class="notrated" for="rating-notrated-${observation.criterium.order}">niet beoordeeld</label>
-                    </div>
+                   
                     <input type="checkbox" name="thumbsup-${observation.criterium.order}"><img src="Icons/ok.png">
                     <input type="checkbox" name="thumbsdown-${observation.criterium.order}"><img src="Icons/question.png">
                     <input type="checkbox" name="questionmark-${observation.criterium.order}"><img src="Icons/star.png">

@@ -51,20 +51,11 @@ input[type=radio]{
 
 }
 
-div.Active{
-    display:inline;
-    width: 100px;
-    padding: 5px;
+div.done label button, div.notDone label button{
     background-color: red;
 }
 
-div.not-done{
-    display:inline;
-    width: 100px;
-    padding: 5px;
-}
-
-div.not-rated{
+div.answer{
     display:inline;
 
 }
