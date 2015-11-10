@@ -10,6 +10,10 @@ export class Start{
     constructor(utils, http) {
         this.utils = utils;
         this.http = http;
+        this.done = false;
+        this.notDone = false;
+        this.rated = false;
+
     }
 
     activate(params) {
@@ -24,7 +28,8 @@ export class Start{
         }
         if (Number.isInteger(parseInt(params.assessmentid))) {
             this.getAssessment(params.assessmentid);            
-        }      
+        }     
+        
     }
 
     getAssessment(id){
@@ -36,4 +41,29 @@ export class Start{
             this.newTime = this.assessment.assessed.time;
         });
     }   
+
+    criteriumAnswerButton(name){
+        switch(name) {
+            case "done":
+                if(this.done){
+                    this.done = false;
+                    this.rated = false;
+                }else{
+                    this.done = true;
+                    this.notDone = false;
+                    this.rated = true;
+                }
+                break;
+            case "notDone":
+                if(this.notDone){
+                    this.notDone = false;
+                    this.rated = false;
+                }else{
+                    this.notDone = true;
+                    this.done = false;
+                    this.rated = true;
+                }
+                break;
+        }   
+    }
 }

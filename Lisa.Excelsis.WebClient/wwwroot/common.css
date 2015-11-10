@@ -12,10 +12,6 @@ form label {
     width: 100px;
 }
 
-form button {
-    margin-left: 200px;
-}
-
 form li {
     margin-bottom: 1em;
 }
@@ -49,22 +45,17 @@ div.questions{
     display: inline;
 }   
 
-input[type=button]+ label.questionmark1{
-    background-color: red;
-}
-
 input[type=radio]{
     width: auto;
     height: auto;
 
 }
 
-input[type="button"]:checked+label.questionmark1{ font-weight: bold; } 
-
-div.done{
+div.Active{
     display:inline;
     width: 100px;
     padding: 5px;
+    background-color: red;
 }
 
 div.not-done{
